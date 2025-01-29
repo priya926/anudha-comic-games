@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap" rel="stylesheet">
+      <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
+  <!-- progress barstle -->
+  <link rel="stylesheet" href="css/css-circular-prog-bar.css">
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,600&display=swap" rel="stylesheet">
+  <!-- font wesome stylesheet -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <!-- Custom styles for this template -->
+  <link href="{% static '/css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
+    <title>Anudha Stories</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Open Sans";
+            background-color: #fffbea;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            font-family: "Finger Paint", serif;
+            text-align: center;
+            font-weight: 400;
+            background-color: #ffdd57;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+       
+        .card {
+            background-color: #fff5c3;
+            border: 1px solid #ffd700;
+            border-radius: 10px;
+            width: 200px; 
+            height: 200px; 
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+        width: 100%;
+        height: 200px; 
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        object-fit: cover; 
+        }
+
+        .card-title {
+            padding: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #000;
+            color: #fff;
+            /* font-size: 0.9em; */
+        }
+
+        .footer a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+        .logo-container {
+        position: absolute;
+        top: 10px;
+        right: 1px;
+        z-index: 1000;
+        }
+        .logo {
+        width: 200px; 
+        height: auto;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Anudha Stories</h1>
+        <h4>Lets Explore....</h4>
+    </div>
+    <div class="logo-container">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+    </div>
+
+    <div class="container">
+        <a href="{% url 'story' %}" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <img src="{% static 'images/st1img.png' %}" alt="Story 1">
+            <div class="card-title">Granny and Girl</div>
+        </div>
+         </a>
+         <a href="{% url 'story' %}" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <img src="{% static 'images/st2img.png' %}" alt="Story 2">
+            <div class="card-title">Fox and Crane</div>
+        </div>
+        </a>
+    </div>
+      <!-- footer section -->
+  <section class="container-fluid footer_section">
+    <p>
+        Copyright &copy; 2025 | Design & Development Team | Made with ❤️ by Anudha        
+    </p>
+  </section>
+  <!-- footer section -->
+  <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+    
+</body>
+</html>
