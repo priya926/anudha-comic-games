@@ -2,199 +2,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap" rel="stylesheet">
+      <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
+  <!-- progress barstle -->
+  <link rel="stylesheet" href="css/css-circular-prog-bar.css">
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,600&display=swap" rel="stylesheet">
+  <!-- font wesome stylesheet -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <!-- Custom styles for this template -->
+  <link href="{% static '/css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap" rel="stylesheet">
 
-  <title>Anudha stories</title>
+    <title>Anudha Stories</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Open Sans";
+            background-color: #fffbea;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
+        .header {
+            font-family: "Finger Paint", serif;
+            /* text-align: center; */
+            font-weight: 400;
+            background-color: #ffdd57;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
+        .header img {
+            max-width: 100%;
+            height: auto;
+        }
 
- <!-- bootstrap core css -->
- <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
- <!-- progress barstle -->
- <link rel="stylesheet" href="css/css-circular-prog-bar.css">
- <!-- fonts style -->
- <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,600&display=swap" rel="stylesheet">
- <!-- font wesome stylesheet -->
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
- <!-- Custom styles for this template -->
- <link href="{% static '/css/style.css' %}" rel="stylesheet" />
- <!-- responsive style -->
- <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
+        .container {
+            display: flex;
+            flex: 1;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
 
- <link rel="stylesheet" href="css/css-circular-prog-bar.css">
+        .containerd {
+          display: flex;
+          flex-direction: row;
+          /* width: 100%; */
+          /* height: 90%; */
+          background-color: #fff;
+          /* border: 1px solid #ddd; */
+          /* border-radius: 8px; */
+          overflow: hidden;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .div1 {
+          flex: 0.1;
+          display: flex;
+          justify-content: center;
+          /* align-items: center; */
+          background-color: #393434;
+        }
 
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap" rel="stylesheet">
+        .div1 i,p {
+          font-size: 2rem;
+          color: #e5e0e0;
+          padding: 20px;
+        }
 
-  <style>
-    .finger-paint-regular {
-      font-family: "Finger Paint", serif;
-      font-weight: 400;
-      font-style: normal;
-    }
-    .fontad{
-      font-family: "Open Sans";
-      font-weight: 400;
-      font-style: normal;
-      color: black;
-    }
-    .containerd {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      height: 90%;
-      background-color: #fff;
-      /* border: 1px solid #ddd; */
-      /* border-radius: 8px; */
-      overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .div1 {
-      flex: 0.1;
-      display: flex;
-      justify-content: center;
-      /* align-items: center; */
-      background-color: #393434;
-    }
+        .div2 {
+          flex: 0.8;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          /* background-color: #fdd41dc2; */
+          /* background-color: #10a6c0; */
+        }
 
-    .div1 i,p {
-      font-size: 2rem;
-      color: #e5e0e0;
-      padding: 20px;
-    }
+        .div2 img {
+          max-width: 100%;
+          max-height: 100%;
+        }
 
-    .div2 {
-      flex: 0.8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      /* background-color: #fdd41dc2; */
-      /* background-color: #10a6c0; */
-    }
+        .div3 {
+          flex: 0.1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          /* background-color: #0d899f; */
+          padding: 16px;
+        }
 
-    .div2 img {
-      max-width: 100%;
-      max-height: 100%;
-    }
+        .coin-section {
+          display: flex;
+          justify-content: right;
+          /* align-items: center; */
+          height: 20%;
+          /* background-color: #0d899f; */
+          border-radius: 8px;
+        }
 
-    .div3 {
-      flex: 0.1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      /* background-color: #0d899f; */
-      padding: 16px;
-    }
+        .coin-section img,p {
+          height: 80px;
+          font-size: 30px;
+          font-family: "Open Sans";
+          font-weight: bold;
+          color: #0c0c0c;
+          padding: 15px;
+        }
 
-    .coin-section {
-      display: flex;
-      justify-content: right;
-      /* align-items: center; */
-      height: 20%;
-      /* background-color: #0d899f; */
-      border-radius: 8px;
-    }
+        .question-section {
+            height: 98%;
+            background-color: #fefefe;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-    .coin-section img,p {
-      height: 80px;
-      font-size: 30px;
-      font-family: "Open Sans";
-      font-weight: bold;
-      color: #0c0c0c;
-      padding: 15px;
-    }
+        .question-section button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-    .question-section {
-        height: 98%;
-        background-color: #fefefe;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 16px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
+        .question-section button:hover {
+            background-color: #0056b3;
+        }
 
-    .question-section button {
-        padding: 8px 16px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #000;
+            color: #fff;
+            /* font-size: 0.9em; */
+        }
 
-    .question-section button:hover {
-        background-color: #0056b3;
-    }
-  </style>
+        .footer a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+        .logo-container {
+        position: absolute;
+        top: 10px;
+        right: 1px;
+        z-index: 1000;
+        }
+        .logo {
+        width: 200px; 
+        height: auto;
+        }
+        
+    </style>
 </head>
 <body>
-    <header class="header_section">
-        <div class="container" style="margin-left: 20px;">
-          <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="#">
-              <span class="finger-paint-regular" style="font-size: 45px;color: black;">
-                Granny and Daughter
-              </span>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-  
-            <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-                <ul class="navbar-nav  ">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="index.html"> Home <span class="sr-only">(current)</span></a>
-                  </li>
-                </ul>
-              </div> -->
-          </nav>
-        </div>
-      </header>
-      <div class="containerd">
-        <div class="div1">
-          <span class="li">
-            <a href=""><i class="fa fa-sign-out"></i></a>
-            <a href=""><i class="fa fa-arrow-left"></i></a>
-          </span>
-        </div>
-        <div class="div2">
-          <img src="{% static 'images/st1img.png' %}" style="Height:519px"> 
-        </div>
-        <div class="div3">
-          <div class="coin-section">
-            <img src="{% static 'icons/totalreward.png' %}" alt="">
-            <p>100</p>
-            <img src="{% static 'icons/reward.png' %}" alt="">
-            <p>20</p>
-        </div>
-        <div class="question-section">
-            <p style="color: #393434;">What should you eat?</p>
-            <button>Confirm</button>
-        </div>
-        </div>
-      </div>
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      Copyright &copy; 2025 Made with ❤ by Anudha
-    </p>
-  </section>
-  <!-- footer section -->
+  <div class="header">
+      <h1>Granny and Daughter</h1>
+  </div>
+  <div class="logo-container">
+      <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+  </div>
 
-  <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
-</body>
-</html>
+  <!-- main section -->
+  <div class="containerd">
+    <div class="div1">
+      <span class="li">
+        <a href=""><i class="fa fa-sign-out"></i></a>
+        <a href=""><i class="fa fa-arrow-left"></i></a>
+      </span>
+    </div>
+    <div class="div2">
+      <img src="{% static 'images/st1img.png' %}" style="Height:519px"> 
+    </div>
+    <div class="div3">
+      <div class="coin-section">
+        <img src="{% static 'icons/totalreward.png' %}" alt="">
+        <p>100</p>
+        <img src="{% static 'icons/reward.png' %}" alt="">
+        <p>20</p>
+      </div>
+      <div class="question-section">
+        <p style="color: #393434;">What should you eat?</p>
+        <button>Confirm</button>
+      </div>
+    </div>
+  </div>
+  <!-- end main section -->
+
+  {% include "footer.html" %}
