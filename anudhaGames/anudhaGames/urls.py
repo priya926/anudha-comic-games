@@ -21,6 +21,10 @@ from storyapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('register/', views.register, name='register'),
+    path('login/', views.login, name='login'),
+    # path('verify-token/', views.verify_token, name='verify_token'),
+    # path('logout/', views.logout, name='logout'),
     path('storylist/', views.storylist, name='storylist'),   
     path('story/', views.story, name='story'),
 ]

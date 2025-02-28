@@ -12,9 +12,16 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import firebase_admin
+from firebase_admin import credentials
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FIREBASE_CREDENTIALS = os.path.join(BASE_DIR, "anudhagames-firebase-adminsdk-fbsvc-e06ff7682b.json")
 TEMP_DIR=os.path.join(BASE_DIR,"templates")
+
+cred = credentials.Certificate("anudhagames-firebase-adminsdk-fbsvc-e06ff7682b.json")
+firebase_admin.initialize_app(cred)
 
 
 # Quick-start development settings - unsuitable for production
@@ -75,12 +82,16 @@ WSGI_APPLICATION = 'anudhaGames.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'anudhagamesdb.sqlite3',
+#         'USER': 'root',
+#         'PASSWORD': 'root123',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation

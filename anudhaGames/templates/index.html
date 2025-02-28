@@ -14,8 +14,78 @@
   <meta name="author" content="" />
 
   <title>Anudha stories</title>
+  <!-- Add Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script>
+    // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
 
+    //  Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyALhrbAC9_1lMmhL4ugUnS23sNDXoRQzr4",
+      authDomain: "anudhagames.firebaseapp.com",
+      projectId: "anudhagames",
+      storageBucket: "anudhagames.firebasestorage.app",
+      messagingSenderId: "841949189921",
+      appId: "1:841949189921:web:b815c74f7bc8be86cf5060"
+    };
 
+    firebase.initializeApp(firebaseConfig);
+
+    //  Register User
+    function registerUser() {
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+          alert("Registration Successful!");
+          document.getElementById("exampleModalToggle1").style.display="None";
+      })
+      .catch((error) => {
+          alert(error.message);
+      });
+    }
+
+    // Login User
+    function login() {
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+      // .then((userCredential) => {
+      //     userCredential.user.getIdToken().then((idToken) => {
+      //         fetch('/verify-token/', {
+      //             method: 'POST',
+      //             headers: {
+      //                 'Content-Type': 'application/x-www-form-urlencoded',
+      //                 'X-CSRFToken': '{{ csrf_token }}'
+      //             },
+      //             body: 'id_token=' + idToken
+      //         })
+      //         .then(response => response.json())
+      //         .then(data => {
+      //             if (data.message) {
+      //                 alert("Login Successful!");
+      //                 window.location.href = '/';
+      //             } else {
+      //                 alert("Authentication failed");
+      //             }
+      //         });
+      //     });
+      // })
+      // .catch((error) => {
+      //     alert(error.message);
+      // });
+      .then((userCredential) => {
+          alert("Login Successful!");
+          document.getElementById("exampleModal").style.display = "none";
+      })
+      .catch((error) => {
+          alert(error.message);
+      });
+    }  
+  </script>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
@@ -66,8 +136,9 @@
     width: 200px; 
     height: auto;
   }
-
   </style>
+
+
 
   <!-- Modalsss -->
   <!-- CSS only -->
@@ -274,7 +345,6 @@
       </section>
       <!-- end contact section -->
      
-
     <!-- MODAL -->
    <!-- USER LOGIN & REGISTRATION MODAL START -->
   <!-- user modal1 LOGIN -->
@@ -286,24 +356,26 @@
           <!-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> -->
         </div>
         <div class="modal-body">
-          <form action="{% url 'storylist' %}" method="">
+          <!-- <form action="l ogin/" method="POST"> -->
+            <!-- <input type="hidden" id="id_token" name="id_token"> -->
+          <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
             <div class="mb-3">
               <label for="user-email" class="col-form-label">Email-ID:</label>
-              <input type="text" class="form-control" name=email id="user-email" placeholder="Enter your Email" value="">
-              
+              <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email">
             </div>
             <div class="mb-3">
               <label for="user-pass" class="col-form-label">Password:</label>
-              <input type="password" class="form-control" name="password" id="user-pass" placeholder="Enter your Password">
-              
+              <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password">
             </div>
             <p>Don't have an account? <a href="#exampleModalToggle1" data-bs-toggle="modal" data-bs-dismiss="modal">Register Here!</a></p>
             <div class="modal-footer">
-            <input type="submit" value="Login" class="btn btn-secondary">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-secondary">Login</button>
+              <!-- <input type="submit" value="Login" class="btn btn-secondary"> -->
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </form>
+        </div>
         </div>
       </div>
     </div>
@@ -319,32 +391,31 @@
           <!-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> -->
         </div>
         <div class="modal-body">
-          <form action="" method="">
-            {% csrf_token %}
-            <div class="mb-3">
+          <!-- <form onsubmit="event . p reventDefault (); r egisterUser ();" method="post"> -->
+            <!-- <div class="mb-3">
               <label for="user-name" class="col-form-label">Name:</label>
-              <input type="text" class="form-control" name=name id="user-name" placeholder="Enter your Name" value="">
+              <input type="text" class="form-control" name=uname id="uname" placeholder="Enter your Name" value="">
               
+            </div> -->
+            <form method="POST" action="{% url 'register' %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="user-email" class="col-form-label">Email-ID:</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email">
+                
+              </div>
+              <div class="mb-3">
+                <label for="user-pass" class="col-form-label">Password:</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password">
+              </div>
+              <p>Have an account? <a href="/">Login Here!</a></p>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-secondary">Register</button>
+              <!-- <input type="submit" value="Login" class="btn btn-secondary"> -->
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
-            <div class="mb-3">
-              <label for="user-email" class="col-form-label">Email-ID:</label>
-              <input type="text" class="form-control" name=email id="user-email" placeholder="Enter your Email" value="">
-              
-            </div>
-            <div class="mb-3">
-              <label for="user-contact" class="col-form-label">Contact:</label>
-              <input type="text" class="form-control" pattern="[6789][0-9]{9}" minlength="10" maxlength="10" name=contact id="user-contact" placeholder="Enter your Contact" value="">
-              
-            </div>
-            <div class="mb-3">
-              <label for="user-pass" class="col-form-label">Password:</label>
-              <input type="password" class="form-control" name="password" id="user-pass" placeholder="Enter your Password">
-              <!--  -->
-            </div>
-            <p>Have an account? <a href="#exampleModal" data-bs-toggle="modal" data-bs-dismiss="modal">Login Here!</a></p>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <input type="submit" value="Register" class="btn btn-secondary" onclick='a1()'>
-          </form>
+              <!-- <input type="submit" value="Register" class="btn btn-secondary" onclick='registerUser();'> -->
+            </form>
         </div>
       </div>
     </div>
@@ -352,8 +423,6 @@
 <!-- end modal2 REG -->
 <!-- END USER LOGIN & REGISTRATION MODAL -->
     <!-- END MODAL -->
-
-
   <!-- footer section -->
   <section class="container-fluid footer_section">
     <p>
@@ -368,8 +437,5 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
   <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
-
- 
 </body>
-
 </html>
