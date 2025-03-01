@@ -309,24 +309,25 @@
                   <b><u>Contact</u></b>
                 </h5>
               </div>
-              <form action="">
+              <form action="{% url 'contact' %}" method="POST">
+                {% csrf_token %}
                 <div class="contact_form-container">
                   <div>
                     <div>
-                      <input type="text" placeholder="Name">
+                      <input type="text" placeholder="Name" id="uname" name="uname" required>
                     </div>
                     <div>
-                      <input type="email" placeholder="Email">
+                      <input type="email" placeholder="Email" id="uemail" name="uemail" required>
                     </div>
                     <div>
-                      <input type="text" placeholder="Phone Number">
+                      <input type="text" placeholder="Phone Number" id="phone_number" name="phone_number" required>
                     </div>
                     <div class="mt-5">
-                      <input type="text" placeholder="Message">
+                      <input type="text" placeholder="Message" id="message" name="message" required>
                     </div>
                     <div class="mt-5">
                       <button type="submit">
-                        send
+                        Send
                       </button>
                     </div>
                   </div>

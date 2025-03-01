@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 import firebase_admin
-from firebase_admin import credentials
+from firebase_admin import credentials,firestore,auth
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +26,7 @@ FIREBASE_CRED = "anudhadb-firebase-adminsdk-fbsvc-b636f66480.json"
 # Initialize Firebase
 cred = credentials.Certificate(FIREBASE_CRED)
 firebase_admin.initialize_app(cred)
+db=firestore.client()
 
 TEMP_DIR=os.path.join(BASE_DIR,"templates")
 
