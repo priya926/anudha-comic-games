@@ -3,16 +3,7 @@ from django.http import JsonResponse
 import firebase_admin
 from firebase_admin import auth,credentials
 import os
-# from .models import *
 from django.contrib import messages
-# from django.contrib.auth import authenticate, login, logout
-# from datetime import datetime
-# from django.contrib.auth.hashers import make_password
-
-FIREBASE_CREDENTIALS = os.path.join(os.path.dirname(os.path.dirname(__file__)), "anudhagames-firebase-adminsdk-fbsvc-e06ff7682b.json")
-if not firebase_admin._apps:
-    cred = credentials.Certificate(FIREBASE_CREDENTIALS)
-    firebase_admin.initialize_app(cred)
 
 def index(request):
     return render(request, 'index.html')

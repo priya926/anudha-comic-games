@@ -21,14 +21,14 @@
     // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
 
     //  Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyALhrbAC9_1lMmhL4ugUnS23sNDXoRQzr4",
-      authDomain: "anudhagames.firebaseapp.com",
-      projectId: "anudhagames",
-      storageBucket: "anudhagames.firebasestorage.app",
-      messagingSenderId: "841949189921",
-      appId: "1:841949189921:web:b815c74f7bc8be86cf5060"
-    };
+      const firebaseConfig = {
+        apiKey: "AIzaSyAfWquAI5mtXuELXd2Fj3MjcSppErs73Lw",
+        authDomain: "anudhadb.firebaseapp.com",
+        projectId: "anudhadb",
+        storageBucket: "anudhadb.firebasestorage.app",
+        messagingSenderId: "14423870655",
+        appId: "1:14423870655:web:153c970dc37942cd0b8a0a"
+      };
 
     firebase.initializeApp(firebaseConfig);
 
@@ -391,12 +391,6 @@
           <!-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> -->
         </div>
         <div class="modal-body">
-          <!-- <form onsubmit="event . p reventDefault (); r egisterUser ();" method="post"> -->
-            <!-- <div class="mb-3">
-              <label for="user-name" class="col-form-label">Name:</label>
-              <input type="text" class="form-control" name=uname id="uname" placeholder="Enter your Name" value="">
-              
-            </div> -->
             <form method="POST" action="{% url 'register' %}">
               {% csrf_token %}
               <div class="mb-3">
@@ -423,6 +417,7 @@
 <!-- end modal2 REG -->
 <!-- END USER LOGIN & REGISTRATION MODAL -->
     <!-- END MODAL -->
+
   <!-- footer section -->
   <section class="container-fluid footer_section">
     <p>

@@ -14,14 +14,20 @@ from pathlib import Path
 import os
 import firebase_admin
 from firebase_admin import credentials
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FIREBASE_CREDENTIALS = os.path.join(BASE_DIR, "anudhagames-firebase-adminsdk-fbsvc-e06ff7682b.json")
-TEMP_DIR=os.path.join(BASE_DIR,"templates")
 
-cred = credentials.Certificate("anudhagames-firebase-adminsdk-fbsvc-e06ff7682b.json")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Path to your Firebase JSON file
+FIREBASE_CRED = "anudhadb-firebase-adminsdk-fbsvc-b636f66480.json"
+
+# Initialize Firebase
+cred = credentials.Certificate(FIREBASE_CRED)
 firebase_admin.initialize_app(cred)
+
+TEMP_DIR=os.path.join(BASE_DIR,"templates")
 
 
 # Quick-start development settings - unsuitable for production
