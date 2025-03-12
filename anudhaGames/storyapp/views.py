@@ -1,12 +1,14 @@
 from django.shortcuts import render,redirect
-from .forms import ContactForm
+from .forms import *
 from django.http import JsonResponse
 import firebase_admin
 from firebase_admin import auth,credentials,firestore
 import os
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 db=firestore.client()
+
 def index(request):
     return render(request, 'index.html')
 
@@ -16,12 +18,21 @@ def register(request):
         password = request.POST.get("password")
 
         try:
-            print(email)
+            # Create user in Firebase Auth
             user = auth.create_user(email=email, password=password)
-            print(email)
-            print(password)
+            user_id = user.uid  # Get the unique Firebase user ID
+            
+            # Store user data in Firestore
+            user_ref = db.collection("User").document(user_id)
+            user_ref.set({
+                "username": "user",  # Default username
+                "email": email,
+                "userpoints": 0  # Default points
+            })
+
             messages.success(request, "Registration successful. Please log in.")
             return redirect("index")
+
         except Exception as e:
             messages.error(request, f"Error: {str(e)}")
             return redirect("index")
@@ -88,3 +99,36 @@ def story(request):
 # def logout(request):
 #     logout(request)
 #     return JsonResponse({"Success":"User Logged out successfully!"})
+
+# @login_required
+def profile(request):
+    user_id = request.session.get("user_id")  # Get logged-in user ID
+    user_ref = db.collection("User").document(user_id)
+    user_doc = user_ref.get()
+
+    if user_doc.exists:
+        user_data = user_doc.to_dict()
+    else:
+        user_data = {}
+
+    if request.method == "POST":
+        new_username = request.POST.get("username")
+        new_email = request.POST.get("email")
+
+        try:
+            # Update Firestore username
+            user_ref.update({"username": new_username})
+
+            # Update Firebase Auth email
+            auth.update_user(user_id, email=new_email)
+
+            # Update Firestore email
+            user_ref.update({"email": new_email})
+
+            messages.success(request, "Profile updated successfully!")
+            return redirect("profile")
+
+        except Exception as e:
+            messages.error(request, f"Error updating profile: {str(e)}")
+
+    return render(request, "profile.html", {"user": user_data})
