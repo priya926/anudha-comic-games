@@ -1,0 +1,42 @@
+{
+    "Story1": {
+      "story_name": "Granny and Daughter",
+      "required_points": 0,
+      "nodes": {
+        "1": {
+          "image_url": "https://drive.google.com/uc?export=view&id=1fYonvNb_1yJuaOI_aUXvRzmBSNTaRqAz",
+          "next": "2"
+        },
+        "2": {
+          "image_url": "https://drive.google.com/uc?export=view&id=1QXl9vfcpu6JVXpaqRaJF3YWqjO3kBgLg",    
+          "question": "What should she eat?",
+          "choices": {
+            "Healthyfood": "2st1",
+            "Junkfood": "2st2"
+          }
+        },
+        "2st1":{
+            "image_url": "https://drive.google.com/uc?export=view&id=1cU1B9WHsWh28M9qmCKlNfT6YW98-YzYG", 
+            "next": "3",
+            "points": 10
+        },
+        "2st2":{
+            "image_url": "https://drive.google.com/uc?export=view&id=1Qha9JCCkP4MHHgpU7neKGEyHDsyJ7P-x",    
+            "next": "3",
+            "points": 5
+        },
+        "3": {
+          "image_url": "https://drive.google.com/uc?export=view&id=1izYE6LoUUiIcfKdBNwFiovx1sTnSb-Up"      
+      }
+    }
+    }
+}
+
+
+
+
+
+
+
+
+

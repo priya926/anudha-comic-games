@@ -23,10 +23,23 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('register/', views.register, name='register'),
     path('login/', views.login, name='login'),
+
     # path('verify-token/', views.verify_token, name='verify_token'),
-    # path('logout/', views.logout, name='logout'),
-    path('storylist/', views.storylist, name='storylist'),   
+    
+    path('logout/', views.logout, name='logout'),
+
+    path('storylist/', views.storylist, name='storylist'),
     path('story/', views.story, name='story'),
+
+    # Story page - starts from the first node (default: img1)
+    # path("story/<str:story_id>/", views.story, name="story"),
+
+    # Load a specific node within a story
+    # path("story/<str:story_id>/<str:node_id>/", views.story, name="story"),
+
+    # Handle choices and move to the next story node dynamically
+    path("choice/<str:story_id>/<str:node_id>/", views.handle_choice, name="handle_choice"),
+
     path('contact/', views.contact, name='contact'),
     path("profile/", views.profile, name="profile"),
 ]

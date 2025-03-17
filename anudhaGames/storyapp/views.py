@@ -2,12 +2,12 @@ from django.shortcuts import render,redirect
 from .forms import *
 from django.http import JsonResponse
 import firebase_admin
-from firebase_admin import auth,credentials,firestore
-import os
+from firebase_admin import auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .story import *
+from firebase_config import db
 
-db=firestore.client()
 
 def index(request):
     return render(request, 'index.html')
@@ -47,8 +47,25 @@ def login(request):
 
         try:
             user = auth.get_user_by_email(email)
-            messages.success(request, "Login successful!")
-            return redirect("storylist")
+            # Fetch user details from Firestore
+            user_ref = db.collection("User").where("email", "==", email).stream()
+            user_data = None
+            for doc in user_ref:
+                user_data = doc.to_dict()
+                break  # Get the first matching user
+            
+            if user_data:
+                # Store user data in session
+                request.session["user_id"] = user.uid
+                request.session["email"] = user.email
+                request.session["username"] = user_data.get("username", "user")
+                request.session["userpoints"] = user_data.get("userpoints", 0)
+
+                messages.success(request, "Login successful!")
+                return redirect("storylist")
+            else:
+                messages.error(request, "User not found in database.")
+                return redirect("index")
         except:
             messages.error(request, "Invalid credentials.")
             return redirect("index")
@@ -85,16 +102,36 @@ def contact(request):
 
     return render(request, "index.html", {"form": form})
 
+
 # Logout View (Clears the session)
-# def logout_view(request):
-#     request.session.flush()  # Clear session
-#     return redirect('index')  # Redirect back to home
+def logout(request):
+    request.session.flush()  # Clear session
+    messages.success(request,"Logged Out Successfully.")
+    return redirect('index')  # Redirect back to home 
+
 
 def storylist(request):
-    return render(request, 'storylist.html')
+    if "email" in request.session:  # Check if user is logged in
+        user_email = request.session.get("email")
+        username = request.session.get("username", "user")
+        userpoints = request.session.get("userpoints", 0)
 
-def story(request):
-    return render(request, 'story.html')
+        return render(request, "storylist.html", {"email": user_email, "username": username, "userpoints": userpoints})
+    else:
+        messages.error(request, "Please log in first.")
+        return redirect("index")
+    
+
+def story(request): 
+    if "email" in request.session:  # Check if user is logged in
+        user_email = request.session.get("email")
+        username = request.session.get("username", "user")
+        userpoints = request.session.get("userpoints", 0)
+
+        return render(request, "story.html", {"email": user_email, "username": username, "userpoints": userpoints})
+    else:
+        messages.error(request, "Please log in first.")
+        return redirect("index")
 
 # def logout(request):
 #     logout(request)
@@ -132,3 +169,46 @@ def profile(request):
             messages.error(request, f"Error updating profile: {str(e)}")
 
     return render(request, "profile.html", {"user": user_data})
+
+
+def story_selection(request):
+    user_id = request.session.get("user_id", "default_user")
+    user_points = get_user_points(user_id)
+    stories = get_all_stories(user_points)
+    
+    return render(request, "storylist.html", {"stories": stories, "user_points": user_points})
+
+def story_page(request, story_id, node_id="1"):
+    user_id = request.session.get("user_id", "default_user")
+    story_node, required_points = get_story_node(story_id, node_id)
+
+    if not story_node:
+        return render(request, "error.html", {"message": "Story node not found."})
+
+    user_points = get_user_points(user_id)
+
+    # Ensure the user has enough points to view this story
+    if user_points < required_points:
+        return render(request, "error.html", {"message": "You need more points to access this story!"})
+
+    # Add points if the node has any
+    points = story_node.get("points", 0)
+    if points:
+        update_user_points(user_id, user_points + points)
+
+    return render(request, "story.html", {
+        "story_node": story_node,
+        "story_id": story_id,
+        "node_id": node_id,
+        "user_points": user_points + points
+    })
+
+def handle_choice(request, story_id, node_id):
+    chosen_option = request.GET.get("choice")
+    story_node, _ = get_story_node(story_id, node_id)
+
+    if not story_node or "choices" not in story_node:
+        return render(request, "error.html", {"message": "Invalid choice."})
+
+    next_node = story_node["choices"].get(chosen_option, "1")
+    return redirect("story", story_id=story_id, node_id=next_node)

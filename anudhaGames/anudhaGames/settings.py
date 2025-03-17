@@ -12,21 +12,16 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-import firebase_admin
-from firebase_admin import credentials,firestore,auth
+# import firebase_admin
+# from firebase_admin import firestore
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# BASE_DIR = Path(__file__).resolve().parent.parent
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Path to your Firebase JSON file
-FIREBASE_CRED = "anudhadb-firebase-adminsdk-fbsvc-b636f66480.json"
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Initialize Firebase
-cred = credentials.Certificate(FIREBASE_CRED)
-firebase_admin.initialize_app(cred)
-db=firestore.client()
+# db=firestore.client()
 
 TEMP_DIR=os.path.join(BASE_DIR,"templates")
 
@@ -85,20 +80,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'anudhaGames.wsgi.application'
 
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
+# MIGRATION_MODULES = {
+#     "auth": None,  # Example: Disable migrations for auth
+# }
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'anudhagamesdb.sqlite3',
-#         'USER': 'root',
-#         'PASSWORD': 'root123',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
+# DATABASES = {}
 
 
 # Password validation
