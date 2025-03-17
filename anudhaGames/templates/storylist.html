@@ -123,6 +123,13 @@
         <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
         <br>
         <a href="{% url 'profile' %}">Profile</a>
+        {% if email %}
+            <p>Welcome, {{ username }} ({{ email }})</p>
+            <p>Your Points: {{ userpoints }}</p>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <p>Please log in.</p>
+        {% endif %}
     </div>
 
     <div class="container">
