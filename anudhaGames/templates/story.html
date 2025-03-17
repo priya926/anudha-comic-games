@@ -4,23 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap" rel="stylesheet">
-      <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
-  <!-- progress barstle -->
-  <link rel="stylesheet" href="css/css-circular-prog-bar.css">
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,600&display=swap" rel="stylesheet">
-  <!-- font wesome stylesheet -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <!-- Custom styles for this template -->
-  <link href="{% static '/css/style.css' %}" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap" rel="stylesheet">
+    <title>{{ story_node.story_name }}</title>
 
-    <title>Anudha Stories</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
+    <!-- Fonts & Styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/responsive.css' %}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
     <style>
         body {
             margin: 0;
@@ -30,96 +23,88 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            transition: background 0.5s ease-in-out;
         }
 
         .header {
             font-family: "Finger Paint", serif;
-            /* text-align: center; */
+            text-align: center;
             font-weight: 400;
             background-color: #ffdd57;
-            padding: 20px;
+            padding: 35px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            flex:100;
         }
 
-        .header img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .container {
+        .containerd {
             display: flex;
             flex: 1;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
-            padding: 20px;
+            /* padding: 20px; */
+            width: 100%;
+
         }
 
-        .containerd {
-          display: flex;
-          flex-direction: row;
-          /* width: 100%; */
-          /* height: 90%; */
-          background-color: #fff;
-          /* border: 1px solid #ddd; */
-          /* border-radius: 8px; */
-          overflow: hidden;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
         .div1 {
-          flex: 0.1;
-          display: flex;
-          justify-content: center;
-          /* align-items: center; */
-          background-color: #393434;
-        }
-
-        .div1 i,p {
-          font-size: 2rem;
-          color: #e5e0e0;
-          padding: 20px;
+            flex: 0.1;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            background-color: #ffdd57;
         }
 
         .div2 {
-          flex: 0.8;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          /* background-color: #fdd41dc2; */
-          /* background-color: #10a6c0; */
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .div2 img {
-          max-width: 100%;
-          max-height: 100%;
+            max-width: 100%;
+            max-height: 100%;
         }
 
         .div3 {
-          flex: 0.1;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          /* background-color: #0d899f; */
-          padding: 16px;
+            flex: 0.1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 16px;
         }
 
         .coin-section {
-          display: flex;
-          justify-content: right;
-          /* align-items: center; */
-          height: 20%;
-          /* background-color: #0d899f; */
-          border-radius: 8px;
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            height: 20%;
+            border-radius: 8px;
+            position: relative;
         }
 
-        .coin-section img,p {
-          height: 80px;
-          font-size: 30px;
-          font-family: "Open Sans";
-          font-weight: bold;
-          color: #0c0c0c;
-          padding: 15px;
+        .coin-section img, .coin-section p {
+            height: 80px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #0c0c0c;
+            padding: 15px;
+        }
+
+        .points-animation {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: green;
+            opacity: 0;
+            transition: opacity 0.5s, transform 1s;
+        }
+
+        .show-points {
+            opacity: 1;
+            transform: translateY(-20px);
         }
 
         .question-section {
@@ -131,6 +116,8 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
+            z-index: 10;
         }
 
         .question-section button {
@@ -146,55 +133,120 @@
             background-color: #0056b3;
         }
 
+        /* Fade Effect for Questions */
+        .fade-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none;
+        }
+
+        .fade-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         .logo-container {
-        position: absolute;
-        top: 10px;
-        right: 1px;
-        z-index: 1000;
+            position: absolute;
+            top: 10px;
+            right: 1px;
+            z-index: 1000;
         }
-        
+
         .logo {
-        width: 200px; 
-        height: auto;
+            width: 200px;
+            height: auto;
         }
-        
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #000;
+            color: #fff;
+            position:fixed;
+        }
+
+        .footer a {
+            color: #ffd700;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
-  <div class="header">
-      <h1>Granny and Daughter</h1>
-  </div>
-  <div class="logo-container">
-      <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
-  </div>
 
-  <!-- main section -->
-  <div class="containerd" style="margin-top: 12px;">
-    <div class="div1">
-      <span class="li">
-        <a href="logout/"><i class="fa fa-sign-out"></i></a>
-        <a href=""><i class="fa fa-arrow-left"></i></a>
-      </span>
-    </div>
-    <!-- Img will be shown here -->
-    <div class="div2">
-      <img src="{% static 'images/st1img.png' %}" style="Height:519px"> 
-    </div>
-    <div class="div3">
-      <div class="coin-section">
-        <img src="{% static 'icons/totalreward.png' %}" alt="">
-        <p>100</p>
-        <img src="{% static 'icons/reward.png' %}" alt="">
-        <p>20</p>
-      </div>
-      <div class="question-section">
-        <!-- Ques will ne here -->
-        <p style="color: #393434;">What should you eat?</p>   
-        <!-- Choice button will ne here -->
-        <button>Confirm</button>
-      </div>
-    </div>
-  </div>
-  <!-- end main section -->
+    <div class="fade-effect" id="fadeEffect"></div>
 
-  {% include "footer.html" %}
+    <div class="header">
+        <h1>{{ story_node.story_name }}</h1>
+    </div>
+
+    <div class="logo-container">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+    </div>
+
+    <!-- Main Section -->
+    <div class="containerd" style="margin-top: 12px;">
+        <div class="div1">
+            <span class="li">
+                <a href="{% url 'profile' %}">Profile</a>
+                {% if email %}
+                    <p>Welcome, {{ username }} ({{ email }})</p>
+                    <p>Your Points: {{ userpoints }}</p>
+                    <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <p>Please log in.</p>
+                {% endif %}
+            </span>
+        </div>
+
+        <!-- Image Display Section -->
+        <div class="div2">
+            <img src="{{ story_node.image_url }}" alt="Story Image" style="height:519px">
+        </div>
+
+        <!-- Question & Choice Section -->
+        <div class="div3">
+            <div class="coin-section">
+                <img src="{% static 'icons/totalreward.png' %}" alt="">
+                <p id="totalPoints">{{ user_total_points }}</p>
+                <span class="points-animation" id="pointsEarned">+10</span>
+                <img src="{% static 'icons/reward.png' %}" alt="">
+                <p id="sessionPoints">{{ user_session_points }}</p>
+            </div>
+            <div class="question-section" id="questionBox">
+                <p style="color: #393434;">{{ story_node.question }}</p>
+                {% if story_node.choices %}
+                    {% for choice, next_node in story_node.choices.items %}
+                        <a href="{% url 'handle_choice' story_id=story_id node_id=node_id %}?choice={{ choice }}">
+                            <button onclick="playSound('choice'); showFadeEffect(); animatePoints(10)">{{ choice }}</button>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <!-- <a href="{  % url 'story_node' story_id=story_id node_id=story_node.next %}"> -->
+                        <button onclick="playSound('choice')">Next</button>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Drive Sound Files -->
+    <audio id="pointGainSound" src="https://drive.google.com/uc?export=view&id=181TYWAR-5Mz50KQmXQQloqtIaz1jZPE0"></audio>
+    <audio id="choiceClickSound" src="https://drive.google.com/uc?export=view&id=1x8AJU_oBrI_IbhIya-VFyN3aZ2EqszNa"></audio>
+
+    <script>
+        function playSound(type) {
+            if (type === 'choice') document.getElementById("choiceClickSound").play();
+            else document.getElementById("pointGainSound").play();
+        }
+    </script>
+
+    {% include "footer.html" %}
+</body>
+</html>
