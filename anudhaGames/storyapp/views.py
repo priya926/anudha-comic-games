@@ -111,16 +111,29 @@ def logout(request):
 
 
 def storylist(request):
-    if "email" in request.session:  # Check if user is logged in
+    stories_ref = db.collection('stories')  # Get 'stories' collection
+    docs = stories_ref.get()  # Fetch all documents
+    stories = []
+    for doc in docs:
+        data = doc.to_dict()
+        story_id = doc.id
+        story_name = data.get('story_name', 'Unknown Story')
+        image = data['nodes'].get('1', {}).get('image_url', '')
+
+        print(f"Story: {story_name}, Image URL: {image}")  # Debugging output
+
+        stories.append({'id': story_id, 'story_name': story_name, 'image': image})
+
+    if "email" in request.session:
         user_email = request.session.get("email")
         username = request.session.get("username", "user")
         userpoints = request.session.get("userpoints", 0)
 
-        return render(request, "storylist.html", {"email": user_email, "username": username, "userpoints": userpoints})
+        return render(request, "storylist.html", {"stories": stories, "email": user_email, "username": username, "userpoints": userpoints})
     else:
         messages.error(request, "Please log in first.")
         return redirect("index")
-    
+   
 
 def story(request): 
     if "email" in request.session:  # Check if user is logged in

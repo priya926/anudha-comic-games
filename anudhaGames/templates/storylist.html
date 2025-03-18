@@ -83,7 +83,8 @@
 
         .card-title {
             padding: 10px;
-            font-size: 1.2em;
+            font-size: 1em;
+            /* font-size: 1.2em; */
             font-weight: bold;
             color: #333;
         }
@@ -131,31 +132,16 @@
             <p>Please log in.</p>
         {% endif %}
     </div>
+    {% for story in stories %}
+        <div class="container">
+            <a href="{% url 'story' story.id %}" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="https://drive.google.com/thumbnail?id=1fYonvNb_1yJuaOI_aUXvRzmBSNTaRqAz&sz=s1000" alt="{{ story.story_name }}">
+                <div class="card-title">{{ story.story_name }}</div>
+            </div>
+        </a>
+        <!-- <img src="https://drive.google.com/thumbnail?id=1fYonvNb_1yJuaOI_aUXvRzmBSNTaRqAz&sz=s4000" alt="{{ story.story_name }}"> -->
+        </div>
+    {% endfor %}
 
-    <div class="container">
-        <a href="{% url 'story' %}" style="text-decoration: none; color: inherit;">
-        <div class="card">
-            <img src="{% static 'images/st1img.png' %}" alt="Story 1">
-            <div class="card-title">Granny and Girl</div>
-        </div>
-         </a>
-         <a href="{% url 'story' %}" style="text-decoration: none; color: inherit;">
-        <div class="card">
-            <img src="{% static 'images/st2img.png' %}" alt="Story 2">
-            <div class="card-title">Fox and Crane</div>
-        </div>
-        </a>
-        <a href="{% url 'story' %}" style="text-decoration: none; color: inherit;">
-            <div class="card">
-                <img src="{% static 'images/st3img.png' %}" alt="Story 3">
-                <div class="card-title">The Thirsty Crow</div>
-            </div>
-        </a>
-        <a href="{% url 'story' %}" style="text-decoration: none; color: inherit;">
-            <div class="card">
-                <img src="{% static 'images/st4img.png' %}" alt="Story 4">
-                <div class="card-title">Preety Shoes</div>
-            </div>
-        </a>
-    </div>
     {% include "footer.html" %}
