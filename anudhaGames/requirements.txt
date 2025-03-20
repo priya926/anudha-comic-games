@@ -1,3 +1,5 @@
 pip install firebase-admin
 pip install django
+
+# To push data in firebase
 python import_json.py

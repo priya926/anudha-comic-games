@@ -1,35 +1,58 @@
 {
-    "Story1": {
-      "story_name": "Granny and Daughter",
-      "required_points": 0,
-      "nodes": {
-        "1": {
-          "image_url": "https://drive.google.com/uc?export=view&id=1fYonvNb_1yJuaOI_aUXvRzmBSNTaRqAz",
-          "next": "2"
-        },
-        "2": {
-          "image_url": "https://drive.google.com/uc?export=view&id=1QXl9vfcpu6JVXpaqRaJF3YWqjO3kBgLg",    
-          "question": "What should she eat?",
+  "Story2": {
+    "story_name": "Fox and Crane",
+    "required_points": 10,
+    "nodes": {
+      "1": {
+        "image_url": "https://drive.google.com/thumbnail?id=1aGwLP78rmrSES54bPGxaqMIqzlM6ToVi&sz=s1000",
+        "next": "2",
+        "order": 1
+      },
+
+      "2": {
+        "image_url": "https://drive.google.com/thumbnail?id=1hAh-exW0jx3J9xcAHr4sFY-x2sN2GO91&sz=s1000",    
+        "next": "3",
+        "order": 2
+      },
+
+      "3":{
+          "image_url": "https://drive.google.com/thumbnail?id=1s3KVMbgRSIxsGApiYYnyr-NccPCZs8Y6&sz=s1000",
+          "order": 3, 
+          "question": "In which she will serve?",
           "choices": {
-            "Healthyfood": "2st1",
-            "Junkfood": "2st2"
+            "Plate": "3st1",
+            "Pitcher": "3st2"
           }
-        },
-        "2st1":{
-            "image_url": "https://drive.google.com/uc?export=view&id=1cU1B9WHsWh28M9qmCKlNfT6YW98-YzYG", 
-            "next": "3",
-            "points": 10
-        },
-        "2st2":{
-            "image_url": "https://drive.google.com/uc?export=view&id=1Qha9JCCkP4MHHgpU7neKGEyHDsyJ7P-x",    
-            "next": "3",
-            "points": 5
-        },
-        "3": {
-          "image_url": "https://drive.google.com/uc?export=view&id=1izYE6LoUUiIcfKdBNwFiovx1sTnSb-Up"      
+      },
+      "3st1":{
+          "image_url": "https://drive.google.com/thumbnail?id=1PCI1Novv1OBJDp6BzzFfCE9DcCReXCL2&sz=s1000",    
+          "next": "4",
+          "order": 4,
+          "points": 10
+      },
+      "3st2":{
+          "image_url": "https://drive.google.com/thumbnail?id=1a4nOsHldQ8ACdfegWnFH218cwmRL0h25&sz=s1000",
+          "order": 4,  
+          "points": 5,  
+          "question": "Will cunning Fox use his brain?",
+          "choices": {
+            "YES": "3st21",
+            "NO": "4"
+          }
+      },
+      "3st21":{
+        "image_url": "https://drive.google.com/thumbnail?id=1Jqf8Rt8c-XYkZMlUx7WktiTboAwHJ92G&sz=s1000",    
+        "next": "4",
+        "order": 5,
+        "points": 20
+      },
+
+      "4":{
+        "image_url": "https://drive.google.com/thumbnail?id=1vwprO6jgcH_kjf_GIJe4km9-7vVl1kf4&sz=s1000",    
+        "order": 6
       }
     }
-    }
+  }
 }
 
 

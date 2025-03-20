@@ -139,6 +139,8 @@ def storylist(request):
         messages.error(request, "Please log in first.")
         return redirect("index")  
 
+
+
 def story(request, story_id, node_id="1"):  
     # Fetch all stories from Firestore
     stories_ref = db.collection("stories")  
@@ -214,9 +216,7 @@ def story(request, story_id, node_id="1"):
         return redirect("index")
 
 
-# def logout(request):
-#     logout(request)
-#     return JsonResponse({"Success":"User Logged out successfully!"})
+
 
 # @login_required
 def profile(request):
@@ -259,6 +259,7 @@ def story_selection(request):
     
     return render(request, "storylist.html", {"stories": stories, "user_points": user_points})
 
+
 def story_page(request, story_id, node_id="1"):
     user_id = request.session.get("user_id", "default_user")
     story_node, required_points = get_story_node(story_id, node_id)
@@ -283,6 +284,7 @@ def story_page(request, story_id, node_id="1"):
         "node_id": node_id,
         "user_points": user_points + points
     })
+
 
 def handle_choice(request, story_id, node_id):
     chosen_option = request.GET.get("choice")

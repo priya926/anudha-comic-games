@@ -132,16 +132,17 @@
             <p>Please log in.</p>
         {% endif %}
     </div>
-    {% for story in stories %}
         <div class="container">
-            <a href="{% url 'story' story.id story.node_id %}" style="text-decoration: none; color: inherit;">
-            <div class="card">
-                <img src="{{ story.image }}" alt="{{ story.story_name }}">
-                <div class="card-title">{{ story.story_name }}</div>
-            </div>
-        </a>
-        <!-- <img src="https://drive.google.com/thumbnail?id=1fYonvNb_1yJuaOI_aUXvRzmBSNTaRqAz&sz=s4000" alt="{{ story.story_name }}"> -->
+            {% for story in stories %}
+                <a href="{% url 'story' story.id story.node_id %}" style="text-decoration: none; color: inherit;">
+                <div class="card">
+                    <img src="{{ story.image }}" alt="{{ story.story_name }}">
+                    <div class="card-title">{{ story.story_name }}</div>
+                </div>
+                </a>
+                <!-- <img src="https://drive.google.com/thumbnail?id=1fYonvNb_1yJuaOI_aUXvRzmBSNTaRqAz&sz=s4000" alt="{{ story.story_name }}"> -->
+            {% endfor %}
         </div>
-    {% endfor %}
+    
 
     {% include "footer.html" %}
