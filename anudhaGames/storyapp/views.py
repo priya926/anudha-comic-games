@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .story import *
 from firebase_config import db
+import json
 
 
 def index(request):
@@ -118,14 +119,15 @@ def storylist(request):
         story_id = doc.id
         data = doc.to_dict()
         nodes = data.get('nodes', {})
-        first_node_id = next(iter(nodes), None)  # Get the first node key
-        print(f"** {first_node_id}")
+        # first_node_id = next(iter(nodes), None)  # Get the first node key
+        first_node_id = 1  # Get the first node key
+        # print(f"** {first_node_id}")
         story_name = data.get('story_name', 'Unknown Story')
         image = data['nodes'].get('1', {}).get('image_url', '')
 
         print(f"Story: {story_name}, Image URL: {image}")  # Debugging output
 
-        stories.append({'id': story_id, 'story_name': story_name, 'image': image})
+        stories.append({'id': story_id, 'story_name': story_name, 'image': image, 'node_id': first_node_id})
 
     if "email" in request.session:
         user_email = request.session.get("email")
@@ -135,55 +137,59 @@ def storylist(request):
         return render(request, "storylist.html", {"stories": stories, "email": user_email, "username": username, "userpoints": userpoints})
     else:
         messages.error(request, "Please log in first.")
-        return redirect("index")
-   
-def start_story(request, story_id):
-    story_ref = db.collection('Stories').document(story_id)
-    story_data = story_ref.get().to_dict()
-
-    if not story_data:
-        return render(request, 'error.html', {'message': 'Story not found'})
-
-    # Get the first node (assuming nodes are stored in a dictionary)
-    nodes = story_data.get('nodes', {})
-    first_node_id = next(iter(nodes), None)  # Get the first node key
-
-    if first_node_id:
-        return redirect('story', story_id=story_id, node_id=first_node_id)
-    else:
-        return render(request, 'error.html', {'message': 'No story content available'})   
+        return redirect("index")  
 
 def story(request, story_id, node_id="1"):  
-    if isinstance(story_id, list):  
-        story_id = story_id[0]  
+    # Fetch all stories from Firestore
+    stories_ref = db.collection("stories")  
+    docs = stories_ref.get()  
+    stories = []
 
-    # Fetch the story document from Firestore
-    story_ref = db.collection("stories")
-    story_data = story_ref.get()
-    print(f"data: {story_data}")
+    for doc in docs:
+        data = doc.to_dict()  # Convert document to dictionary
+        if "nodes" in data:
+            nodes_list = []
+            for key, value in data["nodes"].items():
+                order = value.get("order", float('inf'))  # Default order to infinity if missing
+                nodes_list.append((key, value, order))
+            nodes_list.sort(key=lambda x: x[2])  # Sort nodes by 'order'
+            sorted_nodes = {key: value for key, value, _ in nodes_list}
+            data["nodes"] = sorted_nodes
 
-    if not story_data.exists:
+        stories.append(data)  # Store modified data
+
+    # Fetch the specific story document
+    story_ref = db.collection("stories").document(story_id)
+    doc = story_ref.get()
+
+    if not doc.exists:
         messages.error(request, "Story not found.")
         return redirect("storylist")  
 
-    # Convert Firestore document to dictionary
-    story_content = story_data.to_dict()
-
-    # Retrieve all nodes
+    story_content = doc.to_dict()
     nodes = story_content.get("nodes", {})
+
+    # Ensure node_id is correct and exists in nodes
+    if node_id not in nodes:
+        messages.error(request, "Invalid story node.")
+        return redirect("storylist")
 
     # Get current node data
     current_node = nodes.get(node_id, {})
 
-    # Fetch story details
+    # Fetch story details safely
     story_name = story_content.get("story_name", "Unknown Story")
-    image = current_node.get("image_url", "")
-    question = current_node.get("question", None)
-    choices = current_node.get("choices", {})
+    image = current_node.get("image_url", "") if "image_url" in current_node else ""
+    question = current_node.get("question", next)
+    choices = current_node.get("choices", {}) if "choices" in current_node else {}
+    node_id = current_node.get("next")
 
-    # Determine next step
-    next_node_id = current_node.get("next", None)  # Direct next node
-    points = current_node.get("points", 0)  # Points for current choice (if any)
+    # Debugging: Print values to confirm correctness
+    # print(f"Story: {story_name}")
+    # print(f"Image URL: {image}")
+    # print(f"Question: {question}")
+    # print(f"Choices: {choices}")
+    # print(f"NextNode: {node_id}")
 
     context = {
         "story_id": story_id,
@@ -191,11 +197,12 @@ def story(request, story_id, node_id="1"):
         "image": image,
         "question": question,
         "choices": choices,
-        "next_node_id": next_node_id,
-        "points": points,  # Send points to HTML
+        "stories": stories,  # Pass sorted stories for reference
+        "node_id": node_id,
     }
 
-    if "email" in request.session:  # Check if user is logged in
+    # Check if user is logged in
+    if "email" in request.session:
         context.update({
             "email": request.session.get("email"),
             "username": request.session.get("username", "user"),
@@ -205,6 +212,7 @@ def story(request, story_id, node_id="1"):
     else:
         messages.error(request, "Please log in first.")
         return redirect("index")
+
 
 # def logout(request):
 #     logout(request)

@@ -29,7 +29,6 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
 
     path('storylist/', views.storylist, name='storylist'),
-    path('story/<str:story_id>/', views.start_story, name='story'),  # Handles only story_id
     path('story/<str:story_id>/<str:node_id>/', views.story, name='story'),
 
     # Story page - starts from the first node (default: img1)

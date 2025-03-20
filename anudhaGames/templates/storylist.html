@@ -134,9 +134,9 @@
     </div>
     {% for story in stories %}
         <div class="container">
-            <a href="{% url 'story' story.id %}" style="text-decoration: none; color: inherit;">
+            <a href="{% url 'story' story.id story.node_id %}" style="text-decoration: none; color: inherit;">
             <div class="card">
-                <img src="https://drive.google.com/thumbnail?id=1fYonvNb_1yJuaOI_aUXvRzmBSNTaRqAz&sz=s1000" alt="{{ story.story_name }}">
+                <img src="{{ story.image }}" alt="{{ story.story_name }}">
                 <div class="card-title">{{ story.story_name }}</div>
             </div>
         </a>

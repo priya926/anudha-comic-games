@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ story_node.story_name }}</title>
+    <title>{{ story.story_name }}</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
@@ -182,7 +182,7 @@
     <div class="fade-effect" id="fadeEffect"></div>
 
     <div class="header">
-        <h1>{{ story_node.story_name }}</h1>
+        <h1>{{ story_name }}</h1>
     </div>
 
     <div class="logo-container">
@@ -206,7 +206,7 @@
 
         <!-- Image Display Section -->
         <div class="div2">
-            <img src="{{ story_node.image_url }}" alt="Story Image" style="height:519px">
+            <img src="{{ image }}" alt="Story Image" style="height:519px">
         </div>
 
         <!-- Question & Choice Section -->
@@ -219,18 +219,24 @@
                 <p id="sessionPoints">{{ user_session_points }}</p>
             </div>
             <div class="question-section" id="questionBox">
-                <p style="color: #393434;">{{ story_node.question }}</p>
-                {% if story_node.choices %}
-                    {% for choice, next_node in story_node.choices.items %}
-                        <a href="{% url 'story_node' story_id=story_id node_id=next_node %}">
-                            <button onclick="playSound('choice'); showFadeEffect(); animatePoints(10)">{{ choice }}</button>
-                        </a>
-                    {% endfor %}
-                {% else %}
-                    {% if story_node.next %}
-                        <a href="{% url 'story_node' story_id=story_id node_id=story_node.next %}">
+                {% if not question %}
+                        <a href="{% url 'story' story_id node_id %}">
                             <button onclick="playSound('choice')">Next</button>
                         </a>
+                {% else %}
+                    <p style="color: #393434;">{{ question }}</p>
+                    {% if choices %}
+                        {% for choice, node_id in choices.items %}
+                            <a href="{% url 'story' story_id node_id %}">
+                                <button onclick="playSound('choice'); showFadeEffect(); animatePoints(10)">{{ choice }}</button>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        {% if next %}
+                            <a href="{% url 'story' story_id node_id %}">
+                                <button onclick="playSound('choice')">Next</button>
+                            </a>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
             </div>
