@@ -41,9 +41,7 @@
             flex: 1;
             flex-wrap: wrap;
             justify-content: center;
-            /* padding: 20px; */
             width: 100%;
-
         }
 
         .div1 {
@@ -164,12 +162,13 @@
             width: 200px;
             height: auto;
         }
+
         .footer {
             text-align: center;
             padding: 10px;
             background-color: #000;
             color: #fff;
-            position:fixed;
+            position: fixed;
         }
 
         .footer a {
@@ -223,29 +222,20 @@
                 <p style="color: #393434;">{{ story_node.question }}</p>
                 {% if story_node.choices %}
                     {% for choice, next_node in story_node.choices.items %}
-                        <a href="{% url 'handle_choice' story_id=story_id node_id=node_id %}?choice={{ choice }}">
+                        <a href="{% url 'story_node' story_id=story_id node_id=next_node %}">
                             <button onclick="playSound('choice'); showFadeEffect(); animatePoints(10)">{{ choice }}</button>
                         </a>
                     {% endfor %}
                 {% else %}
-                    <!-- <a href="{  % url 'story_node' story_id=story_id node_id=story_node.next %}"> -->
-                        <button onclick="playSound('choice')">Next</button>
-                    </a>
+                    {% if story_node.next %}
+                        <a href="{% url 'story_node' story_id=story_id node_id=story_node.next %}">
+                            <button onclick="playSound('choice')">Next</button>
+                        </a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
     </div>
-
-    <!-- Google Drive Sound Files -->
-    <audio id="pointGainSound" src="https://drive.google.com/uc?export=view&id=181TYWAR-5Mz50KQmXQQloqtIaz1jZPE0"></audio>
-    <audio id="choiceClickSound" src="https://drive.google.com/uc?export=view&id=1x8AJU_oBrI_IbhIya-VFyN3aZ2EqszNa"></audio>
-
-    <script>
-        function playSound(type) {
-            if (type === 'choice') document.getElementById("choiceClickSound").play();
-            else document.getElementById("pointGainSound").play();
-        }
-    </script>
 
     {% include "footer.html" %}
 </body>
