@@ -175,7 +175,28 @@
             color: #ffd700;
             text-decoration: none;
         }
+
+        .points-animation {
+        font-size: 1.5rem;
+        color: green;
+        animation: bounceFade 1s ease-in-out forwards;
+        display: none;
+        }
+        @keyframes bounceFade {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(-20px); opacity: 0; }
+        }
     </style>
+    
+<script>
+        function animatePoints(points) {
+        const el = document.getElementById('pointsEarned');
+        el.textContent = +${points};
+        el.style.display = 'inline-block';
+        setTimeout(() => el.style.display = 'none', 1000);
+    }
+</script>
 </head>
 <body>
 
@@ -228,8 +249,9 @@
                     {% if choices %}
                         {% for choice, node_id in choices.items %}
                             <a href="{% url 'story' story_id node_id %}">
-                                <button onclick="playSound('choice'); showFadeEffect(); animatePoints(10)">{{ choice }}</button>
-                            </a>
+                                <button onclick="playSound('choice'); animatePoints({{ user_session_points|safe }})">{{ choice }}</button>
+                                <audio id="coinSound" src="{% static 'sound/coin.mp3' %}"></audio>
+                                </a>
                         {% endfor %}
                     {% else %}
                         {% if next %}
@@ -246,3 +268,10 @@
     {% include "footer.html" %}
 </body>
 </html>
+<script>
+function playSound(type) {
+    if (type === 'choice') {
+        document.getElementById('coinSound').play();
+    }
+}
+</script>

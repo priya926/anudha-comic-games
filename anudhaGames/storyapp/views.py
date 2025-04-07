@@ -124,10 +124,12 @@ def storylist(request):
         # print(f"** {first_node_id}")
         story_name = data.get('story_name', 'Unknown Story')
         image = data['nodes'].get('1', {}).get('image_url', '')
+        r_points = data.get('required_points',0)
+        
 
         print(f"Story: {story_name}, Image URL: {image}")  # Debugging output
 
-        stories.append({'id': story_id, 'story_name': story_name, 'image': image, 'node_id': first_node_id})
+        stories.append({'id': story_id, 'story_name': story_name, 'image': image, 'node_id': first_node_id, 'required_points': r_points})
 
     if "email" in request.session:
         user_email = request.session.get("email")
@@ -140,80 +142,52 @@ def storylist(request):
         return redirect("index")  
 
 
+def story(request, story_id, node_id="1"):
+    if "user_id" not in request.session:
+        messages.error(request, "Please log in first.")
+        return redirect("index")
 
-def story(request, story_id, node_id="1"):  
-    # Fetch all stories from Firestore
-    stories_ref = db.collection("stories")  
-    docs = stories_ref.get()  
-    stories = []
+    user_id = request.session["user_id"]
 
-    for doc in docs:
-        data = doc.to_dict()  # Convert document to dictionary
-        if "nodes" in data:
-            nodes_list = []
-            for key, value in data["nodes"].items():
-                order = value.get("order", float('inf'))  # Default order to infinity if missing
-                nodes_list.append((key, value, order))
-            nodes_list.sort(key=lambda x: x[2])  # Sort nodes by 'order'
-            sorted_nodes = {key: value for key, value, _ in nodes_list}
-            data["nodes"] = sorted_nodes
-
-        stories.append(data)  # Store modified data
-
-    # Fetch the specific story document
     story_ref = db.collection("stories").document(story_id)
     doc = story_ref.get()
-
     if not doc.exists:
         messages.error(request, "Story not found.")
-        return redirect("storylist")  
+        return redirect("storylist")
 
     story_content = doc.to_dict()
     nodes = story_content.get("nodes", {})
 
-    # Ensure node_id is correct and exists in nodes
     if node_id not in nodes:
         messages.error(request, "Invalid story node.")
         return redirect("storylist")
 
-    # Get current node data
-    current_node = nodes.get(node_id, {})
+    current_node = nodes[node_id]
+    question = current_node.get("question", "")
+    image = current_node.get("image_url", "")
+    choices = current_node.get("choices", {})
+    next_node = current_node.get("next", None)
+    earned_points = current_node.get("points", 0)
 
-    # Fetch story details safely
-    story_name = story_content.get("story_name", "Unknown Story")
-    image = current_node.get("image_url", "") if "image_url" in current_node else ""
-    question = current_node.get("question", next)
-    choices = current_node.get("choices", {}) if "choices" in current_node else {}
-    node_id = current_node.get("next")
+    # Update user points
+    if earned_points > 0:
+        update_user_points(user_id, story_id, earned_points)
 
-    # Debugging: Print values to confirm correctness
-    # print(f"Story: {story_name}")
-    # print(f"Image URL: {image}")
-    # print(f"Question: {question}")
-    # print(f"Choices: {choices}")
-    # print(f"NextNode: {node_id}")
+    user_total_points = get_user_total_points(user_id)
+    user_story_points = get_user_story_points(user_id, story_id)
 
     context = {
         "story_id": story_id,
-        "story_name": story_name,
+        "story_name": story_content.get("story_name", ""),
         "image": image,
         "question": question,
         "choices": choices,
-        "stories": stories,  # Pass sorted stories for reference
-        "node_id": node_id,
+        "node_id": next_node,
+        "user_session_points": int(user_story_points or 0),
+        "user_total_points": int(user_total_points or 0),
     }
 
-    # Check if user is logged in
-    if "email" in request.session:
-        context.update({
-            "email": request.session.get("email"),
-            "username": request.session.get("username", "user"),
-            "userpoints": request.session.get("userpoints", 0),
-        })
-        return render(request, "story.html", context)
-    else:
-        messages.error(request, "Please log in first.")
-        return redirect("index")
+    return render(request, "story.html", context)
 
 
 
@@ -276,6 +250,7 @@ def story_page(request, story_id, node_id="1"):
     # Add points if the node has any
     points = story_node.get("points", 0)
     if points:
+        print(f"****** {points}")
         update_user_points(user_id, user_points + points)
 
     return render(request, "story.html", {

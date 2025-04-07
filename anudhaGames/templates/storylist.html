@@ -88,6 +88,43 @@
             font-weight: bold;
             color: #333;
         }
+        .locked-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* translucent dark */
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .card-wrapper:hover .locked-overlay {
+            opacity: 1;
+        }
+        
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
 
         .footer {
             text-align: center;
@@ -134,12 +171,24 @@
     </div>
         <div class="container">
             {% for story in stories %}
-                <a href="{% url 'story' story.id story.node_id %}" style="text-decoration: none; color: inherit;">
-                <div class="card">
-                    <img src="{{ story.image }}" alt="{{ story.story_name }}">
-                    <div class="card-title">{{ story.story_name }}</div>
-                </div>
-                </a>
+                {% if userpoints >= story.required_points %}
+                    <a href="{% url 'story' story.id story.node_id %}" style="text-decoration: none; color: inherit;">
+                    <div class="card">
+                        <img src="{{ story.image }}" alt="{{ story.story_name }}">
+                        <div class="card-title">{{ story.story_name }}</div>
+                    </div>
+                    </a>
+                {% else %}
+                    <div class="card-wrapper" onclick="handleLockedClick(event)">
+                        <div class="card">
+                            <div class="image-container">
+                                <img src="{{ story.image }}" alt="{{ story.story_name }}">
+                                <div class="locked-overlay">🔒 Story Locked</div>
+                            </div>
+                            <div class="card-title">{{ story.story_name }}</div>
+                        </div>
+                    </div>
+                {% endif %}
                 <!-- <img src="https://drive.google.com/thumbnail?id=1fYonvNb_1yJuaOI_aUXvRzmBSNTaRqAz&sz=s4000" alt="{{ story.story_name }}"> -->
             {% endfor %}
         </div>
