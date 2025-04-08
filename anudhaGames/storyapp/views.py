@@ -221,7 +221,7 @@ def profile(request):
             user_ref.update({"email": new_email})
 
             messages.success(request, "Profile updated successfully!")
-            return redirect("profile")
+            return redirect("storylist")
 
         except Exception as e:
             messages.error(request, f"Error updating profile: {str(e)}")
