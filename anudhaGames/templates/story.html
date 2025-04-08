@@ -95,7 +95,6 @@
             right: 10px;
             font-size: 24px;
             font-weight: bold;
-            color: green;
             opacity: 0;
             transition: opacity 0.5s, transform 1s;
         }
@@ -178,7 +177,6 @@
 
         .points-animation {
             font-size: 1.5rem;
-            color: green;
             animation: bounceFade 1s ease-in-out forwards;
             display: none;
             transition: transform 1s, opacity 0.5s;
@@ -242,7 +240,11 @@
             <div class="coin-section">
                 <img src="{% static 'icons/totalreward.png' %}" alt="">
                 <p id="totalPoints">{{ user_total_points }}</p>
-                <span class="points-animation" id="pointsEarned">{{ user_session_points }}</span>
+                {% if user_total_points >= 0 %}
+                    <span class="points-animation" style="color: green;" id="pointsEarned">{{ user_total_points }}</span>
+                {% else %}
+                    <span class="points-animation" style="color: red;"  id="pointsEarned">{{ user_total_points }}</span>
+                {% endif %}
                 <img src="{% static 'icons/reward.png' %}" alt="">
                 <p id="sessionPoints">{{ user_session_points }}</p>
             </div>
@@ -256,7 +258,7 @@
                     {% if choices %}
                         {% for choice, node_id in choices.items %}
                             <a href="{% url 'story' story_id node_id %}">
-                                <button onclick="playSound('choice'); animatePoints('{{ user_session_points }}')">{{ choice }}</button>
+                                <button onclick="playSound('choice'); animatePoints('{{ user_total_points }}')">{{ choice }}</button>
                                 <audio id="coinSound" src="{% static 'sound/coin.mp3' %}"></audio>
                                 </a>
                         {% endfor %}

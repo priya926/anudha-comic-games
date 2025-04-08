@@ -27,6 +27,16 @@ def get_user_total_points(user_id):
         return user_doc.to_dict().get("userpoints", 0)
     return 0
 
+def get_user_current_points(story_id, node_id):
+    user_ref = db.collection("stories").document(story_id)
+    user_doc = user_ref.get()
+    if user_doc.exists:
+        story_content = user_doc.to_dict()
+        nodes = story_content.get("nodes", {})
+        current_node = nodes[node_id]
+        return current_node.get("points", 0)
+    return 0
+
 def get_user_story_points(user_id, story_id):
     ref = db.collection("User").document(user_id).collection("stories").document(story_id)
     doc = ref.get()

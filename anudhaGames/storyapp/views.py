@@ -176,6 +176,7 @@ def story(request, story_id, node_id="1"):
 
     user_total_points = get_user_total_points(user_id)
     user_story_points = get_user_story_points(user_id, story_id)
+    current_points = get_user_current_points(story_id,node_id)               #for animation of coin
 
     context = {
         "story_id": story_id,
@@ -186,6 +187,7 @@ def story(request, story_id, node_id="1"):
         "node_id": next_node,
         "user_session_points": int(user_story_points or 0),
         "user_total_points": int(user_total_points or 0),
+        "current_points":current_points,
     }
 
     return render(request, "story.html", context)
