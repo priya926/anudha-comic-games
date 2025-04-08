@@ -21,7 +21,7 @@ def register(request):
         try:
             # Create user in Firebase Auth
             user = auth.create_user(email=email, password=password)
-            user_id = user.uid  # Get the unique Firebase user ID
+            zid = user.uid  # Get the unique Firebase user ID
             
             # Store user data in Firestore
             user_ref = db.collection("User").document(user_id)
@@ -168,9 +168,10 @@ def story(request, story_id, node_id="1"):
     choices = current_node.get("choices", {})
     next_node = current_node.get("next", None)
     earned_points = current_node.get("points", 0)
+    # print(f"****** {earned_points}")
 
     # Update user points
-    if earned_points > 0:
+    if earned_points:
         update_user_points(user_id, story_id, earned_points)
 
     user_total_points = get_user_total_points(user_id)
@@ -228,7 +229,7 @@ def profile(request):
 
 def story_selection(request):
     user_id = request.session.get("user_id", "default_user")
-    user_points = get_user_points(user_id)
+    user_points = get_user_total_points(user_id)
     stories = get_all_stories(user_points)
     
     return render(request, "storylist.html", {"stories": stories, "user_points": user_points})
@@ -241,7 +242,7 @@ def story_page(request, story_id, node_id="1"):
     if not story_node:
         return render(request, "error.html", {"message": "Story node not found."})
 
-    user_points = get_user_points(user_id)
+    user_points = get_user_total_points(user_id)
 
     # Ensure the user has enough points to view this story
     if user_points < required_points:
@@ -250,8 +251,7 @@ def story_page(request, story_id, node_id="1"):
     # Add points if the node has any
     points = story_node.get("points", 0)
     if points:
-        print(f"****** {points}")
-        update_user_points(user_id, user_points + points)
+        update_user_points(user_id, story_id, user_points + points)
 
     return render(request, "story.html", {
         "story_node": story_node,

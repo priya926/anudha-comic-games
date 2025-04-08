@@ -44,4 +44,4 @@ def update_user_points(user_id, story_id, earned_points):
     user_ref.update({"userpoints": user_total + earned_points})
     story_ref.set({"points": story_total + earned_points}, merge=True)
     user_ref = db.collection("User").document(user_id)
-    user_ref.update({"userpoints": points})
+    user_ref.update({"points": earned_points})

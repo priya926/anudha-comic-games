@@ -177,11 +177,13 @@
         }
 
         .points-animation {
-        font-size: 1.5rem;
-        color: green;
-        animation: bounceFade 1s ease-in-out forwards;
-        display: none;
+            font-size: 1.5rem;
+            color: green;
+            animation: bounceFade 1s ease-in-out forwards;
+            display: none;
+            transition: transform 1s, opacity 0.5s;
         }
+
         @keyframes bounceFade {
             0% { transform: translateY(0); opacity: 1; }
             50% { transform: translateY(-10px); }
@@ -189,14 +191,19 @@
         }
     </style>
     
-<script>
+    <script>
         function animatePoints(points) {
-        const el = document.getElementById('pointsEarned');
-        el.textContent = +${points};
-        el.style.display = 'inline-block';
-        setTimeout(() => el.style.display = 'none', 1000);
-    }
-</script>
+            const el = document.getElementById('pointsEarned');
+            el.textContent = points;
+            el.style.display = 'inline-block';
+            el.classList.add('show-points');
+    
+            setTimeout(() => {
+                el.classList.remove('show-points');
+                el.style.display = 'none';
+            }, 2000);
+        }
+    </script>    
 </head>
 <body>
 
@@ -235,7 +242,7 @@
             <div class="coin-section">
                 <img src="{% static 'icons/totalreward.png' %}" alt="">
                 <p id="totalPoints">{{ user_total_points }}</p>
-                <span class="points-animation" id="pointsEarned">+10</span>
+                <span class="points-animation" id="pointsEarned">{{ user_session_points }}</span>
                 <img src="{% static 'icons/reward.png' %}" alt="">
                 <p id="sessionPoints">{{ user_session_points }}</p>
             </div>
@@ -249,7 +256,7 @@
                     {% if choices %}
                         {% for choice, node_id in choices.items %}
                             <a href="{% url 'story' story_id node_id %}">
-                                <button onclick="playSound('choice'); animatePoints({{ user_session_points|safe }})">{{ choice }}</button>
+                                <button onclick="playSound('choice'); animatePoints('{{ user_session_points }}')">{{ choice }}</button>
                                 <audio id="coinSound" src="{% static 'sound/coin.mp3' %}"></audio>
                                 </a>
                         {% endfor %}
