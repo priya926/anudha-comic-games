@@ -221,7 +221,7 @@
                 <a href="{% url 'profile' %}">Profile</a>
                 {% if email %}
                     <p>Welcome, {{ username }} ({{ email }})</p>
-                    <p>Your Points: {{ userpoints }}</p>
+                    <p>Your Points: {{ user_total_points }}</p>
                     <a href="{% url 'logout' %}">Logout</a>
                 {% else %}
                     <p>Please log in.</p>

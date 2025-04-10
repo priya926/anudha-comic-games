@@ -163,7 +163,7 @@
         <a href="{% url 'profile' %}">Profile</a>
         {% if email %}
             <p>Welcome, {{ username }} ({{ email }})</p>
-            <p>Your Points: {{ userpoints }}</p>
+            <p>Your Points: {{ user_total_points }}</p>
             <a href="{% url 'logout' %}">Logout</a>
         {% else %}
             <p>Please log in.</p>
@@ -171,7 +171,7 @@
     </div>
         <div class="container">
             {% for story in stories %}
-                {% if userpoints >= story.required_points %}
+                {% if user_total_points >= story.required_points %}
                     <a href="{% url 'story' story.id story.node_id %}" style="text-decoration: none; color: inherit;">
                     <div class="card">
                         <img src="{{ story.image }}" alt="{{ story.story_name }}">

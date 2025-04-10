@@ -21,7 +21,7 @@ def register(request):
         try:
             # Create user in Firebase Auth
             user = auth.create_user(email=email, password=password)
-            zid = user.uid  # Get the unique Firebase user ID
+            user_id  = user.uid  # Get the unique Firebase user ID
             
             # Store user data in Firestore
             user_ref = db.collection("User").document(user_id)
@@ -135,8 +135,11 @@ def storylist(request):
         user_email = request.session.get("email")
         username = request.session.get("username", "user")
         userpoints = request.session.get("userpoints", 0)
+        user_id = request.session["user_id"]
 
-        return render(request, "storylist.html", {"stories": stories, "email": user_email, "username": username, "userpoints": userpoints})
+        user_total_points = get_user_total_points(user_id)
+
+        return render(request, "storylist.html", {"stories": stories, "email": user_email, "username": username, "userpoints": userpoints, "user_total_points": user_total_points})
     else:
         messages.error(request, "Please log in first.")
         return redirect("index")  
@@ -148,6 +151,7 @@ def story(request, story_id, node_id="1"):
         return redirect("index")
 
     user_id = request.session["user_id"]
+    user_email = request.session.get("email")
 
     story_ref = db.collection("stories").document(story_id)
     doc = story_ref.get()
@@ -188,6 +192,7 @@ def story(request, story_id, node_id="1"):
         "user_session_points": int(user_story_points or 0),
         "user_total_points": int(user_total_points or 0),
         "current_points":current_points,
+        "email": user_email,
     }
 
     return render(request, "story.html", context)
