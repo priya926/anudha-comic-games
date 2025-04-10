@@ -106,7 +106,6 @@
 
         .question-section {
             height: 98%;
-            background-color: #fefefe;
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 16px;
@@ -248,24 +247,24 @@
                 <img src="{% static 'icons/reward.png' %}" alt="">
                 <p id="sessionPoints">{{ user_session_points }}</p>
             </div>
-            <div class="question-section" id="questionBox">
+            <div class="question-section" style="background-image: url('/static/images/qbg3.png');background-size: cover;align-items: center;" id="questionBox">
                 {% if not question %}
                         <a href="{% url 'story' story_id node_id %}">
-                            <button onclick="playSound('choice')">Next</button>
+                            <button onclick="playSound('choice')" style="width: 200px; margin-top: 80%;">Next</button>
                         </a>
                 {% else %}
-                    <p style="color: #393434;">{{ question }}</p>
+                    <p style="color: #393434; background-color: #fefefe; padding: 12px; border-radius: 12%;">{{ question }}</p>
                     {% if choices %}
                         {% for choice, node_id in choices.items %}
                             <a href="{% url 'story' story_id node_id %}">
-                                <button onclick="playSound('choice'); animatePoints('{{ user_total_points }}')">{{ choice }}</button>
+                                <button onclick="playSound('choice'); animatePoints('{{ user_total_points }}')" style="width: 200px;">{{ choice }}</button>
                                 <audio id="coinSound" src="{% static 'sound/coin.mp3' %}"></audio>
                                 </a>
                         {% endfor %}
                     {% else %}
                         {% if next %}
                             <a href="{% url 'story' story_id node_id %}">
-                                <button onclick="playSound('choice')">Next</button>
+                                <button onclick="playSound('choice')" style="width: 200px; margin-top: 80%;">Next</button>
                             </a>
                         {% endif %}
                     {% endif %}
