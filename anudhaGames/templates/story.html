@@ -129,25 +129,19 @@
             background-color: #0056b3;
         }
 
-        /* Fade Effect for Questions */
-        .fade-effect {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 5;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            pointer-events: none;
+       /* Fade and blur effect for the image */
+        .fade-image {
+            opacity: 1;
+            filter: blur(4px);
+            transition: opacity 1s ease-in-out, filter 1s ease-in-out;
         }
 
-        .fade-active {
-            opacity: 1;
-            pointer-events: auto;
+        .unfade-image {
+            opacity: 1 !important;
+            filter: blur(0px);
+            transition: opacity 1s ease-in-out, filter 1s ease-in-out;
         }
+
 
         .logo-container {
             position: absolute;
@@ -203,9 +197,6 @@
     </script>    
 </head>
 <body>
-
-    <div class="fade-effect" id="fadeEffect"></div>
-
     <div class="header">
         <h1>{{ story_name }}</h1>
     </div>
@@ -274,6 +265,52 @@
     </div>
 
     {% include "footer.html" %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const image = document.querySelector('.div2 img');
+            const hasQuestion = document.querySelector('#questionBox p');
+    
+            // Only apply fade if a question exists
+            if (hasQuestion) {
+                setTimeout(() => {
+                    image.classList.add('fade-image');
+                }, 1000); // 1-second delay
+            }
+    
+            // Handle fade-in when a choice is selected
+            document.querySelectorAll('.question-section a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetUrl = link.href;
+    
+                    image.classList.remove('fade-image');
+                    image.classList.add('unfade-image');
+    
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 800);
+                });
+            });
+        });
+    </script>
+
+<script>
+    (function () {
+        // Push a fake state into history
+        history.pushState(null, "", location.href);
+
+        window.addEventListener("popstate", function (event) {
+            const confirmLeave = confirm("Going back will reset your progress. Are you sure you want to leave this story?");
+            if (confirmLeave) {
+                history.back(); // Let them go back
+            } else {
+                history.pushState(null, "", location.href); // Stay on the page
+            }
+        });
+    })();
+</script>
+
 </body>
 </html>
 <script>
