@@ -8,6 +8,11 @@ from django.contrib.auth.decorators import login_required
 from .story import *
 from firebase_config import db
 import json
+import random
+from django.contrib.auth import logout
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 
 def index(request):
@@ -41,37 +46,35 @@ def register(request):
     return render(request, "index.html")
 
 
-def login(request):
+@csrf_exempt  # Disable CSRF just for this token endpoint (since it's called via JS)
+def verify_token(request):
     if request.method == "POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-
         try:
-            user = auth.get_user_by_email(email)
-            # Fetch user details from Firestore
-            user_ref = db.collection("User").where("email", "==", email).stream()
-            user_data = None
-            for doc in user_ref:
-                user_data = doc.to_dict()
-                break  # Get the first matching user
-            
-            if user_data:
-                # Store user data in session
-                request.session["user_id"] = user.uid
-                request.session["email"] = user.email
-                request.session["username"] = user_data.get("username", "user")
-                request.session["userpoints"] = user_data.get("userpoints", 0)
+            data = json.loads(request.body)
+            id_token = data.get("token")
 
-                messages.success(request, "Login successful!")
-                return redirect("storylist")
-            else:
-                messages.error(request, "User not found in database.")
-                return redirect("index")
-        except:
-            messages.error(request, "Invalid credentials.")
-            return redirect("index")
+            #  Verify Firebase ID token
+            decoded_token = auth.verify_id_token(id_token)
+            uid = decoded_token["uid"]
+            email = decoded_token["email"]
 
-    return render(request, "index.html")
+            #  Get user data from Firestore
+            user_doc = db.collection("User").document(uid).get()
+            user_data = user_doc.to_dict() if user_doc.exists else {}
+
+            #  Set session
+            request.session["user_id"] = uid
+            request.session["email"] = email
+            request.session["username"] = user_data.get("username", "user")
+            request.session["userpoints"] = user_data.get("userpoints", 0)
+
+            return JsonResponse({"status": "success"})
+
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+
+    return JsonResponse({"status": "error", "message": "Invalid request"}, status=405)
+
 
 
 def contact(request):
@@ -105,10 +108,20 @@ def contact(request):
 
 
 # Logout View (Clears the session)
+
 def logout(request):
     request.session.flush()  # Clear session
-    messages.success(request,"Logged Out Successfully.")
-    return redirect('index')  # Redirect back to home 
+    messages = [
+        "Goodbye, little hero! The story world will miss you. See you soon! 🌟",
+        "Logging out... Your adventure is saved and your friends are waving goodbye! 👋✨",
+        "Thanks for playing! Rest up, adventurer — new stories await tomorrow! 🛏📖",
+        "You're leaving the storybook, but the magic will be here when you return! ✨🦄",
+        "Bye-bye! Your fairy pals say, 'Come back soon!' 🧚‍♀💫",
+        "Psst... even heroes need snack breaks. Come back after your cookie! 🍪🦸",
+        "Zzz... the story is sleeping now. It'll be ready for you next time! 😴📚"
+    ]
+    selected_msg = random.choice(messages)
+    return render(request, 'logout.html', {'logout_message': selected_msg})
 
 
 def storylist(request):
@@ -127,7 +140,7 @@ def storylist(request):
         r_points = data.get('required_points',0)
         
 
-        print(f"Story: {story_name}, Image URL: {image}")  # Debugging output
+        # print(f"Story: {story_name}, Image URL: {image}")  # Debugging output
 
         stories.append({'id': story_id, 'story_name': story_name, 'image': image, 'node_id': first_node_id, 'required_points': r_points})
 
@@ -240,33 +253,6 @@ def story_selection(request):
     stories = get_all_stories(user_points)
     
     return render(request, "storylist.html", {"stories": stories, "user_points": user_points})
-
-
-def story_page(request, story_id, node_id="1"):
-    user_id = request.session.get("user_id", "default_user")
-    story_node, required_points = get_story_node(story_id, node_id)
-
-    if not story_node:
-        return render(request, "error.html", {"message": "Story node not found."})
-
-    user_points = get_user_total_points(user_id)
-
-    # Ensure the user has enough points to view this story
-    if user_points < required_points:
-        return render(request, "error.html", {"message": "You need more points to access this story!"})
-
-    # Add points if the node has any
-    points = story_node.get("points", 0)
-    if points:
-        update_user_points(user_id, story_id, user_points + points)
-
-    return render(request, "story.html", {
-        "story_node": story_node,
-        "story_id": story_id,
-        "node_id": node_id,
-        "user_points": user_points + points
-    })
-
 
 def handle_choice(request, story_id, node_id):
     chosen_option = request.GET.get("choice")

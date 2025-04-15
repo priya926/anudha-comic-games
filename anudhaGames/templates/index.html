@@ -1,437 +1,444 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
+  {% load static %}
+  <!DOCTYPE html>
+  <html>
 
-<head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-  <title>Anudha stories</title>
-  <!-- Add Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script>
-    // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    <title>Anudha stories</title>
+    <!-- Add Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 
-    //  Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyAfWquAI5mtXuELXd2Fj3MjcSppErs73Lw",
-        authDomain: "anudhadb.firebaseapp.com",
-        projectId: "anudhadb",
-        storageBucket: "anudhadb.firebasestorage.app",
-        messagingSenderId: "14423870655",
-        appId: "1:14423870655:web:153c970dc37942cd0b8a0a"
-      };
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script>
+      // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
 
-    firebase.initializeApp(firebaseConfig);
+      //  Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyAfWquAI5mtXuELXd2Fj3MjcSppErs73Lw",
+          authDomain: "anudhadb.firebaseapp.com",
+          projectId: "anudhadb",
+          storageBucket: "anudhadb.firebasestorage.app",
+          messagingSenderId: "14423870655",
+          appId: "1:14423870655:web:153c970dc37942cd0b8a0a"
+        };
 
-    //  Register User
-    function registerUser() {
-      let email = document.getElementById("email").value;
-      let password = document.getElementById("password").value;
+      firebase.initializeApp(firebaseConfig);
 
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-          alert("Registration Successful!");
-          document.getElementById("exampleModalToggle1").style.display="None";
+      //  Register User
+      function registerUser() {
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            alert("Registration Successful!");
+            document.getElementById("exampleModalToggle1").style.display="None";
+        })
+        .catch((error) => {
+            alert(error.message);
+        });
+      }
+    </script>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
+    <!-- progress barstle -->
+    <link rel="stylesheet" href="css/css-circular-prog-bar.css">
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,600&display=swap" rel="stylesheet">
+    <!-- font wesome stylesheet -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- Custom styles for this template -->
+    <link href="{% static '/css/style.css' %}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/css-circular-prog-bar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <style>
+      .finger-paint-regular {
+        font-family: "Finger Paint", serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      .fontad{
+        font-family: "Open Sans";
+        font-weight: 400;
+        font-style: normal;
+        color: black;
+      }
+      .modal-dialog {
+        max-width: 600px; /* New width for default modal */
+      }
+      hr{
+          color:#fff;
+      }
+      .logo-container {
+      position: absolute;
+      top: 10px;
+      right: 1px;
+      z-index: 1000;
+    }
+    .logo {
+      width: 200px; 
+      height: auto;
+    }
+    </style>
+
+
+
+    <!-- Modalsss -->
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script>
+      var exampleModal = document.getElementById('exampleModal')
+      exampleModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        var recipient = button.getAttribute('data-bs-whatever')
+        // If necessary, you could initiate an AJAX request here
+        // and then do the updating in a callback.
+        //
+        // Update the modal's content.
+        var modalTitle = exampleModal.querySelector('.modal-title')
+        var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+        modalTitle.textContent = 'New message to ' + recipient
+        modalBodyInput.value = recipient
       })
-      .catch((error) => {
-          alert(error.message);
-      });
-    }
+    </script>
+    <!-- End Of Modalsss -->
+  </head>
 
-    // Login User
-    function login() {
-      let email = document.getElementById("email").value;
-      let password = document.getElementById("password").value;
-
-      firebase.auth().signInWithEmailAndPassword(email, password)
-      // .then((userCredential) => {
-      //     userCredential.user.getIdToken().then((idToken) => {
-      //         fetch('/verify-token/', {
-      //             method: 'POST',
-      //             headers: {
-      //                 'Content-Type': 'application/x-www-form-urlencoded',
-      //                 'X-CSRFToken': '{{ csrf_token }}'
-      //             },
-      //             body: 'id_token=' + idToken
-      //         })
-      //         .then(response => response.json())
-      //         .then(data => {
-      //             if (data.message) {
-      //                 alert("Login Successful!");
-      //                 window.location.href = '/';
-      //             } else {
-      //                 alert("Authentication failed");
-      //             }
-      //         });
-      //     });
-      // })
-      // .catch((error) => {
-      //     alert(error.message);
-      // });
-      .then((userCredential) => {
-          alert("Login Successful!");
-          document.getElementById("exampleModal").style.display = "none";
-      })
-      .catch((error) => {
-          alert(error.message);
-      });
-    }  
-  </script>
-
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
-  <!-- progress barstle -->
-  <link rel="stylesheet" href="css/css-circular-prog-bar.css">
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,600&display=swap" rel="stylesheet">
-  <!-- font wesome stylesheet -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <!-- Custom styles for this template -->
-  <link href="{% static '/css/style.css' %}" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
-
-  <link rel="stylesheet" href="css/css-circular-prog-bar.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-  <style>
-    .finger-paint-regular {
-      font-family: "Finger Paint", serif;
-      font-weight: 400;
-      font-style: normal;
-    }
-    .fontad{
-      font-family: "Open Sans";
-      font-weight: 400;
-      font-style: normal;
-      color: black;
-    }
-    .modal-dialog {
-      max-width: 600px; /* New width for default modal */
-    }
-    hr{
-        color:#fff;
-    }
-    .logo-container {
-    position: absolute;
-    top: 10px;
-    right: 1px;
-    z-index: 1000;
-   }
-  .logo {
-    width: 200px; 
-    height: auto;
-  }
-  </style>
-
-
-
-  <!-- Modalsss -->
-  <!-- CSS only -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-  <script>
-    var exampleModal = document.getElementById('exampleModal')
-    exampleModal.addEventListener('show.bs.modal', function (event) {
-      // Button that triggered the modal
-      var button = event.relatedTarget
-      // Extract info from data-bs-* attributes
-      var recipient = button.getAttribute('data-bs-whatever')
-      // If necessary, you could initiate an AJAX request here
-      // and then do the updating in a callback.
-      //
-      // Update the modal's content.
-      var modalTitle = exampleModal.querySelector('.modal-title')
-      var modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-      modalTitle.textContent = 'New message to ' + recipient
-      modalBodyInput.value = recipient
-    })
-    // function a1()
-    // {
-    //     alert("Registered successfully!!");
-    // }
-  </script>
-  <!-- End Of Modalsss -->
-</head>
-
-<body>
-  <div class="top_container">
-    <!-- header section strats -->
-    <header class="header_section">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="{% url 'index' %}">
-            <span class="finger-paint-regular" style="font-size: 45px;color: black;">
-              Anudha Stories
-            </span>
-          </a>
-          <div class="logo-container">
-            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-              <ul class="navbar-nav  ">
-                <li class="nav-item active">
-                  <a class="nav-link" href="index.html"> Home <span class="sr-only">(current)</span></a>
-                </li>
-              </ul>
-            </div> -->
-        </nav>
-      </div>
-    </header>
-    <section class="hero_section ">
-      <div class="hero-container container">
-        <div class="hero_detail-box">
-          <h1 class="finger-paint-regular" style="font-size: 40px;color: black;">
-            Lets read and play different stories!
-          </h1>
-          <p  class="fontad">
-            Fun Stories for Kids !!!<br>
-            Here you can play our classic stories with a little pinch of modern fun.
-          </p>
-          <div class="hero_btn-continer">
-            <form>
-              <div class="form-row ">
-              <div class="home-content__buttons">
-                <button type="button" class="call_to-btn btn_white-border" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">LOGIN</button>
-              </div>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="hero_img-container">
-          <div>
-            <img src="{% static 'images/hero.png' %}" alt="" class="img-fluid">
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <!-- end header section -->
-
-  <div class="common_style">
-
-    <!-- about section -->
-    <section class="about_section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="about_img-container">
-              <img src="{% static 'images/about.png' %}" alt="">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="about_detail-box">
-              <h5>
-                <b><u>About our App</u></b>            
-              </h5>
-              <p>
-                Anudha Games is a delightful app designed to entertain and engage kids through interactive comic games. 
-                Each story combines the magic of storytelling with playful, interactive challenges. 
-                Kids can immerse themselves in exciting tales, complete tasks, earn coins, and unlock new levels 
-                of fun-filled adventures.
-              </p>
-              <div class="">
-                <a href="" class="call_to-btn btn_white-border">
-                  Login to Explore !!
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- end about section -->
-
-    <!--  section -->
-    <section class="admission_section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="admission_detail-box">
-              <h5>
-                <b><u>Our Services</u></b>
-              </h5>
-              <p>
-                  1. Interactive Comic Stories<br>
-                  Dive into colorful and engaging comic-style stories featuring lovable characters and thrilling plots.<br><br>
-                  2. Playable Chapters<br>
-                  Actions in the game influence the progression of the story, making every choice exciting.<br><br>
-                  3. Rewards & Coins<br>
-                  Completing challenges earns kids coins as rewards.<br><br>
-                  4. Level Unlocking System<br>
-                  Once kids finish a story and earn enough coins, they can unlock the next level, which brings new stories and challenges.<br><br>
-                  5. Educational Value<br>
-                  Stories subtly incorporate moral lessons and learning opportunities.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="admission_img-container">
-              <img src="{% static 'images/admission.png' %}" alt="">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- contact section -->
-
-    <section class="contact_section ">
-
+  <body>
+    <div class="top_container">
+      <!-- header section strats -->
+      <header class="header_section">
         <div class="container">
-         
-          <div class="row">
-            <div class="col-md-6">
-              <div class="d-flex justify-content-center d-md-block">
-                <h5>
-                  <b><u>Contact</u></b>
-                </h5>
-              </div>
-              <form action="{% url 'contact' %}" method="POST">
-                {% csrf_token %}
-                <div class="contact_form-container">
-                  <div>
-                    <div>
-                      <input type="text" placeholder="Name" id="uname" name="uname" required>
-                    </div>
-                    <div>
-                      <input type="email" placeholder="Email" id="uemail" name="uemail" required>
-                    </div>
-                    <div>
-                      <input type="text" placeholder="Phone Number" id="phone_number" name="phone_number" required>
-                    </div>
-                    <div class="mt-5">
-                      <input type="text" placeholder="Message" id="message" name="message" required>
-                    </div>
-                    <div class="mt-5">
-                      <button type="submit">
-                        Send
-                      </button>
-                    </div>
-                  </div>
-    
+          <nav class="navbar navbar-expand-lg custom_nav-container ">
+            <a class="navbar-brand" href="{% url 'index' %}">
+              <span class="finger-paint-regular" style="font-size: 45px;color: black;">
+                Anudha Stories
+              </span>
+            </a>
+            <div class="logo-container">
+              <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </nav>
+        </div>
+      </header>
+      <section class="hero_section ">
+        <div class="hero-container container">
+          <div class="hero_detail-box">
+            <h1 class="finger-paint-regular" style="font-size: 40px;color: black;">
+              Lets read and play different stories!
+            </h1>
+            <p  class="fontad">
+              Fun Stories for Kids !!!<br>
+              Here you can play our classic stories with a little pinch of modern fun.
+            </p>
+            <div class="hero_btn-continer">
+              <form>
+                <div class="form-row ">
+                <div class="home-content__buttons">
+                  <button type="button" class="call_to-btn btn_white-border" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">LOGIN</button>
                 </div>
-    
+                </div>
               </form>
             </div>
+          </div>
+          <div class="hero_img-container">
+            <div>
+              <img src="{% static 'images/hero.png' %}" alt="" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- end header section -->
+
+    <div class="common_style">
+
+      <!-- about section -->
+      <section class="about_section">
+        <div class="container">
+          <div class="row">
             <div class="col-md-6">
-              <div class="contact_img-box">
-                <img src="{% static 'images/students.jpg' %}" alt="">
+              <div class="about_img-container">
+                <img src="{% static 'images/about.png' %}" alt="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="about_detail-box">
+                <h5>
+                  <b><u>About our App</u></b>            
+                </h5>
+                <p>
+                  Anudha Games is a delightful app designed to entertain and engage kids through interactive comic games. 
+                  Each story combines the magic of storytelling with playful, interactive challenges. 
+                  Kids can immerse themselves in exciting tales, complete tasks, earn coins, and unlock new levels 
+                  of fun-filled adventures.
+                </p>
+                <div class="">
+                  <a href="" class="call_to-btn btn_white-border">
+                    Login to Explore !!
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <!-- end contact section -->
-     
-    <!-- MODAL -->
-   <!-- USER LOGIN & REGISTRATION MODAL START -->
-  <!-- user modal1 LOGIN -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div style="background: #000000; color: #fff;" class="modal-content">
-        <div class="modal-header">
-          <h5 style="color: #fff; font-family:timesnewroman;" class="modal-title" id="exampleModalLabel">USER LOGIN</h5>
-          <!-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> -->
-        </div>
-        <div class="modal-body">
-          <!-- <form action="l ogin/" method="POST"> -->
-            <!-- <input type="hidden" id="id_token" name="id_token"> -->
-          <form method="POST" action="{% url 'login' %}">
-            {% csrf_token %}
-            <div class="mb-3">
-              <label for="user-email" class="col-form-label">Email-ID:</label>
-              <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email">
-            </div>
-            <div class="mb-3">
-              <label for="user-pass" class="col-form-label">Password:</label>
-              <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password">
-            </div>
-            <p>Don't have an account? <a href="#exampleModalToggle1" data-bs-toggle="modal" data-bs-dismiss="modal">Register Here!</a></p>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-secondary">Login</button>
-              <!-- <input type="submit" value="Login" class="btn btn-secondary"> -->
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-          </form>
-        </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end modal1 LOGIN -->
 
-  <!-- user modal2 REG -->
-  <div class="modal fade" id="exampleModalToggle1" tabindex="-1" aria-labelledby="exampleModalToggleLabel1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div style="background: #000000; color: #fff;" class="modal-content">
-        <div class="modal-header">
-          <h5 style="color: #fff; font-family:timesnewroman;" class="modal-title" id="exampleModalLabel">USER REGISTRATION</h5>
-          <!-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> -->
+
+      <!-- end about section -->
+
+      <!--  section -->
+      <section class="admission_section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="admission_detail-box">
+                <h5>
+                  <b><u>Our Services</u></b>
+                </h5>
+                <p>
+                    1. Interactive Comic Stories<br>
+                    Dive into colorful and engaging comic-style stories featuring lovable characters and thrilling plots.<br><br>
+                    2. Playable Chapters<br>
+                    Actions in the game influence the progression of the story, making every choice exciting.<br><br>
+                    3. Rewards & Coins<br>
+                    Completing challenges earns kids coins as rewards.<br><br>
+                    4. Level Unlocking System<br>
+                    Once kids finish a story and earn enough coins, they can unlock the next level, which brings new stories and challenges.<br><br>
+                    5. Educational Value<br>
+                    Stories subtly incorporate moral lessons and learning opportunities.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="admission_img-container">
+                <img src="{% static 'images/admission.png' %}" alt="">
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-            <form method="POST" action="{% url 'register' %}">
+      </section>
+
+      <!-- contact section -->
+
+      <section class="contact_section ">
+
+          <div class="container">
+          
+            <div class="row">
+              <div class="col-md-6">
+                <div class="d-flex justify-content-center d-md-block">
+                  <h5>
+                    <b><u>Contact</u></b>
+                  </h5>
+                </div>
+                <form action="{% url 'contact' %}" method="POST">
+                  {% csrf_token %}
+                  <div class="contact_form-container">
+                    <div>
+                      <div>
+                        <input type="text" placeholder="Name" id="uname" name="uname" required>
+                      </div>
+                      <div>
+                        <input type="email" placeholder="Email" id="uemail" name="uemail" required>
+                      </div>
+                      <div>
+                        <input type="text" placeholder="Phone Number" id="phone_number" name="phone_number" required>
+                      </div>
+                      <div class="mt-5">
+                        <input type="text" placeholder="Message" id="message" name="message" required>
+                      </div>
+                      <div class="mt-5">
+                        <button type="submit">
+                          Send
+                        </button>
+                      </div>
+                    </div>
+      
+                  </div>
+      
+                </form>
+              </div>
+              <div class="col-md-6">
+                <div class="contact_img-box">
+                  <img src="{% static 'images/students.jpg' %}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- end contact section -->
+      
+      <!-- MODAL -->
+    <!-- USER LOGIN & REGISTRATION MODAL START -->
+    <!-- user modal1 LOGIN -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div style="background: #000000; color: #fff;" class="modal-content">
+          <div class="modal-header">
+            <h5 style="color: #fff; font-family:timesnewroman;" class="modal-title" id="exampleModalLabel">USER LOGIN</h5>
+            <!-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> -->
+          </div>
+          <div class="modal-body">
+            <form id="firebaseLoginForm">
               {% csrf_token %}
               <div class="mb-3">
                 <label for="user-email" class="col-form-label">Email-ID:</label>
                 <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email">
-                
               </div>
               <div class="mb-3">
                 <label for="user-pass" class="col-form-label">Password:</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password">
               </div>
-              <p>Have an account? <a href="/">Login Here!</a></p>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-secondary">Register</button>
-              <!-- <input type="submit" value="Login" class="btn btn-secondary"> -->
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-              <!-- <input type="submit" value="Register" class="btn btn-secondary" onclick='registerUser();'> -->
+              <p>Don't have an account? <a href="#exampleModalToggle1" data-bs-toggle="modal" data-bs-dismiss="modal">Register Here!</a></p>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" id="loginButton">Login</button>
+                <!-- <input type="submit" value="Login" class="btn btn-secondary"> -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
             </form>
+          </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<!-- end modal2 REG -->
-<!-- END USER LOGIN & REGISTRATION MODAL -->
-    <!-- END MODAL -->
+    <!-- end modal1 LOGIN -->
 
-  <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      Copyright &copy; 2025 | Design & Development Team | Made with ❤️ by Anudha    
-    </p>
-    <!-- <div class="bottom-right-content"> -->
-      
-  </section>
-  <!-- footer section -->
-   
-<!-- JavaScript Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
-</body>
-</html>
+    <!-- user modal2 REG -->
+    <div class="modal fade" id="exampleModalToggle1" tabindex="-1" aria-labelledby="exampleModalToggleLabel1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div style="background: #000000; color: #fff;" class="modal-content">
+          <div class="modal-header">
+            <h5 style="color: #fff; font-family:timesnewroman;" class="modal-title" id="exampleModalLabel">USER REGISTRATION</h5>
+            <!-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button> -->
+          </div>
+          <div class="modal-body">
+              <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="user-email" class="col-form-label">Email-ID:</label>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email">
+                  
+                </div>
+                <div class="mb-3">
+                  <label for="user-pass" class="col-form-label">Password:</label>
+                  <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password" minlength="6">
+                </div>
+                <p>Have an account? <a href="/">Login Here!</a></p>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary">Register</button>
+                <!-- <input type="submit" value="Login" class="btn btn-secondary"> -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+                <!-- <input type="submit" value="Register" class="btn btn-secondary" onclick='registerUser();'> -->
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+      const auth = firebase.auth();
+    
+      // Handle Login
+      document.getElementById("firebaseLoginForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+    
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const loginButton = document.getElementById("loginButton");
+    
+        loginButton.disabled = true;
+    
+        auth.signInWithEmailAndPassword(email, password)
+          .then((userCredential) => userCredential.user.getIdToken())
+          .then((idToken) => {
+            return fetch("/verify-token/", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ token: idToken }),
+            });
+          })
+          .then((response) => {
+            if (response.ok) {
+              window.location.href = "/storylist/";
+            } else {
+              throw new Error("Oops! Something went wrong. Please try again later.");
+            }
+          })
+          .catch((error) => {
+            loginButton.disabled = false;
+            showModalError("Hmm... we couldn't log you in. Check your credentials and try again.");
+          });
+      });
+    
+      // Show error inside modal with a friendlier message
+      function showModalError(message) {
+        let err = document.getElementById("modalErrorText");
+        if (!err) {
+          err = document.createElement("p");
+          err.id = "modalErrorText";
+          err.style.color = "#e74c3c";  // Soft red color for errors
+          err.style.fontSize = "14px";
+          err.style.marginTop = "10px";
+          err.style.fontFamily = "Arial, sans-serif";
+          err.style.fontWeight = "500";
+          err.style.textAlign = "center";
+          document.querySelector("#firebaseLoginForm").prepend(err);
+        }
+        err.innerText = message;
+      }
+    </script>
+
+
+
+  <!-- end modal2 REG -->
+  <!-- END USER LOGIN & REGISTRATION MODAL -->
+      <!-- END MODAL -->
+
+    <!-- footer section -->
+    <section class="container-fluid footer_section">
+      <p>
+        Copyright &copy; 2025 | Design & Development Team | Made with ❤️ by Anudha    
+      </p>
+      <!-- <div class="bottom-right-content"> -->
+        
+    </section>
+    <!-- footer section -->
+    
+  <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+  </body>
+  </html>
