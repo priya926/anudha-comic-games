@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logging Out</title>
+    <meta http-equiv="refresh" content="6; url={% url 'index' %}">
+    <style>
+        body {
+            background: #fff5e5;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            padding-top: 100px;
+            color: #333;
+        }
+
+        .message-box {
+            background-color: #fff1c1;
+            padding: 40px;
+            border-radius: 20px;
+            margin: auto;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <h2>{{ logout_message }}</h2>
+        <p>Redirecting to home...</p>
+    </div>
+</body>
+</html>

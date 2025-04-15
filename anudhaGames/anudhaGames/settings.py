@@ -80,6 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'anudhaGames.wsgi.application'
 
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 

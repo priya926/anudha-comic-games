@@ -155,6 +155,54 @@
             height: auto;
         }
 
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-box {
+            background: #fff5e6;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            max-width: 350px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .modal-box p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .modal-box .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn.confirm {
+            background-color: #ff5e5e;
+            color: white;
+        }
+
+        .btn.cancel {
+            background-color: #57d17a;
+            color: white;
+        }
+
         .footer {
             text-align: center;
             padding: 10px;
@@ -264,6 +312,15 @@
         </div>
     </div>
 
+    <!-- Custom Back Button Modal -->
+<div id="backModal" class="modal-overlay">
+    <div class="modal-box">
+        <p>Wait! Fairies are still writing your next scene! 📜 Wanna stay a bit longer? 🧙‍♂</p>
+        <button onclick="confirmBack(true)" class="btn confirm">Yes, go back</button>
+        <button onclick="confirmBack(false)" class="btn cancel">No, stay here!</button>
+    </div>
+</div>
+
     {% include "footer.html" %}
 
     <script>
@@ -297,17 +354,25 @@
 
 <script>
     (function () {
-        // Push a fake state into history
+        let goingBack = false;
+
+        history.pushState(null, "", location.href);
         history.pushState(null, "", location.href);
 
-        window.addEventListener("popstate", function (event) {
-            const confirmLeave = confirm("Going back will reset your progress. Are you sure you want to leave this story?");
-            if (confirmLeave) {
-                history.back(); // Let them go back
-            } else {
-                history.pushState(null, "", location.href); // Stay on the page
+        window.addEventListener("popstate", function () {
+            if (!goingBack) {
+                document.getElementById("backModal").style.display = "flex";
+                history.pushState(null, "", location.href); // trap again
             }
         });
+
+        window.confirmBack = function (confirmLeave) {
+            document.getElementById("backModal").style.display = "none";
+            if (confirmLeave) {
+                goingBack = true;
+                history.go(-3); // skip the 3 fake entries
+            }
+        }
     })();
 </script>
 
