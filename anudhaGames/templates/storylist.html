@@ -34,7 +34,7 @@
             font-family: "Finger Paint", serif;
             text-align: center;
             font-weight: 400;
-            background-color: #ffdd57;
+            background-color: #e8f48c;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -148,10 +148,24 @@
         width: 200px; 
         height: auto;
         }
+
+        .side-container{
+            position: absolute;
+            top: 10px;
+            left: 1px;
+            z-index: 1000; 
+        }
         
     </style>
 </head>
 <body>
+    <div class="side-container">
+        {% if email %}
+            <p align="left">Welcome, {{ username }} <br> Your Points: {{ user_total_points }}</p>
+        {% else %}
+            <p>Please log in.</p>
+        {% endif %}
+    </div>
     <div class="header">
         <h1>Anudha Stories</h1>
         <h4>Lets Explore....</h4>
@@ -160,10 +174,8 @@
         <!-- <a href="l ogout/"><i class="fa fa-sign-out"></i></a> -->
         <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
         <br>
-        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'profile' %}">Profile</a> | 
         {% if email %}
-            <p>Welcome, {{ username }} ({{ email }})</p>
-            <p>Your Points: {{ user_total_points }}</p>
             <a href="{% url 'logout' %}">Logout</a>
         {% else %}
             <p>Please log in.</p>

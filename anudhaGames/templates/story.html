@@ -30,7 +30,8 @@
             font-family: "Finger Paint", serif;
             text-align: center;
             font-weight: 400;
-            background-color: #ffdd57;
+            background-color: #e8f48c
+            ;
             padding: 35px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             flex:100;
@@ -49,7 +50,8 @@
             padding: 20px;
             display: flex;
             justify-content: center;
-            background-color: #ffdd57;
+            background-color: #e8f48c
+            ;
         }
 
         .div2 {
@@ -246,7 +248,8 @@
 </head>
 <body>
     <div class="header">
-        <h1>{{ story_name }}</h1>
+        <!-- <h1>{{ story_name }}</h1> -->
+        <h1 style="color: #000;">{{ story_name }}</h1>
     </div>
 
     <div class="logo-container">
@@ -256,7 +259,8 @@
     <!-- Main Section -->
     <div class="containerd" style="margin-top: 12px;">
         <div class="div1">
-            <span class="li">
+            <!-- <span class="li"> -->
+            <span class="li" style="color: #000;">
                 <a href="{% url 'profile' %}">Profile</a>
                 {% if email %}
                     <p>Welcome, {{ username }} ({{ email }})</p>
@@ -286,7 +290,7 @@
                 <img src="{% static 'icons/reward.png' %}" alt="">
                 <p id="sessionPoints">{{ user_session_points }}</p>
             </div>
-            <div class="question-section" style="background-image: url('/static/images/qbg3.png');background-size: cover;align-items: center;" id="questionBox">
+            <div class="question-section" style="background-image: url('/static/images/qbg2.png');background-size: cover;align-items: center;" id="questionBox">
                 {% if not question %}
                         <a href="{% url 'story' story_id node_id %}">
                             <button onclick="playSound('choice')" style="width: 200px; margin-top: 80%;">Next</button>
