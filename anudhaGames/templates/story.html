@@ -1,391 +1,479 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ story.story_name }}</title>
+    {% load static %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ story.story_name }}</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
-    <!-- Fonts & Styles -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap">
-    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
-    <link rel="stylesheet" href="{% static '/css/responsive.css' %}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- Bootstrap Core CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
+        <!-- Fonts & Styles -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap">
+        <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+        <link rel="stylesheet" href="{% static '/css/responsive.css' %}" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: "Open Sans";
-            background-color: #fffbea;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            transition: background 0.5s ease-in-out;
-        }
+        <!-- Add this in your <head> tag -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-        .header {
-            font-family: "Finger Paint", serif;
-            text-align: center;
-            font-weight: 400;
-            background-color: #e8f48c
-            ;
-            padding: 35px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            flex:100;
-        }
+        <style>
+            body {
+                margin: 0;
+                font-family: "Open Sans";
+                background-color: #fffbea;
+                color: #333;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                transition: background 0.5s ease-in-out;
+            }
 
-        .containerd {
-            display: flex;
-            flex: 1;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
-        }
+            .header {
+                font-family: "Finger Paint", serif;
+                text-align: center;
+                font-weight: 400;
+                background-color: #e8f48c
+                ;
+                padding: 35px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                flex:100;
+            }
 
-        .div1 {
-            flex: 0.1;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            background-color: #e8f48c
-            ;
-        }
+            .containerd {
+                display: flex;
+                flex: 1;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+            }
 
-        .div2 {
-            flex: 0.8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+            .div1 {
+                flex: 0.1;
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+                background-color: #e8f48c
+                ;
+            }
 
-        .div2 img {
-            max-width: 100%;
-            max-height: 100%;
-        }
+            .div2 {
+                flex: 0.8;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-        .div3 {
-            flex: 0.1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 16px;
-        }
+            .div2 img {
+                max-width: 100%;
+                max-height: 100%;
+            }
 
-        .coin-section {
-            display: flex;
-            justify-content: right;
-            align-items: center;
-            height: 20%;
-            border-radius: 8px;
-            position: relative;
-        }
+            .div3 {
+                flex: 0.1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 16px;
+            }
 
-        .coin-section img, .coin-section p {
-            height: 80px;
-            font-size: 30px;
-            font-weight: bold;
-            color: #0c0c0c;
-            padding: 15px;
-        }
+            .coin-section {
+                display: flex;
+                justify-content: right;
+                align-items: center;
+                height: 20%;
+                border-radius: 8px;
+                position: relative;
+            }
 
-        .points-animation {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            font-size: 24px;
-            font-weight: bold;
-            opacity: 0;
-            transition: opacity 0.5s, transform 1s;
-        }
+            .coin-section img, .coin-section p {
+                height: 80px;
+                font-size: 30px;
+                font-weight: bold;
+                color: #0c0c0c;
+                padding: 15px;
+            }
 
-        .show-points {
-            opacity: 1;
-            transform: translateY(-20px);
-        }
+            .points-animation {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                font-size: 24px;
+                font-weight: bold;
+                opacity: 0;
+                transition: opacity 0.5s, transform 1s;
+            }
 
-        .question-section {
-            height: 98%;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            z-index: 10;
-        }
+            .show-points {
+                opacity: 1;
+                transform: translateY(-20px);
+            }
 
-        .question-section button {
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+            .question-section {
+                height: 98%;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                position: relative;
+                z-index: 10;
+            }
 
-        .question-section button:hover {
-            background-color: #0056b3;
-        }
+            .question-section button {
+                padding: 8px 16px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
 
-       /* Fade and blur effect for the image */
-        .fade-image {
-            opacity: 1;
-            filter: blur(4px);
-            transition: opacity 1s ease-in-out, filter 1s ease-in-out;
-        }
+            .question-section button:hover {
+                background-color: #0056b3;
+            }
 
-        .unfade-image {
-            opacity: 1 !important;
-            filter: blur(0px);
-            transition: opacity 1s ease-in-out, filter 1s ease-in-out;
-        }
+        /* Fade and blur effect for the image */
+            .fade-image {
+                opacity: 1;
+                filter: blur(4px);
+                transition: opacity 1s ease-in-out, filter 1s ease-in-out;
+            }
+
+            .unfade-image {
+                opacity: 1 !important;
+                filter: blur(0px);
+                transition: opacity 1s ease-in-out, filter 1s ease-in-out;
+            }
 
 
-        .logo-container {
-            position: absolute;
-            top: 10px;
-            right: 1px;
-            z-index: 1000;
-        }
+            .logo-container {
+                position: absolute;
+                top: 10px;
+                right: 1px;
+                z-index: 1000;
+            }
 
-        .logo {
-            width: 200px;
-            height: auto;
-        }
+            .logo {
+                width: 200px;
+                height: auto;
+            }
 
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
+            .modal-overlay {
+                position: fixed;
+                top: 0; left: 0;
+                width: 100vw; height: 100vh;
+                background: rgba(0,0,0,0.5);
+                backdrop-filter: blur(5px);
+                display: none;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
 
-        .modal-box {
-            background: #fff5e6;
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-            max-width: 350px;
-            font-family: 'Poppins', sans-serif;
-        }
+            .modal-box {
+                background: #fff5e6;
+                border-radius: 12px;
+                padding: 24px;
+                text-align: center;
+                box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+                max-width: 350px;
+                font-family: 'Poppins', sans-serif;
+            }
 
-        .modal-box p {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #444;
-        }
+            .modal-box p {
+                font-size: 18px;
+                margin-bottom: 20px;
+                color: #444;
+            }
 
-        .modal-box .btn {
-            padding: 10px 20px;
-            margin: 5px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+            .modal-box .btn {
+                padding: 10px 20px;
+                margin: 5px;
+                font-weight: bold;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 16px;
+            }
 
-        .btn.confirm {
-            background-color: #ff5e5e;
-            color: white;
-        }
+            .btn.confirm {
+                background-color: #ff5e5e;
+                color: white;
+            }
 
-        .btn.cancel {
-            background-color: #57d17a;
-            color: white;
-        }
+            .btn.cancel {
+                background-color: #57d17a;
+                color: white;
+            }
 
-        .footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #000;
-            color: #fff;
-            position: fixed;
-        }
+            .footer {
+                text-align: center;
+                padding: 10px;
+                background-color: #000;
+                color: #fff;
+                position: fixed;
+            }
 
-        .footer a {
-            color: #ffd700;
-            text-decoration: none;
-        }
+            .footer a {
+                color: #ffd700;
+                text-decoration: none;
+            }
 
-        .points-animation {
-            font-size: 1.5rem;
-            animation: bounceFade 1s ease-in-out forwards;
-            display: none;
-            transition: transform 1s, opacity 0.5s;
-        }
+            .points-animation {
+                font-size: 1.5rem;
+                animation: bounceFade 1s ease-in-out forwards;
+                display: none;
+                transition: transform 1s, opacity 0.5s;
+            }
 
-        @keyframes bounceFade {
-            0% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(-20px); opacity: 0; }
-        }
-    </style>
-    
-    <script>
-        function animatePoints(points) {
-            const el = document.getElementById('pointsEarned');
-            el.textContent = points;
-            el.style.display = 'inline-block';
-            el.classList.add('show-points');
-    
-            setTimeout(() => {
-                el.classList.remove('show-points');
-                el.style.display = 'none';
-            }, 2000);
-        }
-    </script>    
-</head>
-<body>
-    <div class="header">
-        <!-- <h1>{{ story_name }}</h1> -->
-        <h1 style="color: #000;">{{ story_name }}</h1>
-    </div>
+            @keyframes bounceFade {
+                0% { transform: translateY(0); opacity: 1; }
+                50% { transform: translateY(-10px); }
+                100% { transform: translateY(-20px); opacity: 0; }
+            }
 
-    <div class="logo-container">
-        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
-    </div>
+            .messages-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+            }
 
-    <!-- Main Section -->
-    <div class="containerd" style="margin-top: 12px;">
-        <div class="div1">
-            <!-- <span class="li"> -->
-            <span class="li" style="color: #000;">
-                <a href="{% url 'profile' %}">Profile</a>
-                {% if email %}
-                    <p>Welcome, {{ username }} ({{ email }})</p>
-                    <p>Your Points: {{ user_total_points }}</p>
-                    <a href="{% url 'logout' %}">Logout</a>
-                {% else %}
-                    <p>Please log in.</p>
-                {% endif %}
-            </span>
+            .message {
+                position: relative;
+                background-color: #d9edf7;
+                color: #31708f;
+                padding: 12px 20px 12px 15px;
+                margin-bottom: 10px;
+                border: 1px solid #bce8f1;
+                border-radius: 8px;
+                font-size: 16px;
+                min-width: 250px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                transition: all 0.3s ease;
+            }
+
+            .message.success {
+                background-color: #dff0d8;
+                color: #3c763d;
+                border-color: #d6e9c6;
+            }
+
+            .message.error {
+                background-color: #f2dede;
+                color: #a94442;
+                border-color: #ebccd1;
+            }
+
+            .close-btn {
+                position: absolute;
+                top: 5px;
+                right: 10px;
+                font-size: 20px;
+                font-weight: bold;
+                color: #555;
+                cursor: pointer;
+            }
+
+            .close-btn:hover {
+                color: #000;
+            }
+
+        </style>
+        
+        <script>
+            function animatePoints(points) {
+                const el = document.getElementById('pointsEarned');
+                el.textContent = points;
+                el.style.display = 'inline-block';
+                el.classList.add('show-points');
+        
+                setTimeout(() => {
+                    el.classList.remove('show-points');
+                    el.style.display = 'none';
+                }, 2000);
+            }
+        </script>    
+    </head>
+    <body>
+        <div class="header">
+            <!-- <h1>{{ story_name }}</h1> -->
+            <h1 style="color: #000;">{{ story_name }}</h1>
         </div>
 
-        <!-- Image Display Section -->
-        <div class="div2">
-            <img src="{{ image }}" alt="Story Image" style="height:519px">
+        <div class="logo-container">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
         </div>
 
-        <!-- Question & Choice Section -->
-        <div class="div3">
-            <div class="coin-section">
-                <img src="{% static 'icons/totalreward.png' %}" alt="">
-                <p id="totalPoints">{{ user_total_points }}</p>
-                {% if user_total_points >= 0 %}
-                    <span class="points-animation" style="color: green;" id="pointsEarned">{{ user_total_points }}</span>
-                {% else %}
-                    <span class="points-animation" style="color: red;"  id="pointsEarned">{{ user_total_points }}</span>
-                {% endif %}
-                <img src="{% static 'icons/reward.png' %}" alt="">
-                <p id="sessionPoints">{{ user_session_points }}</p>
-            </div>
-            <div class="question-section" style="background-image: url('/static/images/qbg2.png');background-size: cover;align-items: center;" id="questionBox">
-                {% if not question %}
-                        <a href="{% url 'story' story_id node_id %}">
-                            <button onclick="playSound('choice')" style="width: 200px; margin-top: 80%;">Next</button>
-                        </a>
-                {% else %}
-                    <p style="color: #393434; background-color: #fefefe; padding: 12px; border-radius: 12%;">{{ question }}</p>
-                    {% if choices %}
-                        {% for choice, node_id in choices.items %}
-                            <a href="{% url 'story' story_id node_id %}">
-                                <button onclick="playSound('choice'); animatePoints('{{ user_total_points }}')" style="width: 200px;">{{ choice }}</button>
-                                <audio id="coinSound" src="{% static 'sound/coin.mp3' %}"></audio>
-                                </a>
-                        {% endfor %}
+        <!-- Main Section -->
+        <div class="containerd" style="margin-top: 12px;">
+            <div class="div1">
+                <!-- <span class="li"> -->
+                <span class="li" style="color: #000;">
+                    <a href="{% url 'profile' %}">Profile</a>
+                    {% if email %}
+                        <p>Welcome, {{ username }} ({{ email }})</p>
+                        <p>Your Points: {{ user_total_points }}</p>
+                        <a href="{% url 'logout' %}">Logout</a>
                     {% else %}
-                        {% if next %}
+                        <p>Please log in.</p>
+                    {% endif %}
+                </span>
+            </div>
+
+            <!-- Image Display Section -->
+            <div class="div2">
+                <img src="{{ image }}" alt="Story Image" style="height:519px">
+            </div>
+
+            <!-- Question & Choice Section -->
+            <div class="div3">
+                <div class="coin-section">
+                    <img src="{% static 'icons/totalreward.png' %}" alt="">
+                    <p id="totalPoints">{{ user_total_points }}</p>
+                    {% if user_total_points >= 0 %}
+                        <span class="points-animation" style="color: green;" id="pointsEarned">{{ user_total_points }}</span>
+                    {% else %}
+                        <span class="points-animation" style="color: red;"  id="pointsEarned">{{ user_total_points }}</span>
+                    {% endif %}
+                    <img src="{% static 'icons/reward.png' %}" alt="">
+                    <p id="sessionPoints">{{ user_session_points }}</p>
+                </div>
+
+                <div class="question-section" style="background-image: url('/static/images/qbg2.png');background-size: cover;align-items: center;" id="questionBox">
+                    {% if not question %}
                             <a href="{% url 'story' story_id node_id %}">
                                 <button onclick="playSound('choice')" style="width: 200px; margin-top: 80%;">Next</button>
                             </a>
+                    {% else %}
+                        <p style="color: #393434; background-color: #fefefe; padding: 12px; border-radius: 12%;">{{ question }}</p>
+                        {% if choices %}
+                            {% for choice, node_id in choices.items %}
+                                <a href="{% url 'story' story_id node_id %}">
+                                    <button onclick="playSound('choice'); animatePoints('{{ user_total_points }}')" style="width: 200px;">{{ choice }}</button>
+                                    <audio id="coinSound" src="{% static 'sound/coin.mp3' %}"></audio>
+                                    </a>
+                            {% endfor %}
+                        {% else %}
+                            {% if next %}
+                                <a href="{% url 'story' story_id node_id %}">
+                                    <button onclick="playSound('choice')" style="width: 200px; margin-top: 80%;">Next</button>
+                                </a>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
-                {% endif %}
+                </div>
             </div>
+        </div>
+
+        <!-- Custom Back Button Modal -->
+    <div id="backModal" class="modal-overlay">
+        <div class="modal-box">
+            <p>Wait! Fairies are still writing your next scene! 📜 Wanna stay a bit longer? 🧙‍♂</p>
+            <button onclick="confirmBack(true)" class="btn confirm">Yes, go back</button>
+            <button onclick="confirmBack(false)" class="btn cancel">No, stay here!</button>
         </div>
     </div>
 
-    <!-- Custom Back Button Modal -->
-<div id="backModal" class="modal-overlay">
-    <div class="modal-box">
-        <p>Wait! Fairies are still writing your next scene! 📜 Wanna stay a bit longer? 🧙‍♂</p>
-        <button onclick="confirmBack(true)" class="btn confirm">Yes, go back</button>
-        <button onclick="confirmBack(false)" class="btn cancel">No, stay here!</button>
-    </div>
-</div>
+        {% include "footer.html" %}
 
-    {% include "footer.html" %}
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const image = document.querySelector('.div2 img');
-            const hasQuestion = document.querySelector('#questionBox p');
-    
-            // Only apply fade if a question exists
-            if (hasQuestion) {
-                setTimeout(() => {
-                    image.classList.add('fade-image');
-                }, 1000); // 1-second delay
-            }
-    
-            // Handle fade-in when a choice is selected
-            document.querySelectorAll('.question-section a').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetUrl = link.href;
-    
-                    image.classList.remove('fade-image');
-                    image.classList.add('unfade-image');
-    
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const image = document.querySelector('.div2 img');
+                const hasQuestion = document.querySelector('#questionBox p');
+        
+                // Only apply fade if a question exists
+                if (hasQuestion) {
                     setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 800);
+                        image.classList.add('fade-image');
+                    }, 1000); // 1-second delay
+                }
+        
+                // Handle fade-in when a choice is selected
+                document.querySelectorAll('.question-section a').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetUrl = link.href;
+        
+                        image.classList.remove('fade-image');
+                        image.classList.add('unfade-image');
+        
+                        setTimeout(() => {
+                            window.location.href = targetUrl;
+                        }, 800);
+                    });
                 });
             });
-        });
+        </script>
+
+    <script>
+        (function () {
+            let goingBack = false;
+
+            history.pushState(null, "", location.href);
+            history.pushState(null, "", location.href);
+
+            window.addEventListener("popstate", function () {
+                if (!goingBack) {
+                    document.getElementById("backModal").style.display = "flex";
+                    history.pushState(null, "", location.href); // trap again
+                }
+            });
+
+            window.confirmBack = function (confirmLeave) {
+                document.getElementById("backModal").style.display = "none";
+                if (confirmLeave) {
+                    goingBack = true;
+                    history.go(-3); // skip the 3 fake entries
+                }
+            }
+        })();
     </script>
 
-<script>
-    (function () {
-        let goingBack = false;
+    {% if messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+        </script>   
+                {% for message in messages %}
+                <script>
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Hey!!!',
+                        text: '{{ message|escapejs|safe }}',
+                        confirmButtonText: 'Okay 👌',
+                        confirmButtonColor: '#00c9a7',
+                        background: '#fffbea',
+                        color: '#333',
+                        backdrop: `
+                        rgba(0,0,0,0.4)
+                        center center
+                        no-repeat
+                        `,
+                        showClass: {
+                            popup: 'animate_animated animate_fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate_animated animate_fadeOutUp'
+                        }
+                    });
+                </script>    
+                {% endfor %}
+        <script> 
+            });
+        </script>
+    {% endif %}
 
-        history.pushState(null, "", location.href);
-        history.pushState(null, "", location.href);
 
-        window.addEventListener("popstate", function () {
-            if (!goingBack) {
-                document.getElementById("backModal").style.display = "flex";
-                history.pushState(null, "", location.href); // trap again
-            }
-        });
+    </body>
 
-        window.confirmBack = function (confirmLeave) {
-            document.getElementById("backModal").style.display = "none";
-            if (confirmLeave) {
-                goingBack = true;
-                history.go(-3); // skip the 3 fake entries
-            }
+    </html>
+    <script>
+    function playSound(type) {
+        if (type === 'choice') {
+            document.getElementById('coinSound').play();
         }
-    })();
-</script>
-
-</body>
-</html>
-<script>
-function playSound(type) {
-    if (type === 'choice') {
-        document.getElementById('coinSound').play();
     }
-}
-</script>
+    </script>

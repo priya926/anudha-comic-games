@@ -55,3 +55,13 @@ def update_user_points(user_id, story_id, earned_points):
     story_ref.set({"points": story_total + earned_points}, merge=True)
     user_ref = db.collection("User").document(user_id)
     user_ref.update({"points": earned_points})
+
+def get_all_choices_from_story(story_id):
+    story_ref = db.collection("stories").document(story_id)
+    story_data = story_ref.get().to_dict()
+    all_choices = []
+    for node in story_data.get("nodes", {}).values():
+        for choice_key, choice_val in node.get("choices", {}).items():
+            if choice_val.get("points") > 0:  # Only include choices with points
+                all_choices.append(choice_key)
+    return all_choices    
