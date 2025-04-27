@@ -135,19 +135,21 @@
                 background-color: #0056b3;
             }
 
-        /* Fade and blur effect for the image */
-            .fade-image {
-                opacity: 1;
-                filter: blur(4px);
-                transition: opacity 1s ease-in-out, filter 1s ease-in-out;
+            .blur-effect {
+                filter: blur(5px);
+                transition: filter 0.3s ease;
             }
 
-            .unfade-image {
-                opacity: 1 !important;
-                filter: blur(0px);
-                transition: opacity 1s ease-in-out, filter 1s ease-in-out;
+            /* Soft Flash Animation */
+            @keyframes softFlash {
+            0% { background-color: rgba(255, 255, 200, 0.6); }
+            50% { background-color: rgba(255, 255, 255, 0); }
+            100% { background-color: rgba(255, 255, 255, 0); }
             }
 
+            /* .flash-effect {
+            animation: softFlash 0.8s ease forwards;
+            } */
 
             .logo-container {
                 position: absolute;
@@ -235,7 +237,7 @@
                 100% { transform: translateY(-20px); opacity: 0; }
             }
 
-            .messages-container {
+            /* .messages-container {
                 position: fixed;
                 top: 20px;
                 right: 20px;
@@ -280,7 +282,7 @@
 
             .close-btn:hover {
                 color: #000;
-            }
+            } */
 
         </style>
         
@@ -323,7 +325,6 @@
                     {% endif %}
                 </span>
             </div>
-
             <!-- Image Display Section -->
             <div class="div2">
                 <img src="{{ image }}" alt="Story Image" style="height:519px">
@@ -340,13 +341,14 @@
                         <span class="points-animation" style="color: red;"  id="pointsEarned">{{ user_total_points }}</span>
                     {% endif %}
                     <img src="{% static 'icons/reward.png' %}" alt="">
+                    <!-- <img id="rewardGif" src="{% static 'images/coinflip.gif' %}" alt="Reward Given" style="width:100px;height:100px;"> -->
                     <p id="sessionPoints">{{ user_session_points }}</p>
                 </div>
 
                 <div class="question-section" style="background-image: url('/static/images/qbg2.png');background-size: cover;align-items: center;" id="questionBox">
                     {% if not question %}
                             <a href="{% url 'story' story_id node_id %}">
-                                <button onclick="playSound('choice')" style="width: 200px; margin-top: 80%;">Next</button>
+                                <button onclick="playSound('choice');" style="width: 200px; margin-top: 80%;">Next</button>
                             </a>
                     {% else %}
                         <p style="color: #393434; background-color: #fefefe; padding: 12px; border-radius: 12%;">{{ question }}</p>
@@ -378,36 +380,46 @@
         </div>
     </div>
 
-        {% include "footer.html" %}
+    {% include "footer.html" %}
 
         <script>
             document.addEventListener("DOMContentLoaded", () => {
-                const image = document.querySelector('.div2 img');
-                const hasQuestion = document.querySelector('#questionBox p');
-        
-                // Only apply fade if a question exists
-                if (hasQuestion) {
-                    setTimeout(() => {
-                        image.classList.add('fade-image');
-                    }, 1000); // 1-second delay
-                }
-        
-                // Handle fade-in when a choice is selected
-                document.querySelectorAll('.question-section a').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const targetUrl = link.href;
-        
-                        image.classList.remove('fade-image');
-                        image.classList.add('unfade-image');
-        
-                        setTimeout(() => {
-                            window.location.href = targetUrl;
-                        }, 800);
-                    });
+                const header = document.querySelector('.header');
+                const sidebar = document.querySelector('.div1');
+                const questionBox = document.getElementById('questionBox');
+
+                // Find all choice buttons (but ignore "Next" buttons)
+                const choiceLinks = Array.from(document.querySelectorAll('.question-section a')).filter(link => {
+                    const buttonText = link.querySelector('button')?.innerText?.trim().toLowerCase();
+                    return buttonText !== 'next'; // only keep non-Next buttons
                 });
+
+                if (choiceLinks.length > 0) {
+                    // Blur header and sidebar when real choices are there
+                    header.classList.add('blur-effect');
+                    sidebar.classList.add('blur-effect');
+
+                    choiceLinks.forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const targetUrl = link.href;
+
+                            // Remove blur
+                            header.classList.remove('blur-effect');
+                            sidebar.classList.remove('blur-effect');
+
+                            // Add soft flash effect
+                            header.classList.add('flash-effect');
+                            sidebar.classList.add('flash-effect');
+
+                            setTimeout(() => {
+                                window.location.href = targetUrl;
+                            }, 500);
+                        });
+                    });
+                }
             });
-        </script>
+    </script>
 
     <script>
         (function () {
@@ -441,7 +453,7 @@
                 <script>
                     Swal.fire({
                         icon: 'info',
-                        title: 'Hey!!!',
+                        title: 'No Reward!!!',
                         text: '{{ message|escapejs|safe }}',
                         confirmButtonText: 'Okay 👌',
                         confirmButtonColor: '#00c9a7',
@@ -467,13 +479,13 @@
     {% endif %}
 
 
-    </body>
+</body>
 
-    </html>
+</html>
     <script>
-    function playSound(type) {
-        if (type === 'choice') {
-            document.getElementById('coinSound').play();
+        function playSound(type) {
+            if (type === 'choice') {
+                document.getElementById('coinSound').play();
+            }
         }
-    }
     </script>
