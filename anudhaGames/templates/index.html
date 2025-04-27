@@ -101,6 +101,51 @@
       width: 200px; 
       height: auto;
     }
+    .messages-container {
+        position: fixed;
+        top: 90px;
+        right: 20px;
+        z-index: 9999;
+    }
+    .message {
+        position: relative;
+        background-color: #d9edf7;
+        color: #31708f;
+        padding: 12px 20px 12px 15px;
+        margin-bottom: 10px;
+        border: 1px solid #bce8f1;
+        border-radius: 8px;
+        font-size: 16px;
+        min-width: 250px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+    }
+
+    .message.success {
+        background-color: #dff0d8;
+        color: #3c763d;
+        border-color: #d6e9c6;
+    }
+
+    .message.error {
+        background-color: #f2dede;
+        color: #a94442;
+        border-color: #ebccd1;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #555;
+        cursor: pointer;
+    }
+
+    .close-btn:hover {
+        color: #000;
+    }
     </style>
 
 
@@ -169,6 +214,16 @@
                 </div>
               </form>
             </div>
+            {% if messages %}
+              <div class="messages-container">
+                {% for message in messages %}
+                  <div class="message {{ message.tags }}">
+                    <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
           </div>
           <div class="hero_img-container">
             <div>
@@ -297,7 +352,7 @@
           </div>
         </section>
         <!-- end contact section -->
-      
+
       <!-- MODAL -->
     <!-- USER LOGIN & REGISTRATION MODAL START -->
     <!-- user modal1 LOGIN -->

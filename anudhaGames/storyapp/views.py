@@ -155,7 +155,7 @@ def storylist(request):
 
         return render(request, "storylist.html", {"stories": stories, "email": user_email, "username": username, "userpoints": userpoints, "user_total_points": user_total_points})
     else:
-        messages.error(request, "Please loggggg in first.")
+        # messages.error(request, "Please log in first.")
         return redirect("index")  
 
 
@@ -295,7 +295,7 @@ def reset_story(request, story_id):
     user_story_doc = user_story_ref.get()
 
     if not user_story_doc.exists:
-        messages.error(request, "Story not found.")
+        # messages.error(request, "Story not found.")
         return redirect("storylist")
 
     user_story_data = user_story_doc.to_dict()

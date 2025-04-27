@@ -155,7 +155,56 @@
             left: 1px;
             z-index: 1000; 
         }
-        
+        .messages-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        }
+        .message {
+            position: relative;
+            background-color: #d9edf7;
+            color: #31708f;
+            padding: 12px 20px 12px 15px;
+            margin-bottom: 10px;
+            border: 1px solid #bce8f1;
+            border-radius: 8px;
+            font-size: 16px;
+            min-width: 250px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .message.success {
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+
+        .message.warning {
+            background-color: #f2dede;
+            color: #a94442;
+            border-color: #ebccd1;
+        }
+
+        .message.error {
+            background-color: #f2dede;
+            color: #fff86c;
+            border-color: #ebccd1;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
     </style>
 </head>
 <body>
@@ -182,6 +231,17 @@
         {% endif %}
     </div>
         <div class="container">
+            {% if messages %}
+                <div class="messages-container">
+                    {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             {% for story in stories %}
                 {% if user_total_points >= story.required_points %}
                     <a href="{% url 'story' story.id story.node_id %}" style="text-decoration: none; color: inherit;">
@@ -204,6 +264,6 @@
                 <!-- <img src="https://drive.google.com/thumbnail?id=1fYonvNb_1yJuaOI_aUXvRzmBSNTaRqAz&sz=s4000" alt="{{ story.story_name }}"> -->
             {% endfor %}
         </div>
-    
+
 
     {% include "footer.html" %}
