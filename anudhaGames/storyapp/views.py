@@ -238,6 +238,7 @@ def story(request, story_id, node_id="1"):
         "email": user_email,
     }
     return render(request, "story.html", context)
+
 # @login_required
 def profile(request):
     user_id = request.session.get("user_id")  # Get logged-in user ID
@@ -264,7 +265,7 @@ def profile(request):
             user_ref.update({"email": new_email})
 
             messages.success(request, "Profile updated successfully!")
-            return redirect("storylist")
+            return redirect("index")
 
         except Exception as e:
             messages.error(request, f"Error updating profile: {str(e)}")
