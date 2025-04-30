@@ -539,21 +539,23 @@ a:focus {
 /* footer section*/
 
 
-.footer_section {
-  background-color: #000;
-  height: 50px; /* Reduced the height */
-  width: 100%;
-  padding: 5px 0; /* Reduced the padding */
-  padding: 10px;
-  font-family: 'Poppins', sans-serif;
-}
-
+/* .footer_section {
+  background-color: #000; */
+  /* Reduced the height */
+  /* height: 50px; 
+  /* width: 100%; */
+  /* Reduced the padding */
+  /* padding: 5px 0; */
+  /* padding: 10px; */
+  /* font-family: 'Poppins', sans-serif; */
+/* } */
+/* 
 .footer_section p {
   color: #fdfdfe;
   margin: 0;
   text-align: center;
   text-decoration: none;
-}
+} */
 
 
 
