@@ -3,3 +3,16 @@ pip install django
 
 # To push data in firebase
 python import_json.py
+
+ <!-- whenever you want to stop the program in between ,just insert onclick="checkSomething" -->
+        <!-- <script>
+            function checkSomething() {
+                if (/* your error condition */ true) {
+                    alert("Error! Cannot continue!");
+                    return false; // ⛔ STOP link
+                }
+                return true; // ✅ Allow link
+            }
+        </script> -->
+
+ print(f"** Helloooo")       

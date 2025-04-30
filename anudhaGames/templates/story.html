@@ -285,20 +285,31 @@
             } */
 
         </style>
-        
         <script>
             function animatePoints(points) {
-                const el = document.getElementById('pointsEarned');
-                el.textContent = points;
-                el.style.display = 'inline-block';
-                el.classList.add('show-points');
-        
-                setTimeout(() => {
-                    el.classList.remove('show-points');
-                    el.style.display = 'none';
-                }, 2000);
+            const coin = document.getElementById('pointsEarned');
+            const rewardImage = document.getElementById('rewardImage');
+            const coinSound = document.getElementById('coinSound');
+
+            // Show the coin animation (GIF)
+            coin.style.display = 'inline';
+            
+            // Change reward image to coinflip gif
+            rewardImage.style.display = 'none';  // Hide PNG
+            coin.src = coin.src;  // Reload the gif (forces restart)
+
+            // Play the sound
+            if (coinSound) {
+                coinSound.play();
             }
-        </script>    
+
+            // After 2 seconds, hide the coin and show the PNG again
+            setTimeout(() => {
+                coin.style.display = 'none';  // Hide GIF
+                rewardImage.style.display = 'inline';  // Show PNG again
+            }, 2000); // Hide GIF after 2 seconds
+        }
+        </script>
     </head>
     <body>
         <div class="header">
@@ -335,13 +346,8 @@
                 <div class="coin-section">
                     <img src="{% static 'icons/totalreward.png' %}" alt="">
                     <p id="totalPoints">{{ user_total_points }}</p>
-                    {% if user_total_points >= 0 %}
-                        <span class="points-animation" style="color: green;" id="pointsEarned">{{ user_total_points }}</span>
-                    {% else %}
-                        <span class="points-animation" style="color: red;"  id="pointsEarned">{{ user_total_points }}</span>
-                    {% endif %}
-                    <img src="{% static 'icons/reward.png' %}" alt="">
-                    <!-- <img id="rewardGif" src="{% static 'images/coinflip.gif' %}" alt="Reward Given" style="width:100px;height:100px;"> -->
+                    <img id="pointsEarned" src="{% static 'images/coinflip.gif' %}" alt="Reward Given" style="width:80px;height:100px; display: none;">  <!-- Hidden initially -->
+                    <img id="rewardImage" src="{% static 'icons/reward.png' %}" alt="">
                     <p id="sessionPoints">{{ user_session_points }}</p>
                 </div>
 
@@ -355,7 +361,7 @@
                         {% if choices %}
                             {% for choice, node_id in choices.items %}
                                 <a href="{% url 'story' story_id node_id %}">
-                                    <button onclick="playSound('choice'); animatePoints('{{ user_total_points }}')" style="width: 200px;">{{ choice }}</button>
+                                    <button onclick="playSound('choice'); animatePoints('{{ e_points }}')" style="width: 200px;">{{ choice }}</button>
                                     <audio id="coinSound" src="{% static 'sound/coin.mp3' %}"></audio>
                                     </a>
                             {% endfor %}

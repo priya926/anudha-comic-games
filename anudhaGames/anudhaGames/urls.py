@@ -42,4 +42,8 @@ urlpatterns = [
 
     path('contact/', views.contact, name='contact'),
     path("profile/", views.profile, name="profile"),
+
+    path('check_story_status/<str:story_id>/<str:node_id>/', views.check_story_status, name='check_story_status'),
+    path('reset_story_points/<str:story_id>/<str:node_id>/', views.reset_story_points, name='reset_story_points'),
+
 ]

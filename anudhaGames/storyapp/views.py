@@ -169,11 +169,13 @@ def story(request, story_id, node_id="1"):
     if not user_id:
         messages.error(request, "Please log in first.")
         return redirect("index")
+    print(f"** Byeeee1")
     
     story_ref = db.collection("stories").document(story_id)
     story_doc = story_ref.get()
     if not story_doc.exists:
         messages.error(request, "Story not found.")
+        print(f"** Byeeee2")
         return redirect("storylist")
 
     story_content = story_doc.to_dict()
@@ -181,18 +183,23 @@ def story(request, story_id, node_id="1"):
 
     if node_id not in nodes:
         # messages.error(request, "Invalid story node.")
+        print(f"** Byeeee3")
+        print(node_id)
         return redirect("storylist")
+
+    print(f"** Byeeee4")
 
     current_node = nodes[node_id]
     question = current_node.get("question", "")
     image = current_node.get("image_url", "")
     choices = current_node.get("choices", {})
     next_node = current_node.get("next", None)
+    e_points = current_node.get("points", 0)
 
     user_story_ref = db.collection("User").document(user_id).collection("stories").document(story_id)
     user_story_doc = user_story_ref.get()
     user_story_content = user_story_doc.to_dict() if user_story_doc.exists else {}
-
+    
     choices_rewarded = user_story_content.get("choices_rewarded", [])
 
     #### 🛠 Find choice_id based on which choice led here ####
@@ -236,6 +243,7 @@ def story(request, story_id, node_id="1"):
         "user_total_points": int(user_total_points or 0),
         "current_points": current_points,
         "email": user_email,
+        "e_points":int(e_points or 0),
     }
     return render(request, "story.html", context)
 
@@ -280,6 +288,7 @@ def story_selection(request):
     
     return render(request, "storylist.html", {"stories": stories, "user_points": user_points})
 
+
 def handle_choice(request, story_id, node_id):
     chosen_option = request.GET.get("choice")
     story_node, _ = get_story_node(story_id, node_id)
@@ -290,32 +299,59 @@ def handle_choice(request, story_id, node_id):
     next_node = story_node["choices"].get(chosen_option, "1")
     return redirect("story", story_id=story_id, node_id=next_node)
 
-def reset_story(request, story_id):
-    user_id = request.session["user_id"]
-    user_story_ref = db.collection("User").document(user_id).collection("stories").document(story_id)
+
+
+def check_story_status(request, story_id,node_id):
+    print(f"** Helloooo")
+    user_id = request.session.get('user_id')  # Assuming you're storing user_id in session
+    if not user_id:
+        return JsonResponse({'error': 'Not logged in'}, status=403)
+    
+    user_story_ref = db.collection('User').document(user_id).collection('stories').document(story_id)
+    story_ref = db.collection('stories').document(story_id)
     user_story_doc = user_story_ref.get()
+    story_doc = story_ref.get()
 
-    if not user_story_doc.exists:
-        # messages.error(request, "Story not found.")
-        return redirect("storylist")
-
+    if not user_story_doc.exists or not story_doc.exists:
+        return JsonResponse({'error': 'Story not found'}, status=404)
     user_story_data = user_story_doc.to_dict()
-    earned_choices = user_story_data.get("choices_rewarded", [])
-    story_ref = db.collection("stories").document(story_id)
-    story_data = story_ref.get().to_dict()
+    story_data = story_doc.to_dict()
+    choices_rewarded = user_story_data.get('choices_rewarded', [])
+    all_choices = story_data.get('choices', {}).keys()
+    all_explored = set(choices_rewarded) == set(all_choices)
+    story_points = user_story_data.get('points', 0)
 
-    all_choices = [choice_id for node in story_data.get("nodes", {}).values() for choice_id, choice in node.get("choices", {}).items() if choice.get("points")]
+    return JsonResponse({
+        'all_explored': all_explored,
+        'story_points': story_points
+    })
 
-    if set(all_choices) == set(earned_choices):  # All choices have been explored
-        user_story_ref.update({
-            "points": 0,  # Reset story points to 0
-            "choices_rewarded": [],  # Clear choices
-        }, merge=True)      #prevents overwriting other fields if already exists
-        db.collection("User").document(user_id).update({
-            "userpoints": firestore.Increment(-user_story_data["points"])  # Subtract points from the total
-        })
-        messages.success(request, "Story has been reset. Play again!")
-        return redirect("storylist")
-    else:
-        messages.warning(request, "Please explore all choices before resetting.")
-        return redirect("story")
+
+
+
+def reset_story_points(request, story_id,node_id):
+    print(f"** RESET----")
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return JsonResponse({'error': 'Not logged in'}, status=403)
+
+    user_ref = db.collection('User').document(user_id)
+    user_story_ref = user_ref.collection('stories').document(story_id)
+
+    user_story_doc = user_story_ref.get()
+    user_doc = user_ref.get()
+
+    if not user_story_doc.exists or not user_doc.exists:
+        return JsonResponse({'error': 'Documents not found'}, status=404)
+
+    story_points = user_story_doc.to_dict().get('points', 0)
+    total_points = user_doc.to_dict().get('yourpoints', 0)
+
+    # Subtract story points from total
+    updated_total = total_points - story_points
+
+    # Update Firestore
+    user_ref.update({'yourpoints': updated_total})
+    user_story_ref.update({'points': 0, 'choices_rewarded': []})
+
+    return JsonResponse({'success': True})

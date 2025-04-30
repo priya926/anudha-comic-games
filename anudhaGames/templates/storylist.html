@@ -18,6 +18,7 @@
   <link href="{% static '/css/style.css' %}" rel="stylesheet" />
   <!-- responsive style -->
   <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
+
     <title>Anudha Stories</title>
     <style>
         body {
@@ -244,12 +245,14 @@
 
             {% for story in stories %}
                 {% if user_total_points >= story.required_points %}
-                    <a href="{% url 'story' story.id story.node_id %}" style="text-decoration: none; color: inherit;">
-                    <div class="card">
-                        <img src="{{ story.image }}" alt="{{ story.story_name }}">
-                        <div class="card-title">{{ story.story_name }}</div>
+                <!-- <a href="{ %  u r l  'story' story.id story.node_id %}" style="text-decoration: none; color: inherit;"> -->
+                    <div onclick="handleStoryClick('{{ story.id }}','{{ story.node_id }}')" style="cursor:pointer;">
+                        <div class="card">
+                            <img src="{{ story.image }}" alt="{{ story.story_name }}">
+                            <div class="card-title">{{ story.story_name }}</div>
+                        </div>
                     </div>
-                    </a>
+                    <!-- </a> -->
                 {% else %}
                     <div class="card-wrapper" onclick="handleLockedClick(event)">
                         <div class="card">
@@ -265,5 +268,66 @@
             {% endfor %}
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            function handleStoryClick(storyId,nodeId) {
+                console.log('Clicked story ID:', storyId); // debugging
+        
+                fetch(`/check_story_status/${storyId}/${nodeId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.all_explored) {
+                        Swal.fire({
+                            title: 'Replay Adventure? 🎮',
+                            text: "You've explored all the choices! Do you want to restart this story and earn points again?",
+                            imageUrl: '/static/images/celebrate.gif',
+                            imageWidth: 200,
+                            imageHeight: 200,
+                            background: '#fff8dc',
+                            showCancelButton: true,
+                            confirmButtonColor: '#00c853',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, Replay! 🚀',
+                            cancelButtonText: 'No, Thanks'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                fetch(`/reset_story_points/${storyId}/${nodeId}`)
+                                .then(res => res.json())
+                                .then(resData => {
+                                    if (resData.success) {
+                                        Swal.fire({
+                                            title: 'Points Reset!',
+                                            text: 'Have fun playing again! 🌟',
+                                            icon: 'success',
+                                            confirmButtonColor: '#00c853',
+                                            timer: 1500,
+                                            showConfirmButton: false
+                                        });
+                                        setTimeout(() => {
+                                            window.location.href = `/story/${storyId}/${nodeId}/`;
+                                        }, 1500);
+                                    }
+                                });
+                            } else {
+                                window.location.href = `/story/${storyId}/${nodeId}/`;
+                            }
+                        });
+                    } else {
+                        window.location.href = `/story/${storyId}/${nodeId}/`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking story status:', error);
+                    // fallback if error
+                    window.location.href = `/story/${storyId}/${nodeId}/`;
+                });
+            }
+        </script>
 
     {% include "footer.html" %}
