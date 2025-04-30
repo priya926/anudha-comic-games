@@ -169,13 +169,13 @@ def story(request, story_id, node_id="1"):
     if not user_id:
         messages.error(request, "Please log in first.")
         return redirect("index")
-    print(f"** Byeeee1")
+    # print(f"** Byeeee1")
     
     story_ref = db.collection("stories").document(story_id)
     story_doc = story_ref.get()
     if not story_doc.exists:
         messages.error(request, "Story not found.")
-        print(f"** Byeeee2")
+        # print(f"** Byeeee2")
         return redirect("storylist")
 
     story_content = story_doc.to_dict()
@@ -183,11 +183,11 @@ def story(request, story_id, node_id="1"):
 
     if node_id not in nodes:
         # messages.error(request, "Invalid story node.")
-        print(f"** Byeeee3")
-        print(node_id)
+        # print(f"** Byeeee3")
+        # print(node_id)
         return redirect("storylist")
 
-    print(f"** Byeeee4")
+    # print(f"** Byeeee4")
 
     current_node = nodes[node_id]
     question = current_node.get("question", "")
@@ -302,23 +302,37 @@ def handle_choice(request, story_id, node_id):
 
 
 def check_story_status(request, story_id,node_id):
-    print(f"** Helloooo")
     user_id = request.session.get('user_id')  # Assuming you're storing user_id in session
     if not user_id:
         return JsonResponse({'error': 'Not logged in'}, status=403)
     
+    # print(f"** Helloooo1")
     user_story_ref = db.collection('User').document(user_id).collection('stories').document(story_id)
     story_ref = db.collection('stories').document(story_id)
     user_story_doc = user_story_ref.get()
     story_doc = story_ref.get()
-
+    # print(f"** Helloooo2")
     if not user_story_doc.exists or not story_doc.exists:
+        # print(f"** Helloooo3")
         return JsonResponse({'error': 'Story not found'}, status=404)
+    # print(f"** Helloooo4")
     user_story_data = user_story_doc.to_dict()
     story_data = story_doc.to_dict()
     choices_rewarded = user_story_data.get('choices_rewarded', [])
-    all_choices = story_data.get('choices', {}).keys()
-    all_explored = set(choices_rewarded) == set(all_choices)
+    # print(f"Rewarded choices: {choices_rewarded}")
+
+    # Now extract all choices from all nodes in the story
+    all_choices = set()
+    nodes = story_data.get('nodes', {})
+    for node_id, node_data in nodes.items():
+        choices = node_data.get('choices', {})
+        all_choices.update(choices.values())  # Add choice node IDs
+
+    # print(f"All possible choices from story: {all_choices}")
+
+    all_explored = set(choices_rewarded) == all_choices
+    # print(f"All explored? {all_explored}")
+
     story_points = user_story_data.get('points', 0)
 
     return JsonResponse({
@@ -330,7 +344,7 @@ def check_story_status(request, story_id,node_id):
 
 
 def reset_story_points(request, story_id,node_id):
-    print(f"** RESET----")
+    # print(f"** RESET----")
     user_id = request.session.get('user_id')
     if not user_id:
         return JsonResponse({'error': 'Not logged in'}, status=403)
@@ -345,13 +359,13 @@ def reset_story_points(request, story_id,node_id):
         return JsonResponse({'error': 'Documents not found'}, status=404)
 
     story_points = user_story_doc.to_dict().get('points', 0)
-    total_points = user_doc.to_dict().get('yourpoints', 0)
+    total_points = user_doc.to_dict().get('userpoints', 0)
 
     # Subtract story points from total
     updated_total = total_points - story_points
 
     # Update Firestore
-    user_ref.update({'yourpoints': updated_total})
+    user_ref.update({'userpoints': updated_total})
     user_story_ref.update({'points': 0, 'choices_rewarded': []})
 
     return JsonResponse({'success': True})
