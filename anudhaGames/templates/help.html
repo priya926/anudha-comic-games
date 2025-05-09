@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help / FAQ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap');
+        body {
+            background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-2210775-jpeg.jpg") center center no-repeat;
+            background-size: cover;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: poppins;
+            overflow: auto;
+        }
+
+        .container {
+            position: relative;
+            width: 600px;
+            min-height: 500px;
+            border-radius: 20px;
+            padding: 40px;
+            background: #ecf0f3;
+            box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+            text-align: left;
+        }
+
+        .brand-title {
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: #1DA1F2;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .faq-item h3 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .faq-item p {
+            margin: 0;
+            color: #555;
+        }
+
+        a {
+            position: absolute;
+            font-size: 16px;
+            bottom: 20px;
+            right: 20px;
+            text-decoration: none;
+            color: black;
+            background: yellow;
+            border-radius: 10px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="brand-title">HELP / FAQ</div>
+        <div class="faq-item">
+            <h3>🎮 How to Play?</h3>
+            <p>Select a story, follow the images, and answer the questions by choosing the correct option.</p>
+        </div>
+        <div class="faq-item">
+            <h3>🔓 How to Unlock Stories?</h3>
+            <p>Earn points by answering questions correctly. More points unlock new stories.</p>
+        </div>
+        <div class="faq-item">
+            <h3>⭐ What Are Points?</h3>
+            <p>Each correct answer gives you points. These are used to unlock new content.</p>
+        </div>
+        <div class="faq-item">
+            <h3>📧 Having Trouble?</h3>
+            <p>Use the contact form in the app to reach out or email us directly at support@anudhagames.com.</p>
+        </div>
+
+        <a href="{% url 'storylist' %}"> Back to Stories </a>
+    </div>
+</body>
+</html>
