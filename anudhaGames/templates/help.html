@@ -16,16 +16,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: poppins;
+            font-family: 'Poppins', sans-serif;
             overflow: auto;
         }
 
         .container {
-            position: relative;
-            width: 600px;
-            min-height: 500px;
+            width: 450px;
             border-radius: 20px;
-            padding: 40px;
+            padding: 25px;
             background: #ecf0f3;
             box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
             text-align: left;
@@ -33,19 +31,20 @@
 
         .brand-title {
             font-weight: 900;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: #1DA1F2;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
         }
 
         .faq-item {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
-        .faq-item h3 {
+        .faq-item h4 {
             margin-bottom: 5px;
             color: #333;
+            font-size: 1rem;
         }
 
         .faq-item p {
@@ -53,11 +52,21 @@
             color: #555;
         }
 
-        a {
-            position: absolute;
-            font-size: 16px;
-            bottom: 20px;
-            right: 20px;
+        .inputs {
+            background: #ecf0f3;
+            padding: 12px 16px;
+            font-size: 14px;
+            border-radius: 16px;
+            box-shadow: inset 6px 6px 10px #cbced1, inset -6px -6px 10px white,
+                        6px 6px 12px #cbced1, -6px -6px 12px white;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .back-link {
+            /* display: inline-block; */
+            font-size: 14px;
+            /* margin-top: 20px; */
             text-decoration: none;
             color: black;
             background: yellow;
@@ -69,24 +78,33 @@
 <body>
     <div class="container">
         <div class="brand-title">HELP / FAQ</div>
+
         <div class="faq-item">
-            <h3>🎮 How to Play?</h3>
-            <p>Select a story, follow the images, and answer the questions by choosing the correct option.</p>
-        </div>
-        <div class="faq-item">
-            <h3>🔓 How to Unlock Stories?</h3>
-            <p>Earn points by answering questions correctly. More points unlock new stories.</p>
-        </div>
-        <div class="faq-item">
-            <h3>⭐ What Are Points?</h3>
-            <p>Each correct answer gives you points. These are used to unlock new content.</p>
-        </div>
-        <div class="faq-item">
-            <h3>📧 Having Trouble?</h3>
-            <p>Use the contact form in the app to reach out or email us directly at support@anudhagames.com.</p>
+            <h4>🔓 Not able to login?</h4>
+            <p class="inputs">
+                If you're unable to log in even after entering the correct credentials, please follow these steps: <br>
+                1. <strong>Check your internet connection</strong> to ensure it's stable. <br>
+                2. If the issue persists, go to <strong>Settings → Time & Language → Date & Time</strong>, then under <strong>Additional Settings</strong>, click <strong>"Sync Now"</strong> to update your device's time. <br>
+                3. After syncing, try logging in again. <br>
+                4. If you're still experiencing issues, feel free to <strong>contact us directly via email</strong> for assistance.
+            </p>
         </div>
 
-        <a href="{% url 'storylist' %}"> Back to Stories </a>
+        <div class="faq-item">
+            <h4>🎮 How to Unlock Stories?</h4>
+            <p class="inputs">
+                To unlock a new story, you must first fully explore all the choices in the previous stories. Once completed, you can use the points you've earned to unlock the next story.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h4>📧 Having Trouble?</h4>
+            <p class="inputs">
+                Use the contact form in the app to reach out or email us directly at support@anudhagames.com.
+            </p>
+        </div>
+
+        <a class="back-link" href="{% url 'storylist' %}">Back to Stories</a>
     </div>
 </body>
 </html>
