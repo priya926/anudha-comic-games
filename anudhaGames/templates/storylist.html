@@ -2,334 +2,423 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap" rel="stylesheet">
-      <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
-  <!-- progress barstle -->
-  <link rel="stylesheet" href="css/css-circular-prog-bar.css">
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,600&display=swap" rel="stylesheet">
-  <!-- font wesome stylesheet -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <!-- Custom styles for this template -->
-  <link href="{% static '/css/style.css' %}" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anudha Stories</title>
 
-    <title>Anudha Stories</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: "Open Sans";
-            background-color: #fffbea;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap" rel="stylesheet" />
 
-        .header {
-            font-family: "Finger Paint", serif;
-            text-align: center;
-            font-weight: 400;
-            background-color: #e8f48c;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}" />
 
-        .header img {
-            max-width: 100%;
-            height: auto;
-        }
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static '/css/responsive.css' %}" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
 
-        .container {
-            display: flex;
-            flex: 1;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-        }
+  <style>
+    body {
+      margin: 0;
+      font-family: "Open sans";
+      background-color: #fffbea;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-       
-        .card {
-            background-color: #fff5c3;
-            border: 1px solid #ffd700;
-            border-radius: 10px;
-            width: 200px; 
-            height: 200px; 
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; 
-        }
+    .header {
+      font-family: "Finger Paint", serif;
+      text-align: center;
+      background-color: #e8f48c;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
+    .header img {
+      max-width: 100%;
+      height: auto;
+    }
 
-        .card img {
-        width: 100%;
-        height: 200px; 
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        object-fit: cover; 
-        }
+    .container {
+      display: flex;
+      flex: 1;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
 
-        .card-title {
-            padding: 10px;
-            font-size: 1em;
-            /* font-size: 1.2em; */
-            font-weight: bold;
-            color: #333;
-        }
-        .locked-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4); /* translucent dark */
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1em;
-            font-weight: bold;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
+    .card {
+      background-color: #fff5c3;
+      border: 1px solid #ffd700;
+      border-radius: 10px;
+      width: 200px;
+      height: 200px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
 
-        .card-wrapper:hover .locked-overlay {
-            opacity: 1;
-        }
-        
-        .image-container {
-            position: relative;
-            width: 100%;
-            height: 200px;
-        }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
 
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
+    .card img {
+      width: 100%;
+      height: 200px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      object-fit: cover;
+    }
 
-        .footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #000;
-            color: #fff;
-            /* font-size: 0.9em; */
-        }
+    .card-title {
+      padding: 10px;
+      font-size: 1em;
+      font-weight: bold;
+      color: #333;
+    }
 
-        .footer a {
-            color: #ffd700;
-            text-decoration: none;
-        }
-        .logo-container {
-        position: absolute;
-        top: 10px;
-        right: 1px;
-        z-index: 1000;
-        }
-        .logo {
-        width: 200px; 
-        height: auto;
-        }
+    .locked-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1em;
+      font-weight: bold;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
 
-        .side-container{
-            position: absolute;
-            top: 10px;
-            left: 1px;
-            z-index: 1000; 
-        }
-        .messages-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 9999;
-        }
-        .message {
-            position: relative;
-            background-color: #d9edf7;
-            color: #31708f;
-            padding: 12px 20px 12px 15px;
-            margin-bottom: 10px;
-            border: 1px solid #bce8f1;
-            border-radius: 8px;
-            font-size: 16px;
-            min-width: 250px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
+    .card-wrapper:hover .locked-overlay {
+      opacity: 1;
+    }
 
-        .message.success {
-            background-color: #dff0d8;
-            border-color: #d6e9c6;
-        }
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 200px;
+    }
 
-        .message.warning {
-            background-color: #f2dede;
-            color: #a94442;
-            border-color: #ebccd1;
-        }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
 
-        .message.error {
-            background-color: #f2dede;
-            color: #fff86c;
-            border-color: #ebccd1;
-        }
+    .footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #000;
+      color: #fff;
+    }
 
-        .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #555;
-            cursor: pointer;
-        }
+    .footer a {
+      color: #ffd700;
+      text-decoration: none;
+    }
 
-        .close-btn:hover {
-            color: #000;
-        }
-    </style>
+    .logo-container {
+      position: absolute;
+      top: 10px;
+      right: 1px;
+      z-index: 1000;
+    }
+
+    .logo {
+      width: 200px;
+      height: auto;
+    }
+
+    .side-container {
+      position: absolute;
+      top: 10px;
+      left: 1px;
+      z-index: 1000;
+    }
+
+    .messages-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+
+    .message {
+      background-color: #d9edf7;
+      color: #31708f;
+      padding: 12px 20px 12px 15px;
+      margin-bottom: 10px;
+      border: 1px solid #bce8f1;
+      border-radius: 8px;
+      font-size: 16px;
+      min-width: 250px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .message.success {
+      background-color: #dff0d8;
+      border-color: #d6e9c6;
+    }
+
+    .message.warning,
+    .message.error {
+      background-color: #f2dede;
+      color: #a94442;
+      border-color: #ebccd1;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #555;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #000;
+    }
+
+    /* Mobile Sidebar */
+    .mobile-sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 2000;
+      top: 0;
+      right: 0;
+      background-color: #fffbea;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+    }
+
+    .mobile-sidebar .closebtn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .sidebar-content {
+      padding: 20px;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .sidebar-content img.sidebar-logo {
+      width: 150px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-content p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-content a {
+      display: block;
+      margin: 10px 0;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .sidebar-content a:hover {
+      color: #00c853;
+    }
+
+    .hamburger {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      font-size: 28px;
+      cursor: pointer;
+      z-index: 3000;
+    }
+
+    @media (max-width: 768px) {
+      .logo-container,
+      .side-container {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .footer {
+        padding-bottom: 60px;
+      }
+
+      .container {
+        padding-bottom: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="side-container">
-        {% if email %}
-            <p align="left">Welcome, {{ username }} <br> Your Points: {{ user_total_points }}</p>
-        {% else %}
-            <p>Please log in.</p>
-        {% endif %}
-    </div>
-    <div class="header">
-        <h1>Anudha Stories</h1>
-        <h4>Lets Explore....</h4>
-    </div>
-    <div class="logo-container">
-        <!-- <a href="l ogout/"><i class="fa fa-sign-out"></i></a> -->
-        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
-        <br>
-        <a href="{% url 'profile' %}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Profile</a> | 
-        <a href="{% url 'help' %}"> Help / FAQ</a>
-        <br>
-        {% if email %}
-            <a href="{% url 'logout' %}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Logout</a>
-        {% else %}
-            <p>Please log in.</p>
-        {% endif %}
-    </div>
-        <div class="container">
-            {% if messages %}
-                <div class="messages-container">
-                    {% for message in messages %}
-                    <div class="message {{ message.tags }}">
-                        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+  <div class="hamburger" onclick="toggleSidebar()">&#9776;</div>
 
-            {% for story in stories %}
-                {% if user_total_points >= story.required_points %}
-                <!-- <a href="{ %  u r l  'story' story.id story.node_id %}" style="text-decoration: none; color: inherit;"> -->
-                    <div onclick="handleStoryClick('{{ story.id }}','{{ story.node_id }}')" style="cursor:pointer;">
-                        <div class="card">
-                            <img src="{{ story.image }}" alt="{{ story.story_name }}">
-                            <div class="card-title">{{ story.story_name }}</div>
-                        </div>
-                    </div>
-                    <!-- </a> -->
-                {% else %}
-                    <div class="card-wrapper" onclick="handleLockedClick(event)">
-                        <div class="card">
-                            <div class="image-container">
-                                <img src="{{ story.image }}" alt="{{ story.story_name }}">
-                                <div class="locked-overlay">🔒 Story Locked</div>
-                            </div>
-                            <div class="card-title">{{ story.story_name }}</div>
-                        </div>
-                    </div>
-                {% endif %}
-                <!-- <img src="https://drive.google.com/thumbnail?id=1fYonvNb_1yJuaOI_aUXvRzmBSNTaRqAz&sz=s4000" alt="{{ story.story_name }}"> -->
-            {% endfor %}
+  <div class="side-container">
+    {% if email %}
+      <p align="left">Welcome, {{ username }} <br> Your Points: {{ user_total_points }}</p>
+    {% else %}
+      <p>Please log in.</p>
+    {% endif %}
+  </div>
+
+  <div class="header">
+    <h1>Anudha Stories</h1>
+    <h4>Lets Explore....</h4>
+  </div>
+
+  <div class="logo-container">
+    <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo" />
+    <br />
+    <a href="{% url 'profile' %}">Profile</a> |
+    <a href="{% url 'help' %}"> Help / FAQ</a>
+    <br />
+    {% if email %}
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <p>Please log in.</p>
+    {% endif %}
+  </div>
+
+  <div class="container">
+    {% if messages %}
+      <div class="messages-container">
+        {% for message in messages %}
+          <div class="message {{ message.tags }}">
+            <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% for story in stories %}
+      {% if user_total_points >= story.required_points %}
+        <div onclick="handleStoryClick('{{ story.id }}','{{ story.node_id }}')" style="cursor:pointer;">
+          <div class="card">
+            <img src="{{ story.image }}" alt="{{ story.story_name }}">
+            <div class="card-title">{{ story.story_name }}</div>
+          </div>
         </div>
+      {% else %}
+        <div class="card-wrapper" onclick="handleLockedClick(event)">
+          <div class="card">
+            <div class="image-container">
+              <img src="{{ story.image }}" alt="{{ story.story_name }}">
+              <div class="locked-overlay">🔒 Story Locked</div>
+            </div>
+            <div class="card-title">{{ story.story_name }}</div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Mobile Sidebar -->
+  <div id="mobileSidebar" class="mobile-sidebar">
+    <span class="closebtn" onclick="toggleSidebar()">&times;</span>
+    <div class="sidebar-content">
+      <img src="{% static 'images/logo.png' %}" alt="Logo" class="sidebar-logo">
+      {% if email %}
+        <p>Welcome, {{ username }}</p>
+        <p>Your Points: {{ user_total_points }}</p>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'help' %}">Help / FAQ</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <p>Please log in.</p>
+      {% endif %}
+    </div>
+  </div>
 
-        <script>
-            function handleStoryClick(storyId,nodeId) {
-                console.log('Clicked story ID:', storyId); // debugging
-        
-                fetch(`/check_story_status/${storyId}/${nodeId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.all_explored) {
-                        Swal.fire({
-                            title: 'Replay Adventure? 🎮',
-                            text: "You've explored all the choices! Do you want to restart this story and earn points again?",
-                            imageUrl: '/static/images/celebrate.gif',
-                            imageWidth: 200,
-                            imageHeight: 200,
-                            background: '#fff8dc',
-                            showCancelButton: true,
-                            confirmButtonColor: '#00c853',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, Replay! 🚀',
-                            cancelButtonText: 'No, Thanks'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                fetch(`/reset_story_points/${storyId}/${nodeId}`)
-                                .then(res => res.json())
-                                .then(resData => {
-                                    if (resData.success) {
-                                        Swal.fire({
-                                            title: 'Points Reset!',
-                                            text: 'Have fun playing again! 🌟',
-                                            icon: 'success',
-                                            confirmButtonColor: '#00c853',
-                                            timer: 1500,
-                                            showConfirmButton: false
-                                        });
-                                        setTimeout(() => {
-                                            window.location.href = `/story/${storyId}/${nodeId}/`;
-                                        }, 1500);
-                                    }
-                                });
-                            } else {
-                                window.location.href = `/storylist/`;
-                            }
-                        });
-                    } else {
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    function handleStoryClick(storyId, nodeId) {
+      fetch(`/check_story_status/${storyId}/${nodeId}`)
+        .then(response => {
+          if (!response.ok) throw new Error('Network response not ok');
+          return response.json();
+        })
+        .then(data => {
+          if (data.all_explored) {
+            Swal.fire({
+              title: 'Replay Adventure? 🎮',
+              text: "You've explored all the choices! Do you want to restart this story and earn points again?",
+              imageUrl: '/static/images/celebrate.gif',
+              imageWidth: 200,
+              imageHeight: 200,
+              background: '#fff8dc',
+              showCancelButton: true,
+              confirmButtonColor: '#00c853',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, Replay! 🚀',
+              cancelButtonText: 'No, Thanks'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                fetch(`/reset_story_points/${storyId}/${nodeId}`)
+                  .then(res => res.json())
+                  .then(resData => {
+                    if (resData.success) {
+                      Swal.fire({
+                        title: 'Points Reset!',
+                        text: 'Have fun playing again! 🌟',
+                        icon: 'success',
+                        confirmButtonColor: '#00c853',
+                        timer: 1500,
+                        showConfirmButton: false
+                      });
+                      setTimeout(() => {
                         window.location.href = `/story/${storyId}/${nodeId}/`;
+                      }, 1500);
                     }
-                })
-                .catch(error => {
-                    console.error('Error checking story status:', error);
-                    // fallback if error
-                    window.location.href = `/story/${storyId}/${nodeId}/`;
-                });
-            }
-        </script>
+                  });
+              } else {
+                window.location.href = `/storylist/`;
+              }
+            });
+          } else {
+            window.location.href = `/story/${storyId}/${nodeId}/`;
+          }
+        })
+        .catch(error => {
+          console.error('Error checking story status:', error);
+          window.location.href = `/story/${storyId}/${nodeId}/`;
+        });
+    }
 
-    {% include "footer.html" %}
+    function toggleSidebar() {
+      const sidebar = document.getElementById("mobileSidebar");
+      sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
+    }
+  </script>
+
+  {% include "footer.html" %}
+</body>
+</html>

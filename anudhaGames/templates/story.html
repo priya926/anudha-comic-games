@@ -283,6 +283,101 @@
             .close-btn:hover {
                 color: #000;
             } */
+            
+            .menu-toggle {
+                display: none;
+                flex-direction: column;
+                justify-content: space-around;
+                width: 25px;
+                height: 20px;
+                margin: 13px;
+                cursor: pointer;
+                z-index: 10001;
+                position: absolute;
+                top: 5px;
+                left: 5px;
+            }
+
+            .menu-toggle span {
+                background: #333;
+                height: 4px;
+                border-radius: 2px;
+                width: 100%;
+            }
+
+            .sidebar-drawer {
+                display: none;
+                flex-direction: column;
+                background-color: #f9f9c5;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 260px;
+                padding: 20px;
+                box-shadow: 3px 0 6px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-family: 'Poppins', sans-serif;
+                overflow-y: auto;
+            }
+
+            .sidebar-drawer a, .sidebar-drawer p {
+                margin: 10px 0;
+                color: #000;
+                text-decoration: none;
+            }
+
+            .sidebar-logo {
+                width: 180px;
+                margin-bottom: 20px;
+            }
+
+            .sidebar-header {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+            /* Responsive Layout */
+            @media screen and (max-width: 768px) {
+                .containerd {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100vh;
+                    overflow-y: auto;
+                }
+
+                .div2 {
+                    order: 1;
+                    width: 100%;
+                    text-align: center;
+                }
+
+                .div2 img {
+                    max-width: 100%;
+                    height: auto;
+                    object-fit: contain;
+                }
+
+                .div3,
+                .coin-section, 
+                .question-section{
+                    order: 2;
+                    width: 100%;
+                    padding: 25px;
+                    box-sizing: border-box;
+                }
+
+                .menu-toggle {
+                    display: flex;
+                }
+
+                .logo-container,
+                .div1 {
+                    display: none;
+                }
+            }
+
 
         </style>
         <script>
@@ -319,6 +414,28 @@
 
         <div class="logo-container">
             <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+        </div>
+
+        <!-- Hamburger Menu for Mobile -->
+        <div class="menu-toggle" onclick="toggleDrawer()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Sidebar Drawer for Mobile -->
+        <div id="mobileSidebar" class="sidebar-drawer">
+            <div class="sidebar-header">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="sidebar-logo">
+            </div>
+            <a href="{% url 'profile' %}">Profile</a>
+            {% if email %}
+                <p>Welcome, {{ username }} ({{ email }})</p>
+                <p>Your Points: {{ user_total_points }}</p>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <p>Please log in.</p>
+            {% endif %}
         </div>
 
         <!-- Main Section -->
@@ -483,6 +600,14 @@
             });
         </script>
     {% endif %}
+
+    <script>
+        function toggleDrawer() {
+            const sidebar = document.getElementById('mobileSidebar');
+            sidebar.style.display = sidebar.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
+
 
 
 </body>
