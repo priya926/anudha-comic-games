@@ -1,77 +1,12 @@
 {
-  "Story4": {
-    "story_name": "Pretty Shoes",
-    "required_points": 20,
+  "Story5": {
+    "story_name": "The Monkey and Crocodile",
+    "required_points": 110,
     "nodes": {
       "1": {
-        "image_url": "https://drive.google.com/thumbnail?id=1tB7jxffgtgv7_v-FTTmdtO6WHyAHxJ-r&sz=s1000",
+        "image_url": "https://drive.google.com/thumbnail?id=1tARdd34Ipljwu6s8k3KGl5wq2dSJ6Os4&sz=s1000",
         "next": "2",
         "order": 1
-      },          
-
-      "2": {
-        "image_url": "https://drive.google.com/thumbnail?id=1sW34T3Tlq-4oTmSNzY0k5nl6ZzOxo-VT&sz=s1000",    
-        "next": "3",
-        "order": 2
-      },
-
-      "3": {
-        "image_url": "https://drive.google.com/thumbnail?id=1KlYzr1iKZMD0pn0AAv2NlzFGxnpwPhMZ&sz=s1000",    
-        "next": "4",
-        "order": 3
-      },
-
-      "4":{
-          "image_url": "https://drive.google.com/thumbnail?id=1lLt8vCzSHZbHXKCLKEzzYfaFSO7tGYpU&sz=s1000",
-          "order": 4, 
-          "question": "Will Maya understand the importance of Kindness & generosity ?",
-          "choices": {
-            "NO": "4st1",
-            "YES": "4st2"
-          }
-      },
-      "4st1":{
-          "image_url": "https://drive.google.com/thumbnail?id=12B-t2vwN3xH239XzJRK_qwZUrVaeS1Jd&sz=s1000",    
-          "next": "8",
-          "order": 5,
-          "points": -5
-      },
-      "4st2":{
-         "image_url": "https://drive.google.com/thumbnail?id=19w7TCvbwkoh0gV9uCGLXQXyYXxSnFJvy&sz=s1000",
-          "order": 5,
-          "next": "4st21"
-      },
-      "4st21":{
-        "image_url": "https://drive.google.com/thumbnail?id=12o_lzEdHuXR1dDcpTRl2H4fuhGR9oExE&sz=s1000",    
-        "order": 6,
-        "question": "Will Maya Pass the Exam of Kindness?",
-          "choices": {
-            "Doesn't Help poor girl": "5",
-            "Help poor girl": "6"
-          }
-      },
-
-      "5":{
-        "image_url": "https://drive.google.com/thumbnail?id=1fYm-bT3tDh-K2__YT9R2fuhNoMgN1Suf&sz=s1000",    
-        "order": 7,
-        "next": "8",
-        "points": -10
-      },
-
-      "6":{
-        "image_url": "https://drive.google.com/thumbnail?id=1hjOXx5O8cdvNGdzHH1WFRBJLWjjzx74-&sz=s1000",    
-        "order": 7,
-        "next": "7",
-        "points": 20
-      },
-      "7":{
-        "image_url": "https://drive.google.com/thumbnail?id=16eiVt0r2Z5u-5ZkTMwPmR6lIqiAp-zH8&sz=s1000",    
-        "order": 8,
-        "next": "8"
-      },
-      "8":{
-        "image_url": "https://drive.google.com/thumbnail?id=12NBztzwG-_3CpaksLQ9G-HPswIrhzAOP&sz=s1000",    
-        "order": 9
       }
     }
   }
