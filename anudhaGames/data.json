@@ -4,10 +4,106 @@
     "required_points": 110,
     "nodes": {
       "1": {
-        "image_url": "https://drive.google.com/thumbnail?id=1tARdd34Ipljwu6s8k3KGl5wq2dSJ6Os4&sz=s1000",
+        "image_url": "https://drive.google.com/thumbnail?id=1LawcdAHWMYbrK_od444en-jPnUdU5nzW&sz=s1000",
         "next": "2",
         "order": 1
+      },
+      "2": {
+        "image_url": "https://drive.google.com/thumbnail?id=13-p-QMrn_3gY355Wr2BEQB7_RT4lZ1Ge&sz=s1000",    
+        "next": "3",
+        "order": 2
+      },
+      "3":{
+          "image_url": "https://drive.google.com/thumbnail?id=1awsob_CbxUQVol80JzS6hrpNElbN7lJE&sz=s1000",
+          "next": "4",
+          "order": 3
+      },
+      "4":{
+          "image_url": "https://drive.google.com/thumbnail?id=1tVTRnqaugc-pFYyemNYkcLK0BODXjau8&sz=s1000",    
+          "order": 4,
+          "question": "Is the crocodile about to betray the monkey just to please his wife?",
+          "choices": {
+            "NO": "4st1",
+            "YES": "4st2"
+          }
+      },
+      "4st1":{
+          "image_url": "https://drive.google.com/thumbnail?id=1QHjWdjYlPtCi-cbL7QWtBYcvm5hAdYqz&sz=s1000",
+          "order": 5,  
+          "points": 20,  
+          "question": "Will she realize what friendship really means?",
+          "choices": {
+            "YES": "4st11",
+            "NO": "4st12"
+          }
+        },
+        "4st11":{
+            "image_url": "https://drive.google.com/thumbnail?id=1mIJB4VeRk8gH7aI4kQIwAuWzPj9HITtS&sz=s1000",
+            "order": 6,
+            "next": "6",
+            "points": 30
+        },
+        "4st12":{
+            "image_url": "https://drive.google.com/thumbnail?id=1e0HsVfaGsIDa3y4K49YSo7Zeg-mjL1ht&sz=s1000",  
+            "order": 6,  
+            "next": "6",
+            "points": -10
+        },
+      "4st2":{
+        "image_url": "https://drive.google.com/thumbnail?id=17PtnaD9cneIj6g4FsJOyyFhCVtovZrpV&sz=s1000",    
+        "next": "5",
+        "order": 5,
+        "points": -10
+      },
+
+      "5":{
+        "image_url": "https://drive.google.com/thumbnail?id=1WmaUt2lFuJehg53t6mkQBOD93EI_VNHF&sz=s1000",    
+        "order": 7,  
+        "question": "Will the monkey keep his cool and think fast or lose it and end up dead?",
+        "choices": {
+            "END UP DEAD": "5st1",
+            "USE BRAIN": "5st2"
+          }
+      },
+      "5st1":{
+        "image_url": "https://drive.google.com/thumbnail?id=1EaYGGLnXR6QYQk0nSbU2lkcdYev39nNK&sz=s1000",    
+        "next": "6",
+        "order": 7,
+        "points": -5
+      },
+
+       "5st2":{
+        "image_url": "https://drive.google.com/thumbnail?id=11eskYLnmwBX33fRnpL4H7dUhUNrYvIwJ&sz=s1000",    
+        "next": "6",
+        "order": 7,
+        "points": 50
+      },
+       "5st21":{
+        "image_url": "https://drive.google.com/thumbnail?id=15Txli8g1kNkurcLyRcTeg_fp2K1lPlin&sz=s1000",    
+        "next": "5st22",
+        "order": 8
+      },
+        "5st22":{
+        "image_url": "https://drive.google.com/thumbnail?id=1_nNQ8C44jDGOncIm9vIUyDKnYhbQSit2&sz=s1000",    
+        "next": "6",
+        "order": 9
+      },
+       "6":{
+        "image_url": "https://drive.google.com/thumbnail?id=1fXGFWbSDqH7EjD-FO5AinPBe9hSSaGro&sz=s1000",    
+        "next": "7",
+        "order": 10
+      },
+      "7":{
+        "image_url": "https://drive.google.com/thumbnail?id=1pxgGHGVDBa9LiJP-fvooy1ZStZTXVyEA&sz=s1000",    
+        "order": 11
       }
     }
+    }
   }
-}
+
+
+  
+
+      
+
+
