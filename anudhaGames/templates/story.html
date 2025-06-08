@@ -54,8 +54,8 @@
                 padding: 20px;
                 display: flex;
                 justify-content: center;
-                background-color: #e8f48c
-                ;
+                background-color: #e8f48c;
+                font-family:  'Comic Sans MS', cursive, sans-serif;
             }
 
             .div2 {
@@ -317,7 +317,7 @@
                 padding: 20px;
                 box-shadow: 3px 0 6px rgba(0,0,0,0.2);
                 z-index: 10000;
-                font-family: 'Poppins', sans-serif;
+                font-family:  'Comic Sans MS', cursive, sans-serif;
                 overflow-y: auto;
             }
 
@@ -443,11 +443,11 @@
             <div class="div1">
                 <!-- <span class="li"> -->
                 <span class="li" style="color: #000;">
-                    <a href="{% url 'profile' %}">Profile</a>
+                    <a href="{% url 'profile' %}"><strong>Profile</strong></a><br><br><br>
                     {% if email %}
-                        <p>Welcome, {{ username }} ({{ email }})</p>
+                        <p>Welcome, <br>{{ username }}<span style="color: #2e7d32"> ({{ email }})</span></p>
                         <p>Your Points: {{ user_total_points }}</p>
-                        <a href="{% url 'logout' %}">Logout</a>
+                        <a href="{% url 'logout' %}"><strong>Logout</strong></a>
                     {% else %}
                         <p>Please log in.</p>
                     {% endif %}
@@ -474,11 +474,11 @@
                                 <button onclick="playSound('choice');" style="width: 200px; margin-top: 80%;">Next</button>
                             </a>
                     {% else %}
-                        <p style="color: #393434; background-color: #fefefe; padding: 12px; border-radius: 12%;">{{ question }}</p>
+                        <p style="color: #393434; background-color:  #fff3cd; padding: 12px; border-radius: 50px; border: 2px solid #d39e00; font-weight: bold; font-size: 1.3rem; font-family: 'Comic Sans MS', cursive, sans-serif;">{{ question }}</p>
                         {% if choices %}
                             {% for choice, node_id in choices.items %}
                                 <a href="{% url 'story' story_id node_id %}">
-                                    <button onclick="playSound('choice'); animatePoints('{{ e_points }}')" style="width: 200px;">{{ choice }}</button>
+                                    <button onclick="playSound('choice'); animatePoints('{{ e_points }}')" style="width: 200px; font-family: 'Comic Sans MS', cursive, sans-serif;">{{ choice }}</button>
                                     <audio id="coinSound" src="{% static 'sound/coin.mp3' %}"></audio>
                                     </a>
                             {% endfor %}

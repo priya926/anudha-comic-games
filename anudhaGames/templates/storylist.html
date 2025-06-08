@@ -151,6 +151,7 @@
       top: 10px;
       left: 1px;
       z-index: 1000;
+      font-family:  'Comic Sans MS', cursive, sans-serif;
     }
 
     .messages-container {
@@ -242,6 +243,7 @@
       text-decoration: none;
       color: #333;
       font-weight: bold;
+      font-family:  'Comic Sans MS', cursive, sans-serif;
     }
 
     .sidebar-content a:hover {
@@ -283,7 +285,7 @@
 
   <div class="side-container">
     {% if email %}
-      <p align="left">Welcome, {{ username }} <br> Your Points: {{ user_total_points }}</p>
+      <p align="left">&nbsp;<strong>Welcome, {{ username }} <br> &nbsp;Your Points: {{ user_total_points }}</strong></p><br>
     {% else %}
       <p>Please log in.</p>
     {% endif %}
@@ -347,8 +349,8 @@
     <div class="sidebar-content">
       <img src="{% static 'images/logo.png' %}" alt="Logo" class="sidebar-logo">
       {% if email %}
-        <p>Welcome, {{ username }}</p>
-        <p>Your Points: {{ user_total_points }}</p>
+        <p style="font-family:  'Comic Sans MS', cursive, sans-serif;"><strong>Welcome, {{ username }}</strong></p>
+        <p style="font-family:  'Comic Sans MS', cursive, sans-serif;"><strong>Your Points: {{ user_total_points }}</strong></p>
         <a href="{% url 'profile' %}">Profile</a>
         <a href="{% url 'help' %}">Help / FAQ</a>
         <a href="{% url 'logout' %}">Logout</a>
