@@ -462,19 +462,19 @@
             <div class="div3">
                 <div class="coin-section">
                     <img src="{% static 'icons/totalreward.png' %}" alt="">
-                    <p id="totalPoints">{{ user_total_points }}</p>
+                    <p id="totalPoints" style="font-family: 'Comic Sans MS', cursive, sans-serif;">{{ user_total_points }}</p>
                     <img id="pointsEarned" src="{% static 'images/coinflip.gif' %}" alt="Reward Given" style="width:80px;height:100px; display: none;">  <!-- Hidden initially -->
                     <img id="rewardImage" src="{% static 'icons/reward.png' %}" alt="">
-                    <p id="sessionPoints">{{ user_session_points }}</p>
+                    <p id="sessionPoints" style="font-family: 'Comic Sans MS', cursive, sans-serif;">{{ user_session_points }}</p>
                 </div>
 
                 <div class="question-section" style="background-image: url('/static/images/qbg2.png');background-size: cover;align-items: center;" id="questionBox">
                     {% if not question %}
                             <a href="{% url 'story' story_id node_id %}">
-                                <button onclick="playSound('choice');" style="width: 200px; margin-top: 80%;">Next</button>
+                                <button onclick="playSound('choice');" style="width: 200px; margin-top: 80%; font-family: 'Comic Sans MS', cursive, sans-serif;">Next</button>
                             </a>
                     {% else %}
-                        <p style="color: #393434; background-color:  #fff3cd; padding: 12px; border-radius: 50px; border: 2px solid #d39e00; font-weight: bold; font-size: 1.3rem; font-family: 'Comic Sans MS', cursive, sans-serif;">{{ question }}</p>
+                        <p style="color: #393434; background-color:  #fff3cd; padding: 12px; border-radius: 45px; border: 2px solid #d39e00; font-weight: bold; font-size: 1.3rem; font-family: 'Comic Sans MS', cursive, sans-serif;">{{ question }}</p>
                         {% if choices %}
                             {% for choice, node_id in choices.items %}
                                 <a href="{% url 'story' story_id node_id %}">
@@ -485,7 +485,7 @@
                         {% else %}
                             {% if next %}
                                 <a href="{% url 'story' story_id node_id %}">
-                                    <button onclick="playSound('choice')" style="width: 200px; margin-top: 80%;">Next</button>
+                                    <button onclick="playSound('choice')" style="width: 200px; margin-top: 80%; font-family: 'Comic Sans MS', cursive, sans-serif;">Next</button>
                                 </a>
                             {% endif %}
                         {% endif %}

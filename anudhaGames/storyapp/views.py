@@ -18,6 +18,9 @@ from django.views.decorators.csrf import csrf_exempt
 def index(request):
     return render(request, 'index.html')
 
+def forget(request):
+    return render(request, 'forget.html')
+
 def register(request):
     if request.method == "POST":
         email = request.POST.get("email")

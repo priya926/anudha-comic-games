@@ -415,7 +415,9 @@
                 <label for="user-pass" class="col-form-label">Password:</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password">
               </div>
-              <p>Don't have an account? <a href="#exampleModalToggle1" data-bs-toggle="modal" data-bs-dismiss="modal">Register Here!</a><br>Forget Password?</p>
+              <p>Don't have an account? <a href="#exampleModalToggle1" data-bs-toggle="modal" data-bs-dismiss="modal">Register Here!</a><br><a href="{% url 'forget' %}">Forgot Password?</a></p>
+
+
               <div class="modal-footer">
                 <button type="submit" class="btn btn-secondary" id="loginButton">Login</button>
                 <!-- <input type="submit" value="Login" class="btn btn-secondary"> -->

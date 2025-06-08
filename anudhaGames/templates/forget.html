@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset</title>
+     <!-- Add Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script>
+      // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+
+      //  Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyAfWquAI5mtXuELXd2Fj3MjcSppErs73Lw",
+          authDomain: "anudhadb.firebaseapp.com",
+          projectId: "anudhadb",
+          storageBucket: "anudhadb.firebasestorage.app",
+          messagingSenderId: "14423870655",
+          appId: "1:14423870655:web:153c970dc37942cd0b8a0a"
+        };
+
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap');
+
+        input {
+        caret-color: red;
+        }
+
+        body {
+        background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/38816/image-from-rawpixel-id-2210775-jpeg.jpg") center center no-repeat;
+        background-size: cover;
+        /* background-size: 1600px 700px; */
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        place-items: center;
+        overflow: hidden;
+        font-family: poppins;
+        }
+
+        .container {
+        position: relative;
+        width: 350px;
+        height: 500px;
+        border-radius: 20px;
+        padding: 40px;
+        box-sizing: border-box;
+        background: #ecf0f3;
+        box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+        }
+
+        .brand-logo {
+        height: 100px;
+        width: 100px;
+        background: url("https://img.icons8.com/color/100/000000/twitter--v2.png");
+        margin: auto;
+        border-radius: 50%;
+        box-sizing: border-box;
+        box-shadow: 7px 7px 10px #cbced1, -7px -7px 10px white;
+        }
+
+        .brand-title {
+        margin-top: 10px;
+        font-weight: 900;
+        font-size: 1.8rem;
+        color: #1DA1F2;
+        letter-spacing: 1px;
+        }
+
+        .inputs {
+        text-align: left;
+        margin-top: 30px;
+        }
+
+        label, input, button {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        }
+
+        label {
+        margin-bottom: 4px;
+        }
+
+        label:nth-of-type(2) {
+        margin-top: 12px;
+        }
+
+        input::placeholder {
+        color: gray;
+        }
+
+        input {
+        background: #ecf0f3;
+        padding: 10px;
+        padding-left: 20px;
+        height: 50px;
+        font-size: 14px;
+        border-radius: 50px;
+        box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+        }
+
+        button {
+        color: white;
+        margin-top: 20px;
+        background: #1DA1F2;
+        height: 40px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 900;
+        box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+        transition: 0.5s;
+        }
+
+        button:hover {
+        box-shadow: none;
+        }
+
+        a {
+        position: absolute;
+        font-size: 16px;
+        bottom: 20px;
+        right: 20px;
+        text-decoration: none;
+        color: black;
+        background: yellow;
+        border-radius: 10px;
+        padding: 2px;
+        }
+
+        h1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        }
+        .messages-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        }
+        .message {
+            position: relative;
+            background-color: #d9edf7;
+            color: #31708f;
+            padding: 12px 20px 12px 15px;
+            margin-bottom: 10px;
+            border: 1px solid #bce8f1;
+            border-radius: 8px;
+            font-size: 16px;
+            min-width: 250px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .message.success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border-color: #d6e9c6;
+        }
+
+        .message.error {
+            background-color: #f2dede;
+            color: #a94442;
+            border-color: #ebccd1;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+            <!-- Reset password modal -->
+            <div>
+                <h3>Reset Password</h3>
+                <input type="email" id="resetEmail" placeholder="Enter your registered email">
+                <button onclick="sendResetEmail()">Send Reset Link</button>
+                <p id="resetMsg"></p>
+            </div>
+            <a href="{% url 'index' %}">Back to Anudha Stories</a>
+      </div>
+
+    <script>
+        function sendResetEmail() {
+            const email = document.getElementById('resetEmail').value;
+            const auth = firebase.auth();
+
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                document.getElementById('resetMsg').innerText = "Reset link sent! Please check your email.";
+                })
+                .catch((error) => {
+                document.getElementById('resetMsg').innerText = "Error: " + error.message;
+                });
+        }
+    </script>
+</body>
+</html>
