@@ -1,18 +1,9 @@
-pip install firebase-admin
+# Make sure to install latest version of python
 pip install django
+pip install firebase-admin
 
-# To push data in firebase
-python import_json.py
+# To push data in firebase; do not run this command unnecessary
+# python import_json.py
 
- <!-- whenever you want to stop the program in between ,just insert onclick="checkSomething" -->
-        <!-- <script>
-            function checkSomething() {
-                if (/* your error condition */ true) {
-                    alert("Error! Cannot continue!");
-                    return false; // ⛔ STOP link
-                }
-                return true; // ✅ Allow link
-            }
-        </script> -->
-
- print(f"** Helloooo")       
+# To run the project on server
+# python manage.py runserver

@@ -285,7 +285,7 @@
 
   <div class="side-container">
     {% if email %}
-      <p align="left">&nbsp;<strong>Welcome, {{ username }} <br> &nbsp;Your Points: {{ user_total_points }}</strong></p><br>
+      <p align="left">&nbsp;<strong>Welcome, {{ username }} <br> &nbsp;Your Points: {{ user_total_points }}</strong><br><br>&nbsp;<span style="color: #2e7d32"> ({{ email }})</span></p><br>
     {% else %}
       <p>Please log in.</p>
     {% endif %}
@@ -349,7 +349,7 @@
     <div class="sidebar-content">
       <img src="{% static 'images/logo.png' %}" alt="Logo" class="sidebar-logo">
       {% if email %}
-        <p style="font-family:  'Comic Sans MS', cursive, sans-serif;"><strong>Welcome, {{ username }}</strong></p>
+        <p style="font-family:  'Comic Sans MS', cursive, sans-serif;"><strong>Welcome, {{ username }} <br><span style="color: #2e7d32"> {{ email }}</span></strong></p>
         <p style="font-family:  'Comic Sans MS', cursive, sans-serif;"><strong>Your Points: {{ user_total_points }}</strong></p>
         <a href="{% url 'profile' %}">Profile</a>
         <a href="{% url 'help' %}">Help / FAQ</a>
@@ -373,7 +373,8 @@
             Swal.fire({
               title: 'Replay Adventure? 🎮',
               text: "You've explored all the choices! Do you want to restart this story and earn points again?",
-              imageUrl: '/static/images/celebrate.gif',
+              // imageUrl: '/static/images/celebrate.gif',
+              imageUrl: 'https://drive.google.com/thumbnail?id=1XtWyitTmOI7ir7aDmoXVtY2Ey3SS9niJ&sz=s1000',
               imageWidth: 200,
               imageHeight: 200,
               background: '#fff8dc',

@@ -168,6 +168,7 @@ def story(request, story_id, node_id="1"):
 
     user_id = request.session["user_id"]
     user_email = request.session.get("email")
+    username = request.session.get("username", "user")
 
     if not user_id:
         messages.error(request, "Please log in first.")
@@ -246,6 +247,7 @@ def story(request, story_id, node_id="1"):
         "user_total_points": int(user_total_points or 0),
         "current_points": current_points,
         "email": user_email,
+        "username": username,
         "e_points":int(e_points or 0),
     }
     return render(request, "story.html", context)

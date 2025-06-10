@@ -183,6 +183,98 @@
       }
     }
 
+    @media (max-width: 600px) {
+      .navbar .navbar-brand {
+        display: block;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 28px !important;
+      }
+
+      .logo-container {
+        position: static;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .logo-container img {
+        width: 120px;
+        height: auto;
+      }
+
+      .modal-dialog {
+        margin: 10px auto;
+        max-width: 95% !important;
+      }
+
+      .modal-content {
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+      }
+
+      .modal-header,
+      .modal-body,
+      .modal-footer {
+        padding: 10px;
+      }
+
+      .modal-title {
+        font-size: 18px;
+        text-align: center;
+        width: 100%;
+      }
+
+      .modal-body input {
+        font-size: 14px;
+      }
+
+      .modal-footer .btn {
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+
+      .messages-container {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+      }
+
+      .message {
+        font-size: 14px;
+        padding: 10px 15px;
+      }
+
+      .hero_detail-box h1 {
+        font-size: 24px !important;
+        text-align: center;
+      }
+
+      .hero_detail-box p {
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .call_to-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+
+      .form-control {
+        font-size: 14px;
+      }
+
+       .logo-container {
+        display: block;
+      }
+      .logo-container.hide-on-mobile {
+        display: none !important;
+      }
+    }
+
     </style>
 
 
@@ -225,10 +317,6 @@
             <div class="logo-container">
               <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
             </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
           </nav>
         </div>
       </header>
@@ -433,7 +521,7 @@
 
     <!-- user modal2 REG -->
     <div class="modal fade" id="exampleModalToggle1" tabindex="-1" aria-labelledby="exampleModalToggleLabel1" aria-hidden="true">
-      <div class="modal-dialog">
+    <div class="modal-dialog">
         <div style="background: #000000; color: #fff;" class="modal-content">
           <div class="modal-header">
             <h5 style="color: #fff; font-family:timesnewroman;" class="modal-title" id="exampleModalLabel">USER REGISTRATION</h5>
@@ -516,6 +604,37 @@
         }
         err.innerText = message;
       }
+
+
+      // Function to hide/show logo in mobile view
+      function toggleLogoMobile(hide) {
+        const logo = document.querySelector('.logo-container');
+        if (window.innerWidth <= 600) {
+          if (hide) {
+            logo.classList.add('hide-on-mobile');
+          } else {
+            logo.classList.remove('hide-on-mobile');
+          }
+        }
+      }
+
+      // Handle both modals
+      const loginModal = document.getElementById('exampleModal');
+      const registerModal = document.getElementById('exampleModalToggle1');
+
+      // Listen to modal shown and hidden events globally
+      [loginModal, registerModal].forEach((modal) => {
+        modal.addEventListener('show.bs.modal', () => toggleLogoMobile(true));
+        modal.addEventListener('hidden.bs.modal', () => {
+          // Delay to ensure the second modal isn't immediately opening
+          setTimeout(() => {
+            const anyOpenModal = document.querySelector('.modal.show');
+            if (!anyOpenModal) {
+              toggleLogoMobile(false);
+            }
+          }, 300); // Wait a bit to check if another modal opens
+        });
+      });
     </script>
 
 

@@ -51,11 +51,12 @@
 
             .div1 {
                 flex: 0.1;
-                padding: 20px;
+                padding: 50px;
                 display: flex;
                 justify-content: center;
                 background-color: #e8f48c;
                 font-family:  'Comic Sans MS', cursive, sans-serif;
+                font-size: large;
             }
 
             .div2 {
@@ -430,7 +431,7 @@
             </div>
             <a href="{% url 'profile' %}">Profile</a>
             {% if email %}
-                <p>Welcome, {{ username }} ({{ email }})</p>
+                <p>Welcome, <span style="color: #2e7d32"> {{ username }}</span></p>
                 <p>Your Points: {{ user_total_points }}</p>
                 <a href="{% url 'logout' %}">Logout</a>
             {% else %}
@@ -445,8 +446,8 @@
                 <span class="li" style="color: #000;">
                     <a href="{% url 'profile' %}"><strong>Profile</strong></a><br><br><br>
                     {% if email %}
-                        <p>Welcome, <br>{{ username }}<span style="color: #2e7d32"> ({{ email }})</span></p>
-                        <p>Your Points: {{ user_total_points }}</p>
+                        <p><strong>Welcome, <span style="color: #2e7d32"> {{ username }}</span></strong></p>
+                        <p><strong>Your Points: {{ user_total_points }}</strong></p>
                         <a href="{% url 'logout' %}"><strong>Logout</strong></a>
                     {% else %}
                         <p>Please log in.</p>
@@ -463,7 +464,7 @@
                 <div class="coin-section">
                     <img src="{% static 'icons/totalreward.png' %}" alt="">
                     <p id="totalPoints" style="font-family: 'Comic Sans MS', cursive, sans-serif;">{{ user_total_points }}</p>
-                    <img id="pointsEarned" src="{% static 'images/coinflip.gif' %}" alt="Reward Given" style="width:80px;height:100px; display: none;">  <!-- Hidden initially -->
+                    <!-- <img id="pointsEarned" src="{% static 'images/coinflip.gif' %}" alt="Reward Given" style="width:80px;height:100px; display: none;">  Hidden initially -->
                     <img id="rewardImage" src="{% static 'icons/reward.png' %}" alt="">
                     <p id="sessionPoints" style="font-family: 'Comic Sans MS', cursive, sans-serif;">{{ user_session_points }}</p>
                 </div>
