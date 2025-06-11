@@ -35,6 +35,7 @@ SECRET_KEY = 'django-insecure-a260j4&kn5=9mt(%r541!_2i)@gnv2gon-r%o_loo$c8b4dso1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# ALLOWED_HOSTS = []   #uncooment it to run on local server and comment the next line
 ALLOWED_HOSTS = ['anudhagames.onrender.com']
 
 

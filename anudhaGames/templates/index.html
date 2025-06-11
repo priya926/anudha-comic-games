@@ -315,7 +315,9 @@
               </span>
             </a>
             <div class="logo-container">
-              <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+              {% for img in images %}
+                <img src="{{ img.logo }}" alt="Logo" class="logo">
+              {% endfor %}
             </div>
           </nav>
         </div>
@@ -334,7 +336,7 @@
               <form>
                 <div class="form-row ">
                 <div class="home-content__buttons">
-                  <button type="button" class="call_to-btn btn_white-border" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">LOGIN</button>
+                  <button type="button" class="call_to-btn btn_white-border" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" style="background-color: #000000;color: #fff;border-radius: 30px;font-size:15px ;padding: 15px 45px;border:none;font-weight: bold;">LOGIN</button>
                 </div>
                 </div>
               </form>
@@ -352,7 +354,9 @@
           </div>
           <div class="hero_img-container">
             <div>
-              <img src="{% static 'images/hero.png' %}" alt="" class="img-fluid">
+              {% for img in images %}
+                <img src="{{ img.hero }}" alt="" class="img-fluid">
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -368,7 +372,9 @@
           <div class="row">
             <div class="col-md-6">
               <div class="about_img-container">
-                <img src="{% static 'images/about.png' %}" alt="">
+                {% for img in images %}
+                  <img src="{{ img.about }}" alt="">
+                {% endfor %}
               </div>
             </div>
             <div class="col-md-6">
@@ -383,7 +389,7 @@
                   of fun-filled adventures.
                 </p>
                 <div class="">
-                  <a href="" class="call_to-btn btn_white-border" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+                  <a href="" class="call_to-btn btn_white-border" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" style="background-color: #6bd1bd;color: #fff;border-radius: 30px;font-size:15px ;padding: 15px 45px;border:none;font-weight: bold;">
                     Login to Explore !!
                   </a>
                 </div>
@@ -425,7 +431,9 @@
             </div>
             <div class="col-md-6">
               <div class="admission_img-container">
-                <img src="{% static 'images/admission.png' %}" alt="">
+                {% for img in images %}
+                  <img src="{{ img.admission }}" alt="">
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -462,7 +470,7 @@
                         <input type="text" placeholder="Message" id="message" name="message" required>
                       </div>
                       <div class="mt-5">
-                        <button type="submit">
+                        <button type="submit" style="background-color: #6bd1bd;color: #fff;border-radius: 30px;font-size:15px ;padding: 15px 45px;border:none;font-weight: bold;">
                           Send
                         </button>
                       </div>
@@ -474,7 +482,9 @@
               </div>
               <div class="col-md-6">
                 <div class="contact_img-box">
-                  <img src="{% static 'images/students.jpg' %}" alt="">
+                  {% for img in images %}
+                    <img src="{{ img.students }}" alt="">
+                  {% endfor %}
                 </div>
               </div>
             </div>

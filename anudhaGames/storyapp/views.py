@@ -16,7 +16,27 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
-    return render(request, 'index.html')
+    img_ref = db.collection('staticimg')  # Get 'staticimg' collection
+    docs = img_ref.get()  # Fetch all documents
+    images = []
+    for doc in docs:
+        doc1 = doc.id
+        data = doc.to_dict()
+        about = data.get('about', '')
+        admission = data.get('admission', '')
+        bg = data.get('bg', '')
+        body_bg = data.get('body_bg', '')
+        determine = data.get('determine', '')
+        hero = data.get('hero', '')
+        hero_bg = data.get('hero_bg', '')
+        hero_bg_old = data.get('hero_bg_old', '')
+        hero_bg2 = data.get('hero_bg2', '')
+        hero_bg2_old = data.get('hero_bg2_old', '')
+        logo = data.get('logo', '')
+        students = data.get('students', '')
+        why = data.get('why', '')
+        images.append({'about': about, 'admission': admission, 'bg': bg, 'body_bg': body_bg, 'determine': determine, 'hero': hero, 'hero_bg': hero_bg, 'hero_bg_old': hero_bg_old, 'hero_bg2': hero_bg2, 'hero_bg2_old': hero_bg2_old, 'logo': logo, 'students': students, 'why': why})
+    return render(request, 'index.html', {"images": images})
 
 def forget(request):
     return render(request, 'forget.html')
@@ -77,7 +97,6 @@ def verify_token(request):
             return JsonResponse({"status": "error", "message": str(e)}, status=400)
 
     return JsonResponse({"status": "error", "message": "Invalid request"}, status=405)
-
 
 
 def contact(request):
@@ -148,6 +167,16 @@ def storylist(request):
 
         stories.append({'id': story_id, 'story_name': story_name, 'image': image, 'node_id': first_node_id, 'required_points': r_points})
 
+    # Images url
+    img_ref = db.collection('staticimg')  # Get 'staticimg' collection
+    imgdocs = img_ref.get()  # Fetch all documents
+    images = []
+    for doc in imgdocs:
+        doc1 = doc.id
+        data = doc.to_dict()
+        logo = data.get('logo', '')
+        images.append({'logo': logo})
+
     if user_email:
         user_email = request.session.get("email")
         username = request.session.get("username", "user")
@@ -156,7 +185,7 @@ def storylist(request):
 
         user_total_points = get_user_total_points(user_id)
 
-        return render(request, "storylist.html", {"stories": stories, "email": user_email, "username": username, "userpoints": userpoints, "user_total_points": user_total_points})
+        return render(request, "storylist.html", {"stories": stories, "images":images, "email": user_email, "username": username, "userpoints": userpoints, "user_total_points": user_total_points})
     else:
         # messages.error(request, "Please log in first.")
         return redirect("index")  
@@ -169,6 +198,19 @@ def story(request, story_id, node_id="1"):
     user_id = request.session["user_id"]
     user_email = request.session.get("email")
     username = request.session.get("username", "user")
+
+    # Images url
+    img_ref = db.collection('staticimg')  # Get 'staticimg' collection
+    imgdocs = img_ref.get()  # Fetch all documents
+    images = []
+    for doc in imgdocs:
+        doc1 = doc.id
+        data = doc.to_dict()
+        logo = data.get('logo', '')
+        reward = data.get('reward', '')
+        totalreward = data.get('totalreward', '')
+        qbg2 = data.get('qbg2', '')
+        images.append({'reward': reward, 'totalreward': totalreward, 'qbg2': qbg2,'logo': logo})
 
     if not user_id:
         messages.error(request, "Please log in first.")
@@ -249,6 +291,7 @@ def story(request, story_id, node_id="1"):
         "email": user_email,
         "username": username,
         "e_points":int(e_points or 0),
+        "images": images,
     }
     return render(request, "story.html", context)
 

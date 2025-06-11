@@ -414,7 +414,9 @@
         </div>
 
         <div class="logo-container">
-            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+            {% for img in images %}
+                <img src="{{ img.logo }}" alt="Logo" class="logo">
+            {% endfor %}
         </div>
 
         <!-- Hamburger Menu for Mobile -->
@@ -427,7 +429,9 @@
         <!-- Sidebar Drawer for Mobile -->
         <div id="mobileSidebar" class="sidebar-drawer">
             <div class="sidebar-header">
-                <img src="{% static 'images/logo.png' %}" alt="Logo" class="sidebar-logo">
+                {% for img in images %}
+                    <img src="{{ img.logo }}" alt="Logo" class="sidebar-logo">
+                {% endfor %}
             </div>
             <a href="{% url 'profile' %}">Profile</a>
             {% if email %}
@@ -462,14 +466,20 @@
             <!-- Question & Choice Section -->
             <div class="div3">
                 <div class="coin-section">
-                    <img src="{% static 'icons/totalreward.png' %}" alt="">
+                    {% for img in images %}
+                        <img src="{{ img.totalreward }}" alt="">
+                    {% endfor %}
                     <p id="totalPoints" style="font-family: 'Comic Sans MS', cursive, sans-serif;">{{ user_total_points }}</p>
                     <!-- <img id="pointsEarned" src="{% static 'images/coinflip.gif' %}" alt="Reward Given" style="width:80px;height:100px; display: none;">  Hidden initially -->
-                    <img id="rewardImage" src="{% static 'icons/reward.png' %}" alt="">
+                    {% for img in images %}
+                        <img id="rewardImage" src="{{ img.reward }}" alt="">
+                    {% endfor %}
                     <p id="sessionPoints" style="font-family: 'Comic Sans MS', cursive, sans-serif;">{{ user_session_points }}</p>
                 </div>
 
-                <div class="question-section" style="background-image: url('/static/images/qbg2.png');background-size: cover;align-items: center;" id="questionBox">
+                {% for img in images %}
+                    <div class="question-section" style="background-image: url('{{ img.qbg2 }}');background-size: cover;align-items: center;" id="questionBox">
+                {% endfor %}
                     {% if not question %}
                             <a href="{% url 'story' story_id node_id %}">
                                 <button onclick="playSound('choice');" style="width: 200px; margin-top: 80%; font-family: 'Comic Sans MS', cursive, sans-serif;">Next</button>

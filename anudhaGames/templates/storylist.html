@@ -297,7 +297,9 @@
   </div>
 
   <div class="logo-container">
-    <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo" />
+    {% for img in images %}
+        <img src="{{ img.logo }}" alt="Logo" class="logo">
+    {% endfor %}
     <br />
     <a href="{% url 'profile' %}">Profile</a> |
     <a href="{% url 'help' %}"> Help / FAQ</a>
@@ -347,7 +349,9 @@
   <div id="mobileSidebar" class="mobile-sidebar">
     <span class="closebtn" onclick="toggleSidebar()">&times;</span>
     <div class="sidebar-content">
-      <img src="{% static 'images/logo.png' %}" alt="Logo" class="sidebar-logo">
+      {% for img in images %}
+        <img src="{{ img.logo }}" alt="Logo" class="sidebar-logo">
+      {% endfor %}
       {% if email %}
         <p style="font-family:  'Comic Sans MS', cursive, sans-serif;"><strong>Welcome, {{ username }} <br><span style="color: #2e7d32"> {{ email }}</span></strong></p>
         <p style="font-family:  'Comic Sans MS', cursive, sans-serif;"><strong>Your Points: {{ user_total_points }}</strong></p>
