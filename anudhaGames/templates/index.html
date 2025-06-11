@@ -53,7 +53,7 @@
     </script>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
+    <!-- <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" /> -->
     <!-- progress barstle -->
     <link rel="stylesheet" href="css/css-circular-prog-bar.css">
     <!-- fonts style -->
@@ -61,9 +61,13 @@
     <!-- font wesome stylesheet -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!-- Custom styles for this template -->
-    <link href="{% static '/css/style.css' %}" rel="stylesheet" />
+    <!-- <link href="{% static '/css/style.css' %}" rel="stylesheet" /> -->
     <!-- responsive style -->
-    <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
+    <!-- <link href="{% static '/css/responsive.css' %}" rel="stylesheet" /> -->
+
+    <link rel="stylesheet" href="https://cdn.example.com/css/bootstrap.css">
+    <script src="https://cdn.example.com/js/bootstrap.js"></script>
+
 
     <link rel="stylesheet" href="css/css-circular-prog-bar.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -184,94 +188,84 @@
     }
 
     @media (max-width: 600px) {
-      .navbar .navbar-brand {
-        display: block;
-        text-align: center;
-        width: 100%;
-        margin-bottom: 10px;
-        font-size: 28px !important;
+      .hero-container {
+        flex-direction: column !important;
+        align-items: center;
+        padding-top: 60px !important;
+        padding-bottom: 60px !important;
       }
 
-      .logo-container {
-        position: static;
-        text-align: center;
-        margin-top: 10px;
-        margin-bottom: 10px;
+      .hero_detail-box {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 0 15px;
       }
 
-      .logo-container img {
-        width: 120px;
-        height: auto;
+      .hero_img-container {
+        width: 90% !important;
+        margin: 0 auto !important;
       }
 
-      .modal-dialog {
-        margin: 10px auto;
-        max-width: 95% !important;
+      .about_section .col-md-6,
+      .admission_section .col-md-6,
+      .contact_section .col-md-6 {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        text-align: center !important;
       }
 
-      .modal-content {
-        width: 100%;
-        padding: 15px;
-        box-sizing: border-box;
+      .about_img-container img,
+      .admission_img-container img,
+      .contact_img-box img {
+        width: 90% !important;
+        margin: 10px auto !important;
       }
 
-      .modal-header,
-      .modal-body,
-      .modal-footer {
-        padding: 10px;
-      }
-
-      .modal-title {
-        font-size: 18px;
-        text-align: center;
-        width: 100%;
-      }
-
-      .modal-body input {
-        font-size: 14px;
-      }
-
-      .modal-footer .btn {
-        font-size: 14px;
-        padding: 6px 12px;
-      }
-
-      .messages-container {
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        width: auto;
-      }
-
-      .message {
-        font-size: 14px;
-        padding: 10px 15px;
-      }
-
-      .hero_detail-box h1 {
-        font-size: 24px !important;
-        text-align: center;
-      }
-
-      .hero_detail-box p {
-        font-size: 14px;
-        text-align: center;
+      .about_detail-box,
+      .admission_detail-box,
+      .contact_form-container {
+        padding: 20px 15px !important;
       }
 
       .call_to-btn {
-        font-size: 14px;
-        padding: 8px 16px;
+        margin-top: 15px;
       }
 
-      .form-control {
-        font-size: 14px;
+      .navbar .custom_nav-container {
+        flex-direction: column;
+        align-items: center;
       }
 
-       .logo-container {
-        display: block;
+      .navbar-brand {
+        margin-bottom: 10px;
+      }
+
+      .modal-content {
+        font-size: 14px !important;
+      }
+      
+      .logo-container {
+        /* position: static !important; */
+        text-align: center !important;
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .logo-container img {
+        width: 120px !important;
+        height: auto !important;
+      }
+
+      .logo-container {
+        display: block !important;
       }
       .logo-container.hide-on-mobile {
         display: none !important;
+      }
+      .finger-paint-regular{
+        font-size:x-large !important;
+        text-align: left !important;
       }
     }
 
@@ -304,10 +298,12 @@
   </head>
 
   <body>
-    <div class="top_container">
-      <!-- header section strats -->
-      <header class="header_section">
-        <div class="container">
+    {% for img in images %}
+      <div class="top_container"  style="background-image: url('{{ img.hero_bg }}'); background-repeat: no-repeat !important;z-index: -1;background-size: 100% 100%;">
+    {% endfor %}
+    <!-- header section strats -->
+        <header class="header_section">
+        <div class="container" style="width: 100%;padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;">
           <nav class="navbar navbar-expand-lg custom_nav-container ">
             <a class="navbar-brand" href="{% url 'index' %}">
               <span class="finger-paint-regular" style="font-size: 45px;color: black;">
@@ -321,59 +317,59 @@
             </div>
           </nav>
         </div>
-      </header>
-      <section class="hero_section ">
-        <div class="hero-container container">
-          <div class="hero_detail-box">
-            <h1 class="finger-paint-regular" style="font-size: 40px;color: black;">
-              Lets read and play different stories!
-            </h1>
-            <p  class="fontad">
-              Fun Stories for Kids !!!<br>
-              Here you can play our classic stories with a little pinch of modern fun.
-            </p>
-            <div class="hero_btn-continer">
-              <form>
-                <div class="form-row ">
-                <div class="home-content__buttons">
-                  <button type="button" class="call_to-btn btn_white-border" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" style="background-color: #000000;color: #fff;border-radius: 30px;font-size:15px ;padding: 15px 45px;border:none;font-weight: bold;">LOGIN</button>
-                </div>
-                </div>
-              </form>
-            </div>
-            {% if messages %}
-              <div class="messages-container">
-                {% for message in messages %}
-                  <div class="message {{ message.tags }}">
-                    <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
-                    {{ message }}
+        </header>
+        <section class="hero_section ">
+          <div class="hero-container container" style="display: flex;padding-top: 90px;padding-bottom: 325px;">
+            <div class="hero_detail-box">
+              <h1 class="finger-paint-regular" style="font-size: 40px;color: black;">
+                Lets read and play different stories!
+              </h1>
+              <p  class="fontad">
+                Fun Stories for Kids !!!<br>
+                Here you can play our classic stories with a little pinch of modern fun.
+              </p>
+              <div class="hero_btn-continer">
+                <form>
+                  <div class="form-row ">
+                  <div class="home-content__buttons">
+                    <button type="button" class="call_to-btn btn_white-border" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" style="background-color: #000000;color: #fff;border-radius: 30px;font-size:15px ;padding: 15px 45px;border:none;font-weight: bold;">LOGIN</button>
                   </div>
+                  </div>
+                </form>
+              </div>
+              {% if messages %}
+                <div class="messages-container">
+                  {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                      <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                      {{ message }}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <div class="hero_img-container" style="width: 68%;margin-right: -8%;margin-top: -5%;">
+              <div>
+                {% for img in images %}
+                  <img src="{{ img.hero }}" alt="" class="img-fluid" style="width: 100%;">
                 {% endfor %}
               </div>
-            {% endif %}
-          </div>
-          <div class="hero_img-container">
-            <div>
-              {% for img in images %}
-                <img src="{{ img.hero }}" alt="" class="img-fluid">
-              {% endfor %}
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>      </div>
+      <!-- </div> -->
     <!-- end header section -->
 
     <div class="common_style">
 
       <!-- about section -->
-      <section class="about_section">
-        <div class="container">
+      <section class="about_section" style="text-align: right;">
+        <div class="container" style="width: 100%;padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;">
           <div class="row">
             <div class="col-md-6">
               <div class="about_img-container">
                 {% for img in images %}
-                  <img src="{{ img.about }}" alt="">
+                  <img src="{{ img.about }}" alt="" style="left: 10px;margin-left: 10%;margin-bottom: 20%;width: 80%;" align="left">
                 {% endfor %}
               </div>
             </div>
@@ -382,7 +378,7 @@
                 <h5>
                   <b><u>About the Game</u></b>            
                 </h5>
-                <p>
+                <p style="font-weight: 600;color: #4e4f50; margin: 30px 0 50px 0;">
                   Anudha Games is a delightful web-based platform, designed to entertain and engage kids through interactive comic games. 
                   Each story combines the magic of storytelling with playful, interactive challenges. 
                   Kids can immerse themselves in exciting tales, complete tasks, earn coins, and unlock new levels 
@@ -404,14 +400,14 @@
 
       <!--  section -->
       <section class="admission_section">
-        <div class="container">
+        <div class="container" style="width: 100%;padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;">
           <div class="row">
             <div class="col-md-6">
               <div class="admission_detail-box">
                 <h5>
                   <b><u>Our Services</u></b>
                 </h5>
-                <p>
+                <p  style="font-weight: 600;color: #4e4f50; margin: 30px 0 50px 0;">
                   <b>1. Interactive Comic Stories</b><br>
                   Dive into colorful and engaging comic-style stories featuring lovable characters and thrilling plots.<br><br>
                   
@@ -442,11 +438,11 @@
 
       <!-- contact section -->
 
-      <section class="contact_section ">
+      <section class="contact_section " style="padding: 75px 45px;font-family: 'poppins',sans-serif;">
 
-          <div class="container">
+          <div class="container" style="width: 100%;padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;">
           
-            <div class="row">
+            <div class="row" style="align-items: center;">
               <div class="col-md-6">
                 <div class="d-flex justify-content-center d-md-block">
                   <h5>
@@ -458,16 +454,16 @@
                   <div class="contact_form-container">
                     <div>
                       <div>
-                        <input type="text" placeholder="Name" id="uname" name="uname" required>
+                        <input type="text" placeholder="Name" id="uname" name="uname" required style="border: none;outline: none;border-bottom: 1px solid #000; width: 90%; margin: 15px 0;">
                       </div>
                       <div>
-                        <input type="email" placeholder="Email" id="uemail" name="uemail" required>
+                        <input type="email" placeholder="Email" id="uemail" name="uemail" required style="border: none;outline: none;border-bottom: 1px solid #000; width: 90%; margin: 15px 0;">
                       </div>
                       <div>
-                        <input type="text" placeholder="Phone Number" id="phone_number" name="phone_number" required>
+                        <input type="text" placeholder="Phone Number" id="phone_number" name="phone_number" required style="border: none;outline: none;border-bottom: 1px solid #000; width: 90%; margin: 15px 0;">
                       </div>
                       <div class="mt-5">
-                        <input type="text" placeholder="Message" id="message" name="message" required>
+                        <input type="text" placeholder="Message" id="message" name="message" required style="border: none;outline: none;border-bottom: 1px solid #000; width: 90%; margin: 15px 0;">
                       </div>
                       <div class="mt-5">
                         <button type="submit" style="background-color: #6bd1bd;color: #fff;border-radius: 30px;font-size:15px ;padding: 15px 45px;border:none;font-weight: bold;">
@@ -481,9 +477,9 @@
                 </form>
               </div>
               <div class="col-md-6">
-                <div class="contact_img-box">
+                <div class="contact_img-box" style="display: flex;align-items: center;">
                   {% for img in images %}
-                    <img src="{{ img.students }}" alt="">
+                    <img src="{{ img.students }}" alt="" style="width: 100%;">
                   {% endfor %}
                 </div>
               </div>
