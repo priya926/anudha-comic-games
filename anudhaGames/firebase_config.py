@@ -1,5 +1,6 @@
 import firebase_admin
-from firebase_admin import credentials, Firestore
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 # Check if Firebase is already initialized
 
@@ -8,4 +9,4 @@ if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
 
 # Firestore database instance
-db = Firestore.client()
+db = firestore.client()
